@@ -1,9 +1,9 @@
 package primitives;
 
 public class Vector extends Point {
-    public Vector(double x, double y, double z) {
+    public Vector(double x, double y, double z) throws IllegalArgumentException {
         super(x, y, z);
-        if (super.equals(Double3.ZERO))
+        if (super.equals(new Point(Double3.ZERO)))
             throw new IllegalArgumentException("The ZERO Vector");
     }
 

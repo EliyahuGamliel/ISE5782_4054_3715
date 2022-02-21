@@ -11,6 +11,10 @@ public class Point {
         this.xyz = new Double3(x, y, z);
     }
 
+    public Point(Double3 _xyz) {
+        this.xyz = _xyz;
+    }
+
     public Vector subtract(Point point) {
         return new Vector(this.xyz.d1 - point.xyz.d1, this.xyz.d2 - point.xyz.d2, this.xyz.d3 - point.xyz.d3);
     }
@@ -32,7 +36,7 @@ public class Point {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || ! (o instanceof Point)) return false;
         Point point = (Point) o;
         return Objects.equals(xyz, point.xyz);
     }
