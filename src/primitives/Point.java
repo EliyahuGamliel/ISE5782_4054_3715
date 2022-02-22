@@ -22,14 +22,6 @@ public class Point {
 
     /**
      *
-     * @param _xyz
-     */
-    public Point(Double3 _xyz) {
-        this.xyz = _xyz;
-    }
-
-    /**
-     *
      * @param point
      * @return new Vector from this point and another point
      */
@@ -69,9 +61,16 @@ public class Point {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || ! (o instanceof Point)) return false;
-        Point point = (Point) o;
-        return Objects.equals(xyz, point.xyz);
+        if (o == null) return false;
+        if (this.getClass() == o.getClass()) {
+            Point point = (Point) o;
+            return Objects.equals(xyz, point.xyz);
+        }
+        else if(o.getClass() == Double3.class) {
+            Double3 double3 = (Double3) o;
+            return Objects.equals(xyz, o);
+        }
+        return false;
     }
 
     @Override
