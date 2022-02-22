@@ -4,31 +4,64 @@ import com.ise.Main;
 
 import java.util.Objects;
 
+/**
+ *
+ */
 public class Point {
     final Double3 xyz;
 
+    /**
+     *
+     * @param x
+     * @param y
+     * @param z
+     */
     public Point(double x, double y, double z) {
         this.xyz = new Double3(x, y, z);
     }
 
+    /**
+     *
+     * @param _xyz
+     */
     public Point(Double3 _xyz) {
         this.xyz = _xyz;
     }
 
+    /**
+     *
+     * @param point
+     * @return new Vector from this point and another point
+     */
     public Vector subtract(Point point) {
         return new Vector(this.xyz.d1 - point.xyz.d1, this.xyz.d2 - point.xyz.d2, this.xyz.d3 - point.xyz.d3);
     }
 
+    /**
+     *
+     * @param vector
+     * @return new Point that
+     */
     public Point add(Vector vector) {
         return new Point(this.xyz.d1 + vector.xyz.d1, this.xyz.d2 + vector.xyz.d2, this.xyz.d3 + vector.xyz.d3);
     }
 
+    /**
+     *
+     * @param point2
+     * @return
+     */
     public double distanceSquared(Point point2) {
         return (point2.xyz.d1-this.xyz.d1)*(point2.xyz.d1-this.xyz.d1)+
                 (point2.xyz.d2-this.xyz.d2)*(point2.xyz.d2-this.xyz.d2)+
                 (point2.xyz.d3-this.xyz.d3)*(point2.xyz.d3-this.xyz.d3);
     }
 
+    /**
+     *
+     * @param point2
+     * @return
+     */
     public double distance(Point point2) {
         return Math.sqrt(distanceSquared(point2));
     }
@@ -43,6 +76,6 @@ public class Point {
 
     @Override
     public String toString() {
-        return "Point: ({},{},{})".formatted(this.xyz.d1,this.xyz.d2,this.xyz.d3);
+        return String.format("Point: (%.2f,%.2f,%.2f)",this.xyz.d1,this.xyz.d2,this.xyz.d3);
     }
 }
