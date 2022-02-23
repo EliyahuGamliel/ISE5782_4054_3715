@@ -14,7 +14,13 @@ public class Vector extends Point {
      */
     public Vector(double x, double y, double z) throws IllegalArgumentException {
         super(x, y, z);
-        if (super.equals(Double3.ZERO))
+        if (this.xyz.equals(Double3.ZERO))
+            throw new IllegalArgumentException("The ZERO Vector");
+    }
+
+    Vector(Double3 xyz) throws IllegalArgumentException {
+        super(xyz);
+        if (this.xyz.equals(Double3.ZERO))
             throw new IllegalArgumentException("The ZERO Vector");
     }
 
@@ -34,7 +40,7 @@ public class Vector extends Point {
      * @return
      */
     public Vector add(Vector vector) {
-        return new Vector(this.xyz.d1*vector.xyz.d1, this.xyz.d2*vector.xyz.d2, this.xyz.d3*vector.xyz.d3);
+        return new Vector(this.xyz.add(vector.xyz));
     }
 
     /**
@@ -43,7 +49,7 @@ public class Vector extends Point {
      * @return
      */
     public Vector scale(double number) {
-        return new Vector(this.xyz.d1*number, this.xyz.d2*number, this.xyz.d3*number);
+        return new Vector(this.xyz.scale(number));
     }
 
     /**
@@ -76,7 +82,8 @@ public class Vector extends Point {
      * @return
      */
     public double dotProduct(Vector vector) {
-        return this.xyz.d1*vector.xyz.d1 + this.xyz.d2*vector.xyz.d2 + this.xyz.d3*vector.xyz.d3;
+        Double3 product = this.xyz.product(vector.xyz);
+        return product.d1 + product.d2 + product.d3;
     }
 
     /**

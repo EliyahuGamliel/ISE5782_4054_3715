@@ -8,7 +8,7 @@ import java.util.Objects;
  *
  */
 public class Point {
-    final Double3 xyz;
+    final protected Double3 xyz;
 
     /**
      *
@@ -21,12 +21,20 @@ public class Point {
     }
 
     /**
+     * 
+     * @param xyz
+     */
+    Point(Double3 xyz) {
+        this.xyz = xyz;
+    }
+
+    /**
      *
      * @param point
      * @return new Vector from this point and another point
      */
     public Vector subtract(Point point) {
-        return new Vector(this.xyz.d1 - point.xyz.d1, this.xyz.d2 - point.xyz.d2, this.xyz.d3 - point.xyz.d3);
+        return new Vector(this.xyz.subtract(point.xyz));
     }
 
     /**
@@ -35,7 +43,7 @@ public class Point {
      * @return new Point that
      */
     public Point add(Vector vector) {
-        return new Point(this.xyz.d1 + vector.xyz.d1, this.xyz.d2 + vector.xyz.d2, this.xyz.d3 + vector.xyz.d3);
+        return new Point(this.xyz.add(vector.xyz));
     }
 
     /**
@@ -62,15 +70,9 @@ public class Point {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null) return false;
-        if (this.getClass() == o.getClass()) {
-            Point point = (Point) o;
-            return Objects.equals(xyz, point.xyz);
-        }
-        else if(o.getClass() == Double3.class) {
-            Double3 double3 = (Double3) o;
-            return Objects.equals(xyz, o);
-        }
-        return false;
+        if (!(o instanceof Point)) return false;
+        Point point = (Point) o;
+        return Objects.equals(xyz, point.xyz);
     }
 
     @Override
