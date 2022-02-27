@@ -3,7 +3,7 @@ package geometries;
 import primitives.*;
 
 /**
- *
+ * an infinite pipe
  */
 public class Tube implements Geometry {
     
@@ -11,9 +11,9 @@ public class Tube implements Geometry {
     protected double radius;
 
     /**
-     *
-     * @param exisRay
-     * @param radius
+     * create a tube with a ray and a radius
+     * @param exisRay the ray on which the tube is based
+     * @param radius the radius of the tube
      */
     public Tube(Ray exisRay, double radius) {
         this.exisRay = exisRay;
@@ -22,7 +22,7 @@ public class Tube implements Geometry {
 
     /**
      *
-     * @return
+     * @return Ray
      */
     public Ray getExisRay() {
         return exisRay;
@@ -30,7 +30,7 @@ public class Tube implements Geometry {
 
     /**
      *
-     * @return
+     * @return double
      */
     public double getRadius() {
         return radius;

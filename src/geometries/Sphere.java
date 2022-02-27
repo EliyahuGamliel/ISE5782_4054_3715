@@ -3,7 +3,7 @@ package geometries;
 import primitives.*;
 
 /**
- *
+ * sort of a ball
  */
 public class Sphere implements Geometry {
     
@@ -11,9 +11,9 @@ public class Sphere implements Geometry {
     protected double radius;
 
     /**
-     *
-     * @param center
-     * @param radius
+     * create a sphere with point and a radius
+     * @param center the center point of the sphere
+     * @param radius the radius of the sphere
      */
     public Sphere(Point center, double radius) {
         this.center = center;
@@ -22,7 +22,7 @@ public class Sphere implements Geometry {
 
     /**
      *
-     * @return
+     * @return Point
      */
     public Point getCenter() {
         return center;
@@ -30,7 +30,7 @@ public class Sphere implements Geometry {
 
     /**
      *
-     * @return
+     * @return double
      */
     public double getRadius() {
         return radius;

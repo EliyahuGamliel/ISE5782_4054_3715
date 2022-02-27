@@ -5,6 +5,11 @@ import static java.lang.System.out;
 import static primitives.Util.*;
 
 /**
+ * Eliyahu Gamliel 325884054 egamliel@g.jct.ac.il
+ * Avraham Simon 214363715 simon@yatmal.co.il
+ */
+
+/**
  * Test program for the 1st stage
  *
  * @author Dan Zilberstein

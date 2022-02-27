@@ -5,32 +5,32 @@ import com.ise.Main;
 import java.util.Objects;
 
 /**
- *
+ * 3d point
  */
 public class Point {
     final protected Double3 xyz;
 
     /**
-     *
-     * @param x
-     * @param y
-     * @param z
+     * create a point using 3 doubles
+     * @param x position in the x dimension
+     * @param y position in the y dimension
+     * @param z position in the z dimension
      */
     public Point(double x, double y, double z) {
         this.xyz = new Double3(x, y, z);
     }
 
     /**
-     * 
-     * @param xyz
+     * create a point using the Double3 class (for inner purposes)
+     * @param xyz the Double3
      */
     Point(Double3 xyz) {
         this.xyz = xyz;
     }
 
     /**
-     *
-     * @param point
+     * create a vector from the subtraction of two points
+     * @param point the second point
      * @return new Vector from this point and another point
      */
     public Vector subtract(Point point) {
@@ -38,18 +38,18 @@ public class Point {
     }
 
     /**
-     *
-     * @param vector
-     * @return new Point that
+     * add or "move" a point by a vector
+     * @param vector vector to move the point by
+     * @return new Point that "moved" by the vector
      */
     public Point add(Vector vector) {
         return new Point(this.xyz.add(vector.xyz));
     }
 
     /**
-     *
-     * @param point2
-     * @return
+     * calculate the squared distance between two points
+     * @param point2 the second point
+     * @return the squared distance
      */
     public double distanceSquared(Point point2) {
         return (point2.xyz.d1-this.xyz.d1)*(point2.xyz.d1-this.xyz.d1)+
@@ -58,9 +58,9 @@ public class Point {
     }
 
     /**
-     *
-     * @param point2
-     * @return
+     * calculate the distance between two points
+     * @param point2 the second point
+     * @return the distance
      */
     public double distance(Point point2) {
         return Math.sqrt(distanceSquared(point2));
@@ -70,8 +70,7 @@ public class Point {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null) return false;
-        if (!(o instanceof Point)) return false;
-        Point point = (Point) o;
+        if (!(o instanceof Point point)) return false;
         return Objects.equals(xyz, point.xyz);
     }
 
