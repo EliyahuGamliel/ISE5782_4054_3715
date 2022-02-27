@@ -62,7 +62,9 @@ public class Vector extends Point {
      * @return the squared length of the vector
      */
     public double lengthSquared() {
-        return this.dotProduct(this);
+        return this.xyz.d1*this.xyz.d1 +
+                this.xyz.d2*this.xyz.d2 +
+                this.xyz.d3*this.xyz.d3;
     }
 
     /**
@@ -78,7 +80,7 @@ public class Vector extends Point {
      * @return a new normalized vector
      */
     public Vector normalize() {
-        return new Vector(this.xyz.d1/this.length(), this.xyz.d2/this.length(), this.xyz.d3/this.length());
+        return new Vector(this.xyz.reduce(this.length()));
     }
 
     /**
@@ -101,6 +103,4 @@ public class Vector extends Point {
                 this.xyz.d3*vector.xyz.d1-this.xyz.d1*vector.xyz.d3,
                 this.xyz.d1*vector.xyz.d2-this.xyz.d2*vector.xyz.d1);
     }
-
-
 }
