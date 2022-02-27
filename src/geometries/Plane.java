@@ -7,8 +7,8 @@ import primitives.*;
  */
 public class Plane implements Geometry {
     
-    protected Point q0;
-    protected Vector normal;
+    final private Point q0;
+    final private Vector normal;
 
     /**
      * create a plane using point and a vector

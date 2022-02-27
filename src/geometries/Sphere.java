@@ -7,8 +7,8 @@ import primitives.*;
  */
 public class Sphere implements Geometry {
     
-    protected Point center;
-    protected double radius;
+    final private Point center;
+    final private double radius;
 
     /**
      * create a sphere with point and a radius

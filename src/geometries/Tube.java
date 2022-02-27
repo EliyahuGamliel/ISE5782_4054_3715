@@ -6,9 +6,8 @@ import primitives.*;
  * an infinite pipe
  */
 public class Tube implements Geometry {
-    
-    protected Ray exisRay;
-    protected double radius;
+    final protected Ray exisRay;
+    final protected double radius;
 
     /**
      * create a tube with a ray and a radius
