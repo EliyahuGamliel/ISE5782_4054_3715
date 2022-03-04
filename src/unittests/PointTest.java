@@ -9,7 +9,6 @@ import static primitives.Util.isZero;
 
 /**
  * Unit tests for primitives.Point class
- * @author asimon
  */
 class PointTest {
     /**
