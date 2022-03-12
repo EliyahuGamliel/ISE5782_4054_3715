@@ -14,7 +14,7 @@ public class Vector extends Point {
      */
     public Vector(double x, double y, double z) throws IllegalArgumentException {
         super(x, y, z);
-        if (this.xyz.equals(Double3.ZERO))
+        if (xyz.equals(Double3.ZERO))
             throw new IllegalArgumentException("The ZERO Vector");
     }
 
@@ -25,13 +25,13 @@ public class Vector extends Point {
      */
     Vector(Double3 xyz) throws IllegalArgumentException {
         super(xyz);
-        if (this.xyz.equals(Double3.ZERO))
+        if (xyz.equals(Double3.ZERO))
             throw new IllegalArgumentException("The ZERO Vector");
     }
 
     @Override
     public String toString() {
-        return String.format("Vector: (%.2f,%.2f,%.2f)",this.xyz.d1,this.xyz.d2,this.xyz.d3);
+        return String.format("Vector: (%.2f,%.2f,%.2f)",xyz.d1,xyz.d2,xyz.d3);
     }
 
     @Override
@@ -45,7 +45,7 @@ public class Vector extends Point {
      * @return a new vector result of the addition
      */
     public Vector add(Vector vector) {
-        return new Vector(this.xyz.add(vector.xyz));
+        return new Vector(xyz.add(vector.xyz));
     }
 
     /**
@@ -54,7 +54,7 @@ public class Vector extends Point {
      * @return a new scaled vector
      */
     public Vector scale(double number) {
-        return new Vector(this.xyz.scale(number));
+        return new Vector(xyz.scale(number));
     }
 
     /**
@@ -62,9 +62,7 @@ public class Vector extends Point {
      * @return the squared length of the vector
      */
     public double lengthSquared() {
-        return this.xyz.d1*this.xyz.d1 +
-                this.xyz.d2*this.xyz.d2 +
-                this.xyz.d3*this.xyz.d3;
+        return xyz.d1*xyz.d1 + xyz.d2*xyz.d2 + xyz.d3*xyz.d3;
     }
 
     /**
@@ -72,7 +70,7 @@ public class Vector extends Point {
      * @return the length of the vector
      */
     public double length() {
-        return Math.sqrt(this.lengthSquared());
+        return Math.sqrt(lengthSquared());
     }
 
     /**
@@ -80,7 +78,7 @@ public class Vector extends Point {
      * @return a new normalized vector
      */
     public Vector normalize() {
-        return new Vector(this.xyz.reduce(this.length()));
+        return new Vector(xyz.reduce(length()));
     }
 
     /**
@@ -89,7 +87,7 @@ public class Vector extends Point {
      * @return the dot product of the two vectors
      */
     public double dotProduct(Vector vector) {
-        Double3 product = this.xyz.product(vector.xyz);
+        Double3 product = xyz.product(vector.xyz);
         return product.d1 + product.d2 + product.d3;
     }
 
@@ -99,8 +97,8 @@ public class Vector extends Point {
      * @return the cross product of the two vectors
      */
     public Vector crossProduct(Vector vector) {
-        return new Vector(this.xyz.d2*vector.xyz.d3-this.xyz.d3*vector.xyz.d2,
-                this.xyz.d3*vector.xyz.d1-this.xyz.d1*vector.xyz.d3,
-                this.xyz.d1*vector.xyz.d2-this.xyz.d2*vector.xyz.d1);
+        return new Vector(xyz.d2*vector.xyz.d3-xyz.d3*vector.xyz.d2,
+                xyz.d3*vector.xyz.d1-xyz.d1*vector.xyz.d3,
+                xyz.d1*vector.xyz.d2-xyz.d2*vector.xyz.d1);
     }
 }
