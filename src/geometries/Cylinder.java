@@ -21,8 +21,15 @@ public class Cylinder extends Tube {
 
     @Override
     public Vector getNormal(Point point) {
-        // TODO calculate normal at a specific point
-        return null;
+        Vector OtherBase = exisRay.getDir().scale(height);
+        Point p0OtherBase = exisRay.getP0().add(OtherBase);
+        double crossProductP01 = exisRay.getDir().dotProduct(exisRay.getP0().subtract(point));
+        double crossProductP02 = exisRay.getDir().dotProduct(p0OtherBase.subtract(point));
+        double r = radius*radius;
+        if (point.distanceSquared(exisRay.getP0()) <= r && crossProductP01 == 0 || point.distanceSquared(p0OtherBase) <= r && crossProductP02 == 0)
+            return exisRay.getDir();
+        else
+            return super.getNormal(point);
     }
 
     @Override

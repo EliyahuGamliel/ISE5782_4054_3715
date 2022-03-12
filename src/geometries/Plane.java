@@ -24,13 +24,14 @@ public class Plane implements Geometry {
      * create a plane using 3 points
      * @param q0 first point
      * @param q1 second point
-     * @param q3 third point
+     * @param q2 third point
      */
-    public Plane(Point q0, Point q1, Point q3) {
+    public Plane(Point q0, Point q1, Point q2) {
         // save one point as the point of reference
         this.q0 = q0;
-        // TODO: needs to calculate the normal from the 3 points
-        this.normal = null;
+        Vector v1 = q1.subtract(q0);
+        Vector v2 = q2.subtract(q0);
+        normal = v1.crossProduct(v2).normalize();
     }
 
     /**
