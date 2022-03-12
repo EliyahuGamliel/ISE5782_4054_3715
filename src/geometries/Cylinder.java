@@ -1,7 +1,7 @@
 package geometries;
 
 import primitives.*;
-
+import static primitives.Util.*;
 /**
  *  a finite tube
  */
@@ -22,7 +22,7 @@ public class Cylinder extends Tube {
     @Override
     public Vector getNormal(Point point) {
         double t = exisRay.getDir().dotProduct(point.subtract(exisRay.getP0()));
-        if (t == 0 || t == height)
+        if (isZero(t) || isZero(t - height))
             return exisRay.getDir();
         else
             return super.getNormal(point);

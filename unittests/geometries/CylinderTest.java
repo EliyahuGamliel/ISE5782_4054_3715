@@ -20,11 +20,11 @@ class CylinderTest {
                 "getNormal() wrong result");
 
         //TC02: Test that getNormal of Cylinder works
-        assertEquals(new Vector(1, 1, 0).normalize(), c1.getNormal(new Point(3.535533906, 3.535533906, -0.5)),
+        assertEquals(new Vector(1, 1, 0).normalize(), c1.getNormal(new Point(3.5355339059327373, 3.5355339059327373, -0.5)),
                 "getNormal() wrong result");
         
         //TC03: Test that getNormal of Cylinder works
-        assertEquals(new Vector(1, 1, 0).scale(-1).normalize(), c1.getNormal(new Point(0.0, 0.0, 0.53)),
+        assertEquals(new Vector(1, 1, 0).normalize(), c1.getNormal(new Point(0.0, 0.0, 0.53)),
                 "getNormal() wrong result");
         
         // =============== Boundary Values Tests ==================
