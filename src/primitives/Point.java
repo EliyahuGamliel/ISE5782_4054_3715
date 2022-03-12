@@ -17,7 +17,7 @@ public class Point {
      * @param z position in the z dimension
      */
     public Point(double x, double y, double z) {
-        this.xyz = new Double3(x, y, z);
+        xyz = new Double3(x, y, z);
     }
 
     /**
@@ -34,7 +34,7 @@ public class Point {
      * @return new Vector from this point and another point
      */
     public Vector subtract(Point point) {
-        return new Vector(this.xyz.subtract(point.xyz));
+        return new Vector(xyz.subtract(point.xyz));
     }
 
     /**
@@ -43,7 +43,7 @@ public class Point {
      * @return new Point that "moved" by the vector
      */
     public Point add(Vector vector) {
-        return new Point(this.xyz.add(vector.xyz));
+        return new Point(xyz.add(vector.xyz));
     }
 
     /**
@@ -52,9 +52,9 @@ public class Point {
      * @return the squared distance
      */
     public double distanceSquared(Point point2) {
-        return (point2.xyz.d1-this.xyz.d1)*(point2.xyz.d1-this.xyz.d1)+
-                (point2.xyz.d2-this.xyz.d2)*(point2.xyz.d2-this.xyz.d2)+
-                (point2.xyz.d3-this.xyz.d3)*(point2.xyz.d3-this.xyz.d3);
+        return (point2.xyz.d1-xyz.d1)*(point2.xyz.d1-xyz.d1)+
+                (point2.xyz.d2-xyz.d2)*(point2.xyz.d2-xyz.d2)+
+                (point2.xyz.d3-xyz.d3)*(point2.xyz.d3-xyz.d3);
     }
 
     /**
@@ -76,6 +76,6 @@ public class Point {
 
     @Override
     public String toString() {
-        return String.format("Point: (%.2f,%.2f,%.2f)",this.xyz.d1,this.xyz.d2,this.xyz.d3);
+        return String.format("Point: (%.2f,%.2f,%.2f)",xyz.d1,xyz.d2,xyz.d3);
     }
 }

@@ -46,7 +46,7 @@ public class Ray {
     @Override
     public String toString() {
         return "Ray: " +
-                String.format("point: (%.2f,%.2f,%.2f)",this.p0.xyz.d1,this.p0.xyz.d2,this.p0.xyz.d3) +
-                String.format("dir: (%.2f,%.2f,%.2f)",this.dir.xyz.d1,this.dir.xyz.d2,this.dir.xyz.d3);
+                String.format("point: (%.2f,%.2f,%.2f)",p0.xyz.d1,p0.xyz.d2,p0.xyz.d3) +
+                String.format("dir: (%.2f,%.2f,%.2f)",dir.xyz.d1,dir.xyz.d2,dir.xyz.d3);
     }
 }

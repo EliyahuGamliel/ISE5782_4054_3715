@@ -1,9 +1,7 @@
-package unittests;
+package primitives;
 
 import org.junit.jupiter.api.Test;
-import primitives.*;
 
-import static java.lang.System.out;
 import static org.junit.jupiter.api.Assertions.*;
 import static primitives.Util.isZero;
 
@@ -11,8 +9,9 @@ import static primitives.Util.isZero;
  * Unit tests for primitives.Point class
  */
 class PointTest {
+
     /**
-     * Test method for {@link Point#subtract(Point)}
+     * Test method for {@link primitives.Point#subtract(Point)}
      */
     @Test
     void subtract() {
@@ -35,7 +34,7 @@ class PointTest {
     }
 
     /**
-     * Test method for {@link Point#add(Vector)}
+     * Test method for {@link primitives.Point#add(Vector)}
      */
     @Test
     void add() {
@@ -48,7 +47,7 @@ class PointTest {
     }
 
     /**
-     * Test method for {@link Point#distanceSquared(Point)}
+     * Test method for {@link primitives.Point#distanceSquared(Point)}
      */
     @Test
     void distanceSquared() {
@@ -72,7 +71,7 @@ class PointTest {
     }
 
     /**
-     * Test method for {@link Point#distanceSquared(Point)}
+     * Test method for {@link primitives.Point#distanceSquared(Point)}
      */
     @Test
     void distance() {
