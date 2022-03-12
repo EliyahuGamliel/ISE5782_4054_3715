@@ -1,13 +1,8 @@
-package unittests.primitives;
+package primitives;
 
 import org.junit.jupiter.api.Test;
-
-import primitives.Point;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static primitives.Util.isZero;
-
-import primitives.Vector;
 
 /**
  * Unit tests for primitives.Point class
