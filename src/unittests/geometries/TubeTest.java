@@ -1,4 +1,4 @@
-package geometries;
+package unittests.geometries;
 
 import org.junit.jupiter.api.Test;
 

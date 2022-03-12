@@ -1,10 +1,10 @@
-package geometries;
+package unittests.geometries;
 
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class CylinderTest {
+class SphereTest {
 
     @Test
     void getNormal() {
