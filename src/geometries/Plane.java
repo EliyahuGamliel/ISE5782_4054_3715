@@ -33,7 +33,7 @@ public class Plane implements Geometry {
         this.q0 = q0;
         Vector v1 = q1.subtract(q0);
         Vector v2 = q2.subtract(q0);
-        if (v1.dotProduct(v2) == 1 || v1.dotProduct(v2) == -1)
+        if (v1.dotProduct(v2)/(v1.length()*v2.length()) == 1 || v1.dotProduct(v2)/(v1.length()*v2.length()) == -1)
             throw new IllegalArgumentException("The points on are the same line");
         normal = v1.crossProduct(v2).normalize();
     }
