@@ -27,10 +27,14 @@ public class Plane implements Geometry {
      * @param q2 third point
      */
     public Plane(Point q0, Point q1, Point q2) {
+        if (q0.equals(q1) || q1.equals(q2) || q2.equals(q0))
+            throw new IllegalArgumentException("Two or more equal points");
         // save one point as the point of reference
         this.q0 = q0;
         Vector v1 = q1.subtract(q0);
         Vector v2 = q2.subtract(q0);
+        if (v1.dotProduct(v2) == 1 || v1.dotProduct(v2) == -1)
+            throw new IllegalArgumentException("The points on are the same line");
         normal = v1.crossProduct(v2).normalize();
     }
 
