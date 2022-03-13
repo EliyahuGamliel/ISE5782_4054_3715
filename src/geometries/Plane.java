@@ -2,6 +2,8 @@ package geometries;
 
 import primitives.*;
 
+import java.util.List;
+
 /**
  * an infinite surface in a 3d space
  */
@@ -45,7 +47,7 @@ public class Plane implements Geometry {
     public Point getQ0() {
         return q0;
     }
-
+//
     /**
      *
      * @return Vector
@@ -62,5 +64,10 @@ public class Plane implements Geometry {
     @Override
     public String toString() {
         return "Plane [normal=" + normal + ", q0=" + q0 + "]";
+    }
+
+    @Override
+    public List<Point> findIntersections(Ray ray) {
+        return null;
     }
 }

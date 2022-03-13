@@ -35,4 +35,8 @@ class PlaneTest {
         assertEquals(new Vector(3,4,5).normalize(), p2.getNormal(new Point(1, 2, 3)),
                 "getNormal() wrong result");
         }
+
+    @Test
+    void findIntersections() {
+    }
 }

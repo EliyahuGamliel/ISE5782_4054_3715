@@ -2,6 +2,8 @@ package geometries;
 
 import primitives.*;
 
+import java.util.List;
+
 /**
  * an infinite pipe
  */
@@ -49,5 +51,10 @@ public class Tube implements Geometry {
     @Override
     public String toString() {
         return "Tube [exisRay=" + exisRay + ", radius=" + radius + "]";
+    }
+
+    @Override
+    public List<Point> findIntersections(Ray ray) {
+        return null;
     }
 }
