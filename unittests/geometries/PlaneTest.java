@@ -50,8 +50,8 @@ class PlaneTest {
         // ============ Equivalence Partitions Tests ==============
         //TC01: Ray intersects the plane
         Ray r1 = new Ray(new Point(5, 3, 0), new Vector(-4, -2.5, 4));
-//        assertEquals(1, p1.findIntersections(r1).size(),
-//                "findIntersections() wrong result");
+        assertEquals(1, p1.findIntersections(r1).size(),
+                "findIntersections() wrong result");
 
         //TC02: Ray does not intersects the plane
         Ray r2 = new Ray(new Point(5, 3, 0), new Vector(4, 2.5, 4));
