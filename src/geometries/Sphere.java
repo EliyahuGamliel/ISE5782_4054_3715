@@ -52,7 +52,12 @@ public class Sphere implements Geometry {
 
     @Override
     public List<Point> findIntersections(Ray ray) {
-       // if (ray.getP0().equals(center))
+        if (ray.getP0().equals(center)) {
+            List<Point> points = new ArrayList<>(1);
+            Point p = center.add(ray.getDir().scale(radius));
+            points.add(p);
+            return points;
+        }
 
         Vector u = center.subtract(ray.getP0());
         double Tm = ray.getDir().dotProduct(u);
