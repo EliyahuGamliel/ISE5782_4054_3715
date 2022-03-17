@@ -49,4 +49,8 @@ public class Ray {
                 String.format("point: (%.2f,%.2f,%.2f)",p0.xyz.d1,p0.xyz.d2,p0.xyz.d3) +
                 String.format("dir: (%.2f,%.2f,%.2f)",dir.xyz.d1,dir.xyz.d2,dir.xyz.d3);
     }
+
+    public Point getPoint(double t) {
+        return p0.add(dir.scale(t));
+    }
 }
