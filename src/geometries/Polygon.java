@@ -91,26 +91,6 @@ public class Polygon implements Geometry {
 
 	@Override
 	public List<Point> findIntersections(Ray ray) {
-		List<Point> _points = plane.findIntersections(ray);
-		if (_points == null) {
-			return null;
-		}
-		Point p = _points.get(0);
-		Point viMinus1 = vertices.get(vertices.size()-1);
-		for (Point vi : vertices) {
-			Vector edge = vi.subtract(viMinus1);
-			Vector pviMinus1 = p.subtract(viMinus1);
-			Vector C;
-			try {
-				C = edge.crossProduct(pviMinus1);
-			} catch (Exception e) {
-				return null;
-			}
-			if (alignZero(plane.getNormal().dotProduct(C)) <= 0) {
-				return null;
-			}
-			viMinus1 = vi;
-		}
-		return _points;
+		return null;
 	}
 }
