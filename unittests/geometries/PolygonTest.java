@@ -97,12 +97,12 @@ public class PolygonTest {
         // =============== Boundary Values Tests ==================
         //TC11: Ray intersect on edge
         Ray r4 = new Ray(new Point(-1, -1, 1), new Vector(2.6, 3, 1.6));
-        assertEquals(1, p1.findIntersections(r4).size(),
+        assertNull(p1.findIntersections(r4),
                         "findIntersections() Ray intersect on edge wrong result");
 
         //TC12: Ray intersect in vertex
         Ray r5 = new Ray(new Point(-1, -1, 1), new Vector(0, -1, 3));
-        assertEquals(1, p1.findIntersections(r5).size(),
+        assertNull(p1.findIntersections(r5),
                         "findIntersections() Ray intersect in vertex wrong result");
 
         //TC13: Ray intersect on edge's continuation

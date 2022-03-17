@@ -1,7 +1,9 @@
 package geometries;
 
 import primitives.*;
+import static primitives.Util.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -68,6 +70,21 @@ public class Plane implements Geometry {
 
     @Override
     public List<Point> findIntersections(Ray ray) {
+        if (this.q0.equals(ray.getP0())) {
+            return null;
+        }
+        double nv = this.normal.dotProduct(ray.getDir());
+        if (isZero(nv)) {
+            return null;
+        }
+        double nQMinusP0 = this.normal.dotProduct(this.q0.subtract(ray.getP0()));
+        double t = alignZero(nQMinusP0 / nv);
+        if (t > 0) {
+            List<Point> points = new ArrayList<Point>(1);
+            Point p = ray.getP0().add(ray.getDir().scale(t));
+            points.add(p);
+            return points;
+        }
         return null;
     }
 }
