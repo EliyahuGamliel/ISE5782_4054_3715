@@ -27,4 +27,5 @@ public class Geometries implements Intersectable {
     public List<Point> findIntersections(Ray ray) {
         return null;
     }
+
 }
