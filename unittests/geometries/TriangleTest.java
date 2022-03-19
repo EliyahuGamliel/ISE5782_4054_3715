@@ -8,6 +8,8 @@ import primitives.Vector;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.List;
+
 /**
  * Unit tests for geometries.Triangle class
  */
@@ -22,7 +24,7 @@ public class TriangleTest {
         // ============ Equivalence Partitions Tests ==============
         //TC01: Ray intersect inside Triangle
         Ray r1 = new Ray(new Point(-1, -1, 1), new Vector(1, 1, 1));
-        assertEquals(1, p1.findIntersections(r1).size(),
+        assertEquals(List.of(new Point(0.9473684210526312, 0.9473684210526312, 2.947368421052631)), p1.findIntersections(r1),
                         "findIntersections() wrong result");
 
         //TC02: Ray intersect outside Triangle against edge
