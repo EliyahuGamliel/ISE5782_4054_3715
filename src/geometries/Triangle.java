@@ -1,5 +1,6 @@
 package geometries;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import primitives.Point;
@@ -30,26 +31,28 @@ public class Triangle extends Polygon {
 
     @Override
     public List<Point> findIntersections(Ray ray) {
-        List<Point> _points = plane.findIntersections(ray);
-		if (_points == null) {
-			return null;
+        int len = vertices.size();
+		Point p0 = ray.getP0();
+		Vector v = ray.getDir();
+		List<Vector> vectors = new ArrayList<Vector>(len);
+
+		//all the vectors
+		for (Point vertex : vertices) {
+			vectors.add(vertex.subtract(p0));
 		}
-		Point p = _points.get(0);
-		Point viMinus1 = vertices.get(vertices.size()-1);
-		for (Point vi : vertices) {
-			Vector edge = vi.subtract(viMinus1);
-			Vector pviMinus1 = p.subtract(viMinus1);
-			Vector C;
-			try {
-				C = edge.crossProduct(pviMinus1);
-			} catch (Exception e) {
+
+		int sign = 0;
+		for (int i = 0; i < len; i++) {
+			// calculate the normal using the formula in the course slides
+			Vector N = vectors.get(i).crossProduct(vectors.get((i+1)%len)).normalize();
+			double dotProd = v.dotProduct(N);
+
+			if (i == 0)
+				sign = dotProd > 0 ? 1 : -1;
+
+			if (!checkSign(sign,dotProd) || isZero(dotProd))
 				return null;
-			}
-			if (alignZero(plane.getNormal().dotProduct(C)) <= 0) {
-				return null;
-			}
-			viMinus1 = vi;
 		}
-		return _points;
+		return plane.findIntersections(ray);
     }
 }
