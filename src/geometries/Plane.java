@@ -81,7 +81,7 @@ public class Plane implements Geometry {
         double t = alignZero(nQMinusP0 / nv);
         if (t > 0) {
             List<Point> points = new ArrayList<Point>(1);
-            Point p = ray.getP0().add(ray.getDir().scale(t));
+            Point p = ray.getPoint(t);
             points.add(p);
             return points;
         }

@@ -76,11 +76,11 @@ public class Sphere implements Geometry {
             size += 1;
         List<Point> points = new ArrayList<>(size);
         if (t1 > 0) {
-            Point p = ray.getP0().add(ray.getDir().scale(t1));
+            Point p = ray.getPoint(t1);
             points.add(p);
         }
         if (t2 > 0) {
-            Point p = ray.getP0().add(ray.getDir().scale(t2));
+            Point p = ray.getPoint(t2);
             points.add(p);
         }
         return points;
