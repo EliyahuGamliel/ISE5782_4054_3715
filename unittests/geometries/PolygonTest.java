@@ -79,14 +79,14 @@ public class PolygonTest {
 
     @Test
     void findIntersections() {
-        Polygon p = new Polygon(new Point(-2,5,0), new Point(2,0,5),new Point(2,5,5), new Point(-2,0,0));
+        Polygon p = new Polygon(new Point(1,1,1), new Point(2,0.5,0.5),new Point(1,-1,1), new Point(-2,0.5,2.5));
 
         // ============ Equivalence Partitions Tests ==============
         // TC01: intersection in the polygon
-        Ray r1 = new Ray(new Point(0,3,0), new Vector(-4,0,5));
+        Ray r1 = new Ray(new Point(-2,-1,0.5), new Vector(6,2,0.5));
         List<Point> points = p.findIntersections(r1);
         assertEquals(1,points.size(),"Wrong number of points");
-        assertEquals(new Point(-1,3,1.25),points.get(0),"Ray intersection isn't working on polygon");
+        assertEquals(new Point(1.4285714285714288,0.14285714285714302,0.7857142857142858),points.get(0),"Ray intersection isn't working on polygon");
 
 
     }
