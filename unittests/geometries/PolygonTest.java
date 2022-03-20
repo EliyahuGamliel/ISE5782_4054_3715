@@ -6,6 +6,9 @@ import primitives.Ray;
 import primitives.Vector;
 
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -72,5 +75,19 @@ public class PolygonTest {
         Polygon pl = new Polygon(new Point(0, 0, 1), new Point(1, 0, 0), new Point(0, 1, 0), new Point(-1, 1, 1));
         double sqrt3 = Math.sqrt(1d / 3);
         assertEquals(new Vector(sqrt3, sqrt3, sqrt3), pl.getNormal(new Point(0, 0, 1)), "Bad normal to trinagle");
+    }
+
+    @Test
+    void findIntersections() {
+        Polygon p = new Polygon(new Point(-2,5,0), new Point(2,0,5),new Point(2,5,5), new Point(-2,0,0));
+
+        // ============ Equivalence Partitions Tests ==============
+        // TC01: intersection in the polygon
+        Ray r1 = new Ray(new Point(0,3,0), new Vector(-4,0,5));
+        List<Point> points = p.findIntersections(r1);
+        assertEquals(1,points.size(),"Wrong number of points");
+        assertEquals(new Point(-1,3,1.25),points.get(0),"Ray intersection isn't working on polygon");
+
+
     }
 }

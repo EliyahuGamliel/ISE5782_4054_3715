@@ -2,6 +2,7 @@ package geometries;
 
 import primitives.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,8 +14,9 @@ public class Tube implements Geometry {
 
     /**
      * create a tube with a ray and a radius
+     *
      * @param exisRay the ray on which the tube is based
-     * @param radius the radius of the tube
+     * @param radius  the radius of the tube
      */
     public Tube(Ray exisRay, double radius) {
         this.exisRay = exisRay;
@@ -22,7 +24,6 @@ public class Tube implements Geometry {
     }
 
     /**
-     *
      * @return Ray
      */
     public Ray getExisRay() {
@@ -30,7 +31,6 @@ public class Tube implements Geometry {
     }
 
     /**
-     *
      * @return double
      */
     public double getRadius() {
