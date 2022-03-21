@@ -1,5 +1,4 @@
 package geometries;
-//נ נח  נחמ נחמן מאומן
 
 import primitives.Point;
 import primitives.Ray;
@@ -115,3 +114,4 @@ public class PolygonTest {
                         "findIntersections() Ray intersect on edge's continuation wrong result");
     }
 }
+//
