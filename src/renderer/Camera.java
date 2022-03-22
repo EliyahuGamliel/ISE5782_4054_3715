@@ -80,6 +80,13 @@ public class Camera {
      * @return the constructed Ray
      */
     public Ray constructRay(int nX, int nY, int j, int i) {
-        return null;
+        Point imgCenter = location.add(vTo.scale(distance));
+        double rY = height / nY, rX = width / nX;
+        double iY = -(i - (nY - 1d) / 2) * rY, jX = (j - (nX - 1d) / 2) * rX;
+        Point ijP = imgCenter;
+        if (jX != 0) ijP = ijP.add(vRight.scale(jX));
+        if (iY != 0) ijP = ijP.add(vUp.scale(iY));
+        Vector ijV = ijP.subtract(location);
+        return new Ray(location, ijV);
     }
 }

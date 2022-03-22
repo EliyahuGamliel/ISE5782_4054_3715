@@ -133,7 +133,6 @@ public class IntegretionTest {
 
     @Test
     void TriangleTest() {
-
         Camera camera1 = new Camera(new Point(0, 0, 0), new Vector(0, 0, 1), new Vector(0, -1, 0))
             .setVPSize(3, 3)
             .setVPDistance(1);
@@ -154,7 +153,5 @@ public class IntegretionTest {
         //TC01: test plane not parallar to view plane
         assertEquals(2, sum2,
             "constructRay() and findIntersections() wrong result");
-
     }
-
 }
