@@ -56,55 +56,63 @@ public class Tube implements Geometry {
 
     @Override
     public List<Point> findIntersections(Ray ray) {
-        Point P = ray.getP0();
-        Vector V = ray.getDir(),
-                Va = exisRay.getDir(),
-                DeltaP = P.subtract(exisRay.getP0()),
-                temp_for_use1, temp_for_use2;
+        Vector dir = ray.getDir();
+        Vector v = exisRay.getDir();
+        double dirV = dir.dotProduct(v);
 
-        double V_dot_Va = V.dotProduct(Va),
-                DeltaP_dot_Va = DeltaP.dotProduct(Va);
+        if (ray.getP0().equals(exisRay.getP0())) { // In case the ray starts on the p0.
+            if (isZero(dirV))
+                return List.of(ray.getPoint(radius));
 
-        temp_for_use1 = V.subtract(Va.scale(V_dot_Va));
-        temp_for_use2 = DeltaP.subtract(Va.scale(DeltaP_dot_Va));
-
-        double A = temp_for_use1.dotProduct(temp_for_use1);
-        double B = 2*V.subtract(Va.scale(V_dot_Va)).dotProduct(DeltaP.subtract(Va.scale(DeltaP_dot_Va)));
-        double C = temp_for_use2.dotProduct(temp_for_use2) - radius * radius;
-        double desc = B*B - 4*A*C;
-
-        if (desc < 0) {//No solution
-            return null;
-        }
-
-        double t1 = (-B+Math.sqrt(desc))/(2*A),
-                t2 = (-B-Math.sqrt(desc))/(2*A);
-
-        if (desc == 0) {//One solution
-            if (-B/(2*A) < 0)
+            if (dir.equals(v.scale(dir.dotProduct(v))))
                 return null;
-            List<Point> _points = new ArrayList<Point>(1);
-            _points.add(P.add(V.scale(-B/(2*A))));
-            return _points;
+
+            return List.of(ray.getPoint(
+                    Math.sqrt(radius * radius / dir.subtract(v.scale(dir.dotProduct(v)))
+                            .lengthSquared())));
         }
-        else if (t1 < 0 && t2 < 0){
+
+        Vector deltaP = ray.getP0().subtract(exisRay.getP0());
+        double dpV = deltaP.dotProduct(v);
+
+        double a = 1 - dirV * dirV;
+        double b = 2 * (dir.dotProduct(deltaP) - dirV * dpV);
+        double c = deltaP.lengthSquared() - dpV * dpV - radius * radius;
+
+        if (isZero(a)) {
+            if (isZero(b)) { // If a constant equation.
+                return null;
+            }
+            return List.of(ray.getPoint(-c / b)); // if it's linear, there's a solution.
+        }
+
+        double discriminant = alignZero(b * b - 4 * a * c);
+
+        if (discriminant < 0) // No real solutions.
             return null;
-        }
-        else if (t1 < 0 && t2 > 0) {
-            List<Point> _points = new ArrayList<Point>(1);
-            _points.add(P.add(V.scale(t2)));
+
+        double t1 = alignZero(-(b + Math.sqrt(discriminant)) / (2 * a)); // Positive solution.
+        double t2 = alignZero(-(b - Math.sqrt(discriminant)) / (2 * a)); // Negative solution.
+
+        if (discriminant < 0) // No real solutions.
+            return null;
+
+        if (t1 > 0 && t2 > 0) {
+            List<Point> _points = new ArrayList<>(2);
+            _points.add(ray.getPoint(t1));
+            _points.add(ray.getPoint(t2));
             return _points;
         }
-        else if (t1 > 0 && t2 < 0) {
-            List<Point> _points = new ArrayList<Point>(1);
-            _points.add(P.add(V.scale(t1)));
+        else if (t1 > 0) {
+            List<Point> _points = new ArrayList<>(1);
+            _points.add(ray.getPoint(t1));
+            return  _points;
+        }
+        else if (t2 > 0) {
+            List<Point> _points = new ArrayList<>(1);
+            _points.add(ray.getPoint(t2));
             return _points;
         }
-        else {
-            List<Point> _points = new ArrayList<Point>(2);
-            _points.add(P.add(V.scale(t1)));
-            _points.add(P.add(V.scale(t2)));
-            return _points;
-        }
+        return null;
     }
 }
