@@ -2,6 +2,7 @@ package geometries;
 
 import primitives.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static primitives.Util.*;
@@ -39,6 +40,17 @@ public class Cylinder extends Tube {
 
     @Override
     public List<Point> findIntersections(Ray ray) {
-        return null;
+        List<Point> res = new ArrayList<>();
+        List<Point> lst = super.findIntersections(ray);
+        if (lst != null)
+            for (Point point : lst) {
+                double distance = alignZero(point.subtract(exisRay.getP0()).dotProduct(exisRay.getDir()));
+                if (distance > 0 && distance <= height)
+                    res.add(point);
+            }
+
+        if (res.size() == 0)
+            return null;
+        return res;
     }
 }

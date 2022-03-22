@@ -94,7 +94,7 @@ public class Tube implements Geometry {
         double t1 = alignZero(-(b + Math.sqrt(discriminant)) / (2 * a)); // Positive solution.
         double t2 = alignZero(-(b - Math.sqrt(discriminant)) / (2 * a)); // Negative solution.
 
-        if (discriminant < 0) // No real solutions.
+        if (discriminant <= 0) // No real solutions.
             return null;
 
         if (t1 > 0 && t2 > 0) {
