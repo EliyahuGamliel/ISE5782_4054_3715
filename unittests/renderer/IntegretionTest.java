@@ -39,7 +39,7 @@ public class IntegretionTest {
 
     @Test
     void shpereTest() {
-        Camera camera1 = new Camera(new Point(0, 0, 0), new Vector(0, 0, 1), new Vector(0, -1, 0))
+        Camera camera1 = new Camera(new Point(0, 0, 0), new Vector(0, 0, -1), new Vector(0, 1, 0))
             .setVPSize(3, 3)
             .setVPDistance(1);
         Sphere s1 = new Sphere(new Point(0, 0, -3), 1);
@@ -50,7 +50,7 @@ public class IntegretionTest {
             "constructRay() and findIntersections() wrong result");
 
         
-        Camera camera2 = new Camera(new Point(0, 0, 0.5), new Vector(0, 0, 1), new Vector(0, -1, 0))
+        Camera camera2 = new Camera(new Point(0, 0, 0.5), new Vector(0, 0, -1), new Vector(0, 1, 0))
             .setVPSize(3, 3)
             .setVPDistance(1);
         Sphere s2 = new Sphere(new Point(0, 0, -2.5), 2.5);
@@ -61,7 +61,7 @@ public class IntegretionTest {
             "constructRay() and findIntersections() wrong result");
         
 
-        Camera camera3 = new Camera(new Point(0, 0, 0.5), new Vector(0, 0, 1), new Vector(0, -1, 0))
+        Camera camera3 = new Camera(new Point(0, 0, 0.5), new Vector(0, 0, -1), new Vector(0, 1, 0))
             .setVPSize(3, 3)
             .setVPDistance(1);
         Sphere s3 = new Sphere(new Point(0, 0, -2), 2);
@@ -72,7 +72,7 @@ public class IntegretionTest {
             "constructRay() and findIntersections() wrong result");
 
 
-        Camera camera4 = new Camera(new Point(0, 0, 0.5), new Vector(0, 0, 1), new Vector(0, -1, 0))
+        Camera camera4 = new Camera(new Point(0, 0, 0.5), new Vector(0, 0, -1), new Vector(0, 1, 0))
             .setVPSize(3, 3)
             .setVPDistance(1);
         Sphere s4 = new Sphere(new Point(0, 0, -2), 4);
@@ -83,7 +83,7 @@ public class IntegretionTest {
             "constructRay() and findIntersections() wrong result");
 
 
-        Camera camera5 = new Camera(new Point(0, 0, 0), new Vector(0, 0, 1), new Vector(0, -1, 0))
+        Camera camera5 = new Camera(new Point(0, 0, 0), new Vector(0, 0, -1), new Vector(0, 1, 0))
             .setVPSize(3, 3)
             .setVPDistance(1);
         Sphere s5 = new Sphere(new Point(0, 0, 1), 0.5);
@@ -96,7 +96,7 @@ public class IntegretionTest {
 
     @Test
     void planeTest() {
-        Camera camera1 = new Camera(new Point(0, 0, 0), new Vector(0, 0, 1), new Vector(0, -1, 0))
+        Camera camera1 = new Camera(new Point(0, 0, 0), new Vector(0, 0, -1), new Vector(0, 1, 0))
             .setVPSize(3, 3)
             .setVPDistance(1);
         Plane p1 = new Plane(new Point(1, 1, -3), new Vector(0, 0, 1));
@@ -107,7 +107,7 @@ public class IntegretionTest {
             "constructRay() and findIntersections() wrong result");
 
 
-        Camera camera2 = new Camera(new Point(0, 0, 0), new Vector(0, 0, 1), new Vector(0, -1, 0))
+        Camera camera2 = new Camera(new Point(0, 0, 0), new Vector(0, 0, -1), new Vector(0, 1, 0))
             .setVPSize(3, 3)
             .setVPDistance(1);
         Plane p2 = new Plane(new Point(0, 0, -3), new Vector(0, -0.5, 1));
@@ -118,7 +118,7 @@ public class IntegretionTest {
             "constructRay() and findIntersections() wrong result");
 
         
-        Camera camera3 = new Camera(new Point(0, 0, 0), new Vector(0, 0, 1), new Vector(0, -1, 0))
+        Camera camera3 = new Camera(new Point(0, 0, 0), new Vector(0, 0, -1), new Vector(0, 1, 0))
             .setVPSize(3, 3)
             .setVPDistance(1);
         Plane p3 = new Plane(new Point(0, 0, -3), new Vector(0, -1, 1));
@@ -133,7 +133,7 @@ public class IntegretionTest {
 
     @Test
     void TriangleTest() {
-        Camera camera1 = new Camera(new Point(0, 0, 0), new Vector(0, 0, 1), new Vector(0, -1, 0))
+        Camera camera1 = new Camera(new Point(0, 0, 0), new Vector(0, 0, -1), new Vector(0, 1, 0))
             .setVPSize(3, 3)
             .setVPDistance(1);
         Triangle t1 = new Triangle(new Point(0, 1, -2), new Point(1, -1, -2), new Point(-1, -1, -2));
@@ -144,7 +144,7 @@ public class IntegretionTest {
             "constructRay() and findIntersections() wrong result");
 
 
-        Camera camera2 = new Camera(new Point(0, 0, 0), new Vector(0, 0, 1), new Vector(0, -1, 0))
+        Camera camera2 = new Camera(new Point(0, 0, 0), new Vector(0, 0, -1), new Vector(0, 1, 0))
             .setVPSize(3, 3)
             .setVPDistance(1);
         Triangle t2 = new Triangle(new Point(0, 20, -2), new Point(1, -1, -2), new Point(-1, -1, -2));
