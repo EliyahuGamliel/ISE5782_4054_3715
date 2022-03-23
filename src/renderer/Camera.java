@@ -12,6 +12,8 @@ public class Camera {
     private Vector vTo, vUp, vRight;
     private double width, height;
     private double distance;
+    private ImageWriter imageWriter;
+    private RayTracerBase rayTracerBase;
 
     /**
      * create a camera specifying the location and the To and Up vectors
