@@ -11,5 +11,10 @@ public abstract class RayTracerBase {
         this.scene = scene;
     }
 
+    /**
+     * return the color of the first hit by a ray or black for no hit
+     * @param ray the ray
+     * @return the color that go back
+     */
     public abstract Color traceRay(Ray ray);
 }
