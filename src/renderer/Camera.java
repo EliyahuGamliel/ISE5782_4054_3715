@@ -1,6 +1,9 @@
 package renderer;
 
 import primitives.*;
+
+import java.util.MissingResourceException;
+
 import static primitives.Util.*;
 
 /**
@@ -53,6 +56,23 @@ public class Camera {
     public double getDistance() {
         return distance;
     }
+    public ImageWriter getImageWriter() {
+        return imageWriter;
+    }
+    public RayTracerBase getRayTracerBase() {
+        return rayTracerBase;
+    }
+
+    public Camera setImageWriter(ImageWriter imageWriter) {
+        this.imageWriter = imageWriter;
+        return this;
+    }
+
+    public Camera setRayTracerBase(RayTracerBase rayTracerBase) {
+        this.rayTracerBase = rayTracerBase;
+        return this;
+    }
+
     /**
      * set the View Plane size
      * @param width the width of the VP
@@ -90,5 +110,40 @@ public class Camera {
         if (iY != 0) ijP = ijP.add(vUp.scale(iY));
         Vector ijV = ijP.subtract(location);
         return new Ray(location, ijV);
+    }
+
+    public void renderImage() {
+        if (imageWriter == null)
+            throw new MissingResourceException("Camera resource not set", "Camera", "Image Writer");
+
+        if (rayTracerBase == null)
+            throw new MissingResourceException("Camera resource not set", "Camera", "Ray Tracer Base");
+
+        int nX = imageWriter.getNx();
+        int nY = imageWriter.getNy();
+
+        for (int i = 0; i < nX; ++i)
+            for (int j = 0; j < nY; ++j)
+
+    }
+
+    public void printGrid(int interval, Color color) {
+        if (imageWriter == null)
+            throw new MissingResourceException("Camera resource not set", "Camera", "Image writer");
+
+        int nX = imageWriter.getNx();
+        int nY = imageWriter.getNy();
+
+        for (int i = 0; i < nX; ++i)
+            for (int j = 0; j < nY; ++j)
+                if (j % interval == 0 || i % interval == 0)
+                    imageWriter.writePixel(j, i, color);
+    }
+
+    public void writeToImage() {
+        if (imageWriter == null)
+            throw new MissingResourceException("Camera resource not set", "Camera", "Image writer");
+
+        imageWriter.writeToImage();
     }
 }
