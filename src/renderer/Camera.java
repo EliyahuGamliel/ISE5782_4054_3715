@@ -122,8 +122,13 @@ public class Camera {
         int nX = imageWriter.getNx();
         int nY = imageWriter.getNy();
 
-        for (int i = 0; i < nX; ++i)
-            for (int j = 0; j < nY; ++j)
+        for (int j = 0; j < nX; j++) {
+            for (int i = 0; i < nY; i++) {
+                Ray ray = this.constructRay(nX, nY, j, i);
+                Color color = rayTracerBase.traceRay(ray);
+                imageWriter.writePixel(j, i, color);
+            }
+        }
 
     }
 

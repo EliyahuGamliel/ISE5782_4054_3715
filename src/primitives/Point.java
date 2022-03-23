@@ -11,6 +11,11 @@ public class Point {
     final protected Double3 xyz;
 
     /**
+	 * Zero triad (0,0,0)
+	 */
+	static final public Point ZERO = new Point(Double3.ZERO);   
+
+    /**
      * create a point using 3 doubles
      * @param x position in the x dimension
      * @param y position in the y dimension
