@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 
 import elements.*;
 import geometries.*;
-import javafx.beans.binding.DoubleExpression;
 import primitives.*;
 import renderer.*;
 import scene.Scene;
@@ -56,7 +55,7 @@ public class RenderTests {
 				.setRayTracerBase(new RayTracerBasic(scene));
 
 		camera.renderImage();
-		camera.printGrid(100, new Color(java.awt.Color.YELLOW));
+		camera.printGrid(100, new Color(java.awt.Color.BLUE));
 		camera.writeToImage();
 	}
 
