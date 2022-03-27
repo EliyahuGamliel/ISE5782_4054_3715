@@ -7,6 +7,7 @@ import geometries.*;
 import primitives.*;
 import renderer.*;
 import scene.Scene;
+import scene.SceneBuilder;
 
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -116,46 +117,19 @@ public class RenderTests {
 
 	/**
 	 * Test for XML based scene - for bonus
+	 * @throws ParserConfigurationException
+	 * @throws IOException
+	 * @throws SAXException
 	 */
 	@Test
-	public void basicRenderXml() {
-		Scene scene = new Scene("XML Test scene");
-		// enter XML file name and parse from XML file into scene object
-		// ...
-		Element root = openXml("scenes/basicRenderTestTwoColors.xml");
+	public void basicRenderXml() throws SAXException, IOException, ParserConfigurationException {
+		SceneBuilder sceneBuilder = new SceneBuilder();
+		File file = new File("scenes/basicRenderTestTwoColors.xml");
+		
+		sceneBuilder.loadSceneFromFile(file);
 
-		Color backgroundColor = makeColorFromString(root.getAttribute("background-color"));
-		scene.setBackground(backgroundColor);
-
-		Element ambientLightElement = (Element) root.getElementsByTagName("ambient-light").item(0);
-		Color ambientLightColor = makeColorFromString(ambientLightElement.getAttribute("color"));
-		AmbientLight ambientLight = new AmbientLight(ambientLightColor, new Double3(1,1,1));
-		scene.setAmbientLight(ambientLight);
-
-		Geometries geometries = new Geometries();
-		Node geometriesNode = root.getElementsByTagName("geometries").item(0);
-		NodeList geometriesNodes = geometriesNode.getChildNodes();
-		for (int i = 0; i < geometriesNodes.getLength(); i++) {
-			Node geometryNode = geometriesNodes.item(i);
-			if (geometryNode.getNodeType() != Node.ELEMENT_NODE) {
-				continue;
-			}
-			Element geometryElement = (Element) geometryNode;
-			switch (geometryElement.getNodeName()) {
-				case "sphere":
-					Sphere sphere = makeSphere(geometryElement);
-					geometries.add(sphere);
-					break;
-				case "triangle":
-					Triangle triangle = makeTriangle(geometryElement);
-					geometries.add(triangle);
-					break;
-				default:
-					break;
-			}
-		}
-		scene.setGeometries(geometries);
-
+		Scene scene = sceneBuilder.getScene();
+		
 		Camera camera = new Camera(Point.ZERO, new Vector(0, 0, -1), new Vector(0, 1, 0)) //
 				.setVPDistance(100) //
 				.setVPSize(500, 500)
