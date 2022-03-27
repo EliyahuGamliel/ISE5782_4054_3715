@@ -58,11 +58,11 @@ public class Ray {
     public Point findClosestPoint(List<Point> points) {
         if (points.size() == 0)
             return null;
-        double close = p0.distance(points.get(0));
+        double close = p0.distanceSquared(points.get(0));
         int index = 0;
         for (int i = 1; i < points.size(); i++) {
-            if (p0.distance(points.get(i)) < close) {
-                close = p0.distance(points.get(i));
+            if (p0.distanceSquared(points.get(i)) < close) {
+                close = p0.distanceSquared(points.get(i));
                 index = i;
             }
         }

@@ -139,10 +139,11 @@ public class Camera {
         int nX = imageWriter.getNx();
         int nY = imageWriter.getNy();
 
-        for (int i = 0; i < nX; ++i)
-            for (int j = 0; j < nY; ++j)
-                if (j % interval == 0 || i % interval == 0)
-                    imageWriter.writePixel(j, i, color);
+        for (int i = 0; i < nX; i += interval)
+            for (int j = 0; j < nY; ++j) {
+                imageWriter.writePixel(j, i, color);
+                imageWriter.writePixel(i, j, color);
+            }
     }
 
     public void writeToImage() {

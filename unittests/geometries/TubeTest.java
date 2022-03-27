@@ -106,7 +106,7 @@ class TubeTest {
         assertNull(tube.findIntersections(new Ray(new Point(6,0,0), new Vector(2,0,0))),
                 "Ray's line out of tube");
 
-        // **** Group: Ray's line is tangent to the sphere (all tests 0 points)
+        // **** Group: Ray's line is tangent to the tube (all tests 0 points)
         // TC19: Ray starts before the tangent point
         assertNull(tube.findIntersections(new Ray(new Point(4,-5,0), new Vector(0,3,0))),
                 "Ray's line out of tube");
@@ -120,7 +120,7 @@ class TubeTest {
                 "Ray's line out of tube");
 
         // **** Group: Special cases
-        // TC19: Ray's line is outside, ray is orthogonal to ray start to sphere's center line
+        // TC19: Ray's line is outside, ray is orthogonal to ray start to tube's center line
         assertNull(tube.findIntersections(new Ray(new Point(6,1,0), new Vector(0,2,0))),
                 "Ray's line out of tube");
     }
