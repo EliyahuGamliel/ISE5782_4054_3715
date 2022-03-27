@@ -59,29 +59,8 @@ public class RenderTests {
 		camera.writeToImage();
 	}
 
-	double[] mapStringToDouble(String[] strings) {
-		double[] res = new double[strings.length];
-		for (int i = 0; i < strings.length; i++) {
-			res[i] = Double.parseDouble(strings[i]);
-		}
-		return res;
-	}
-
-	Point makePointFromString(String string) {
-		double[] numbers = mapStringToDouble(string.split(" "));
-		return new Point(numbers[0], numbers[1], numbers[2]);
-	}
-
-
-	/**
-	 * Test for XML based scene - for bonus
-	 */
-	@Test
-	public void basicRenderXml() {
-		Scene scene = new Scene("XML Test scene");
-		// enter XML file name and parse from XML file into scene object
-		// ...
-		File inputFile = new File("scenes/basicRenderTestTwoColors.xml");
+	Element openXml(String fileName) {
+		File inputFile = new File(fileName);
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder dBuilder;
 		Document doc = null;
@@ -97,17 +76,59 @@ public class RenderTests {
 		}
 		doc.getDocumentElement().normalize();
 
-		Element root = doc.getDocumentElement();
+		return doc.getDocumentElement();
+	}
 
-		String[] backgroundColorString = root.getAttribute("background-color").split(" ");
-		double[] backgroundColorDouble = mapStringToDouble(backgroundColorString);
-		Color backgroundColor = new Color(backgroundColorDouble[0], backgroundColorDouble[1], backgroundColorDouble[2]);
+	double[] mapStringToDouble(String[] strings) {
+		double[] res = new double[strings.length];
+		for (int i = 0; i < strings.length; i++) {
+			res[i] = Double.parseDouble(strings[i]);
+		}
+		return res;
+	}
+
+	Point makePointFromString(String string) {
+		double[] numbers = mapStringToDouble(string.split(" "));
+		return new Point(numbers[0], numbers[1], numbers[2]);
+	}
+
+	Color makeColorFromString(String string) {
+		double[] numbers = mapStringToDouble(string.split(" "));
+		return new Color(numbers[0], numbers[1], numbers[2]);
+	}
+
+	Sphere makeSphere(Element geometryElement) {
+		String centerString = geometryElement.getAttribute("center");
+		Point center = makePointFromString(centerString);
+		Double radius = Double.parseDouble(geometryElement.getAttribute("radius"));
+		return new Sphere(center, radius);
+	}
+
+	Triangle makeTriangle(Element geometryElement) {
+		String p0String = geometryElement.getAttribute("p0");
+		Point p0 = makePointFromString(p0String);
+		String p1String = geometryElement.getAttribute("p1");
+		Point p1 = makePointFromString(p1String);
+		String p2String = geometryElement.getAttribute("p2");
+		Point p2 = makePointFromString(p2String);
+		return new Triangle(p0, p1, p2);
+	}
+
+	/**
+	 * Test for XML based scene - for bonus
+	 */
+	@Test
+	public void basicRenderXml() {
+		Scene scene = new Scene("XML Test scene");
+		// enter XML file name and parse from XML file into scene object
+		// ...
+		Element root = openXml("scenes/basicRenderTestTwoColors.xml");
+
+		Color backgroundColor = makeColorFromString(root.getAttribute("background-color"));
 		scene.setBackground(backgroundColor);
 
 		Element ambientLightElement = (Element) root.getElementsByTagName("ambient-light").item(0);
-		String[] ambientLightString = ambientLightElement.getAttribute("color").split(" ");
-		double[] ambientLightDouble = mapStringToDouble(ambientLightString);
-		Color ambientLightColor = new Color(ambientLightDouble[0], ambientLightDouble[1], ambientLightDouble[2]);
+		Color ambientLightColor = makeColorFromString(ambientLightElement.getAttribute("color"));
 		AmbientLight ambientLight = new AmbientLight(ambientLightColor, new Double3(1,1,1));
 		scene.setAmbientLight(ambientLight);
 
@@ -122,29 +143,18 @@ public class RenderTests {
 			Element geometryElement = (Element) geometryNode;
 			switch (geometryElement.getNodeName()) {
 				case "sphere":
-					String centerString = geometryElement.getAttribute("center");
-					Point center = makePointFromString(centerString);
-					Double radius = Double.parseDouble(geometryElement.getAttribute("radius"));
-					Sphere sphere = new Sphere(center, radius);
+					Sphere sphere = makeSphere(geometryElement);
 					geometries.add(sphere);
 					break;
 				case "triangle":
-					String p0String = geometryElement.getAttribute("p0");
-					Point p0 = makePointFromString(p0String);
-					String p1String = geometryElement.getAttribute("p1");
-					Point p1 = makePointFromString(p1String);
-					String p2String = geometryElement.getAttribute("p2");
-					Point p2 = makePointFromString(p2String);
-					Triangle triangle = new Triangle(p0, p1, p2);
+					Triangle triangle = makeTriangle(geometryElement);
 					geometries.add(triangle);
 					break;
 				default:
 					break;
 			}
 		}
-
 		scene.setGeometries(geometries);
-
 
 		Camera camera = new Camera(Point.ZERO, new Vector(0, 0, -1), new Vector(0, 1, 0)) //
 				.setVPDistance(100) //
