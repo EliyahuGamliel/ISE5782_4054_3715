@@ -2,8 +2,8 @@ package renderer;
 
 import org.junit.jupiter.api.Test;
 
-import elements.*;
 import geometries.*;
+import lighting.*;
 import primitives.*;
 import renderer.*;
 import scene.Scene;

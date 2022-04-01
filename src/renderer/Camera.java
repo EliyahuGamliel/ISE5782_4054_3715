@@ -112,6 +112,20 @@ public class Camera {
         return new Ray(location, ijV);
     }
 
+    /**
+     * construct a ray from the camera throu a specific pixel in the View Plane
+     * and get the color of the pixel
+     * @param nX how many pixels are in the X dim
+     * @param nY how many pixels are in the Y dim
+     * @param j the pixel to go throu X dim 
+     * @param i the pixel to go throu Y dim 
+     * @return the color of the pixel
+     */
+    private Color castRay(int nX, int nY, int j, int i) {
+        Ray ray = this.constructRay(nX, nY, j, i);
+        return rayTracerBase.traceRay(ray);
+    }
+
     public void renderImage() {
         if (imageWriter == null)
             throw new MissingResourceException("Camera resource not set", "Camera", "Image Writer");
@@ -124,8 +138,7 @@ public class Camera {
 
         for (int j = 0; j < nX; j++) {
             for (int i = 0; i < nY; i++) {
-                Ray ray = this.constructRay(nX, nY, j, i);
-                Color color = rayTracerBase.traceRay(ray);
+                Color color = this.castRay(nX, nY, j, i);
                 imageWriter.writePixel(j, i, color);
             }
         }

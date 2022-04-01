@@ -10,10 +10,10 @@ import javax.xml.parsers.SAXParserFactory;
 
 import org.xml.sax.SAXException;
 
-import elements.AmbientLight;
 import geometries.Geometries;
 import geometries.Sphere;
 import geometries.Triangle;
+import lighting.AmbientLight;
 import parser.SceneDescriptor;
 import parser.SceneXMLHandler;
 import primitives.Color;
