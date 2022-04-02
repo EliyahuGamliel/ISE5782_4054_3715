@@ -53,19 +53,4 @@ public class Cylinder extends Tube {
             return null;
         return res;
     }
-
-    public List<Point> findIntersections(Ray ray) {
-        List<Point> res = new ArrayList<>();
-        List<Point> lst = super.findIntersections(ray);
-        if (lst != null)
-            for (Point point : lst) {
-                double distance = alignZero(point.subtract(exisRay.getP0()).dotProduct(exisRay.getDir()));
-                if (distance > 0 && distance <= height)
-                    res.add(point);
-            }
-
-        if (res.size() == 0)
-            return null;
-        return res;
-    }
 }

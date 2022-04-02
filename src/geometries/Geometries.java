@@ -37,18 +37,4 @@ public class Geometries extends Intersectable {
         }
         return res;
     }
-
-    public List<Point> findIntersections(Ray ray) {
-        List<Point> res = null;
-        for (Intersectable geometry : this.geometries) {
-            List<Point> resi = geometry.findIntersections(ray);
-            if (resi != null) {
-                if (res == null) {
-                    res = new LinkedList<Point>();
-                }
-                res.addAll(resi);
-            }
-        }
-        return res;
-    }
 }
