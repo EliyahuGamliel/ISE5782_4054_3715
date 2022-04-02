@@ -2,6 +2,7 @@ package primitives;
 
 import java.util.List;
 import java.util.Objects;
+import geometries.Intersectable.GeoPoint;
 
 /**
  * 3d ray with direction
@@ -63,6 +64,20 @@ public class Ray {
         for (int i = 1; i < points.size(); i++) {
             if (p0.distanceSquared(points.get(i)) < close) {
                 close = p0.distanceSquared(points.get(i));
+                index = i;
+            }
+        }
+        return points.get(index);
+    }
+
+    public GeoPoint findClosestGeoPoint(List<GeoPoint> points) {
+        if (points.size() == 0)
+            return null;
+        double close = p0.distanceSquared(points.get(0).point);
+        int index = 0;
+        for (int i = 1; i < points.size(); i++) {
+            if (p0.distanceSquared(points.get(i).point) < close) {
+                close = p0.distanceSquared(points.get(i).point);
                 index = i;
             }
         }

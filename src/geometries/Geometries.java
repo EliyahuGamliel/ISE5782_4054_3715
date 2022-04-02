@@ -8,11 +8,11 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Geometries implements Intersectable {
+public class Geometries extends Intersectable {
     private List<Intersectable> geometries;
 
     public Geometries() {
-        geometries = new ArrayList<>(); //why? or LinkedList
+        geometries = new ArrayList<>();
     }
 
     public Geometries(Intersectable... geometries) {
@@ -24,6 +24,20 @@ public class Geometries implements Intersectable {
     }
 
     @Override
+    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
+        List<GeoPoint> res = null;
+        for (Intersectable geometry : this.geometries) {
+            List<GeoPoint> resi = geometry.findGeoIntersections(ray);
+            if (resi != null) {
+                if (res == null) {
+                    res = new LinkedList<GeoPoint>();
+                }
+                res.addAll(resi);
+            }
+        }
+        return res;
+    }
+
     public List<Point> findIntersections(Ray ray) {
         List<Point> res = null;
         for (Intersectable geometry : this.geometries) {
@@ -37,5 +51,4 @@ public class Geometries implements Intersectable {
         }
         return res;
     }
-
 }

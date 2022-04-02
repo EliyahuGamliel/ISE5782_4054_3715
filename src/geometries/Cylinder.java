@@ -39,6 +39,21 @@ public class Cylinder extends Tube {
     }
 
     @Override
+    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
+        List<GeoPoint> res = new ArrayList<>();
+        List<GeoPoint> lst = super.findGeoIntersectionsHelper(ray);
+        if (lst != null)
+            for (GeoPoint geoPoint : lst) {
+                double distance = alignZero(geoPoint.point.subtract(exisRay.getP0()).dotProduct(exisRay.getDir()));
+                if (distance > 0 && distance <= height)
+                    res.add(geoPoint);
+            }
+
+        if (res.size() == 0)
+            return null;
+        return res;
+    }
+
     public List<Point> findIntersections(Ray ray) {
         List<Point> res = new ArrayList<>();
         List<Point> lst = super.findIntersections(ray);

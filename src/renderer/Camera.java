@@ -68,7 +68,7 @@ public class Camera {
         return this;
     }
 
-    public Camera setRayTracerBase(RayTracerBase rayTracerBase) {
+    public Camera setRayTracer(RayTracerBase rayTracerBase) {
         this.rayTracerBase = rayTracerBase;
         return this;
     }

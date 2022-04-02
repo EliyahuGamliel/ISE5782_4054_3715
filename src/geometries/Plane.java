@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * an infinite surface in a 3d space
  */
-public class Plane implements Geometry {
+public class Plane extends Geometry {
     
     final private Point q0;
     final private Vector normal;
@@ -69,6 +69,25 @@ public class Plane implements Geometry {
     }
 
     @Override
+    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
+        if (this.q0.equals(ray.getP0())) {
+            return null;
+        }
+        double nv = this.normal.dotProduct(ray.getDir());
+        if (isZero(nv)) {
+            return null;
+        }
+        double nQMinusP0 = this.normal.dotProduct(this.q0.subtract(ray.getP0()));
+        double t = alignZero(nQMinusP0 / nv);
+        if (t > 0) {
+            List<GeoPoint> points = new ArrayList<>(1);
+            Point p = ray.getPoint(t);
+            points.add(new GeoPoint(this, p));
+            return points;
+        }
+        return null;
+    }
+
     public List<Point> findIntersections(Ray ray) {
         if (this.q0.equals(ray.getP0())) {
             return null;
