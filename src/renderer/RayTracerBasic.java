@@ -33,31 +33,36 @@ public class RayTracerBasic extends RayTracerBase {
     }
 
     private Color calcLocalEffects(GeoPoint intersection, Ray ray) {
-        Vector v = ray.getDir ();
+
+        Vector v = ray.getDir();
         Vector n = intersection.geometry.getNormal(intersection.point);
         double nv = alignZero(n.dotProduct(v));
-        if (nv == 0) {
+        if (nv == 0)
             return Color.BLACK;
-        }
-        int nShininess = intersection.geometry.getMaterial().getnShininess();
-        double kd = intersection.geometry.getMaterial().getkD(), ks = intersection.geometry.getMaterial().getkS();
-        Color color = Color.BLACK;
+
+        Material material = intersection.geometry.getMaterial();
+        int nShininess = material.getnShininess();
+        double kd = material.getkD(), ks = material.getkS();
+        //Color color = Color.BLACK;
+        Color color = intersection.geometry.getEmission();
         for (LightSource lightSource : scene.lights) {
             Vector l = lightSource.getL(intersection.point);
             double nl = alignZero(n.dotProduct(l));
             if (nl * nv > 0) { // sign(nl) == sing(nv)
                 Color lightIntensity = lightSource.getIntensity(intersection.point);
                 color = color.add(calcDiffusive(kd, l, n, lightIntensity),
-                                    calcSpecular(ks, l, n, nShininess, lightIntensity));
+                                    calcSpecular(ks, l, n, v, nShininess, lightIntensity));
             } 
         }
-        return color; }
+        return color;
+    }
 
-    private Color calcSpecular(double ks, Vector l, Vector n, int nShininess, Color lightIntensity) {
-        return null;
+    private Color calcSpecular(double kS, Vector l, Vector n, Vector v, int nShininess, Color intensity) {
+        Vector r = l.subtract(n.scale(2 * (l.dotProduct(n))));
+        return intensity.scale(kS * Math.pow(Math.max(v.scale(-1).dotProduct(r), 0), nShininess));
     }
 
     private Color calcDiffusive(double kd, Vector l, Vector n, Color lightIntensity) {
-        return null;
+        return lightIntensity.scale(kd*Math.abs(l.dotProduct(n)));
     }
 }
