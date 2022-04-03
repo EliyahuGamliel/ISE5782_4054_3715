@@ -13,7 +13,7 @@ public class Material {
         this.kS = kS;
         return this;
     }
-    public Material setnShininess(int nShininess) {
+    public Material setShininess(int nShininess) {
         this.nShininess = nShininess;
         return this;
     }
