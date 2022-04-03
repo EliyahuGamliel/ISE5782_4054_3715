@@ -1,15 +1,15 @@
 package primitives;
 
 public class Material {
-    Double3 kD = Double3.ZERO, kS = Double3.ZERO;
+    double kD = 0, kS = 0;
     int nShininess = 0;
     
 
-    public Material setkD(Double3 kD) {
+    public Material setkD(double kD) {
         this.kD = kD;
         return this;
     }
-    public Material setkS(Double3 kS) {
+    public Material setkS(double kS) {
         this.kS = kS;
         return this;
     }

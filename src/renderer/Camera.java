@@ -126,7 +126,7 @@ public class Camera {
         return rayTracerBase.traceRay(ray);
     }
 
-    public void renderImage() {
+    public Camera renderImage() {
         if (imageWriter == null)
             throw new MissingResourceException("Camera resource not set", "Camera", "Image Writer");
 
@@ -142,7 +142,7 @@ public class Camera {
                 imageWriter.writePixel(j, i, color);
             }
         }
-
+        return this;
     }
 
     public void printGrid(int interval, Color color) {
