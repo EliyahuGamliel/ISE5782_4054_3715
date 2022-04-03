@@ -17,19 +17,21 @@ public class PointLight extends Light implements LightSource {
         this.kQ = 0;
     }
 
+    public PointLight(Color intensity, Point position, double kC, double kL, double kQ) {
+        super(intensity);
+        this.position = position;
+        this.kC = kC;
+        this.kL = kL;
+        this.kQ = kQ;
+    }
 
     @Override
     public Color getIntensity(Point p) {
-        // TODO Auto-generated method stub
         return null;
     }
-
 
     @Override
     public Vector getL(Point p) {
-        // TODO Auto-generated method stub
         return null;
     }
-
-
 }
