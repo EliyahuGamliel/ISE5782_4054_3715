@@ -94,11 +94,11 @@ public class Camera {
         return this;
     }
     /**
-     * create a ray from the camera throu a specific pixel in the View Plane
+     * create a ray from the camera through a specific pixel in the View Plane
      * @param nX how many pixels are in the X dim
      * @param nY how many pixels are in the Y dim
-     * @param j the pixel to go throu X dim 
-     * @param i the pixel to go throu Y dim 
+     * @param j the pixel to go through X dim
+     * @param i the pixel to go through Y dim
      * @return the constructed Ray
      */
     public Ray constructRay(int nX, int nY, int j, int i) {
@@ -117,8 +117,8 @@ public class Camera {
      * and get the color of the pixel
      * @param nX how many pixels are in the X dim
      * @param nY how many pixels are in the Y dim
-     * @param j the pixel to go throu X dim 
-     * @param i the pixel to go throu Y dim 
+     * @param j the pixel to go through X dim
+     * @param i the pixel to go through Y dim
      * @return the color of the pixel
      */
     private Color castRay(int nX, int nY, int j, int i) {
@@ -164,5 +164,37 @@ public class Camera {
             throw new MissingResourceException("Camera resource not set", "Camera", "Image writer");
 
         imageWriter.writeToImage();
+    }
+
+    /**
+     * spin the camera 'angle' degrees around clockwise
+     * @param angle the angle we want to spin the camera
+     * @return this instance of camera
+     */
+    public Camera turnDegrees(double angle){
+        double len = vUp.length();
+        double rad = Math.toRadians(angle + Math.toDegrees(Math.acos((vUp.getX())/len)));
+        double newX = len*(Math.cos(rad));
+
+        rad = Math.toRadians(angle + Math.toDegrees(Math.acos((vUp.getY())/len)));
+        double newY = len*Math.cos(rad);
+
+        vUp = new Vector(newX, newY, vUp.getZ()).normalize();
+        vRight = vTo.crossProduct(vUp);
+        return this;
+    }
+
+    /**
+     * spin the camera 'angle' degrees to the left
+     * @param angle the angle we want to spin the camera
+     * @return this instance of camera
+     */
+    public Camera spinToTheSide(double angle){
+        vRight = new Vector(
+                Math.cos(angle)*vRight.getX()-Math.sin(angle)*vRight.getY(),
+                Math.sin(angle)*vRight.getX()+Math.cos(angle)*vRight.getY(),
+                vRight.getZ()
+                );
+        return this;
     }
 }

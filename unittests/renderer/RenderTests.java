@@ -56,6 +56,11 @@ public class RenderTests {
 		camera.renderImage();
 		camera.printGrid(100, new Color(java.awt.Color.BLUE));
 		camera.writeToImage();
+
+		//camera.spinToTheSide(90);
+		camera.renderImage();
+		camera.printGrid(100, new Color(CYAN));
+		camera.writeToImage();
 	}
 
 	Element openXml(String fileName) {
