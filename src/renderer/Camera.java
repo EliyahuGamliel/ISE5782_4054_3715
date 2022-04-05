@@ -189,12 +189,16 @@ public class Camera {
      * @param angle the angle we want to spin the camera
      * @return this instance of camera
      */
-    public Camera spinToTheSide(double angle){
-        vRight = new Vector(
-                Math.cos(angle)*vRight.getX()-Math.sin(angle)*vRight.getY(),
-                Math.sin(angle)*vRight.getX()+Math.cos(angle)*vRight.getY(),
-                vRight.getZ()
-                );
+    public Camera spinToTheSide(double angle) {
+        double len = vUp.length();
+        double rad = Math.toRadians(angle + Math.toDegrees(Math.acos((vUp.getX()) / len)));
+        double newX = len * (Math.cos(rad));
+
+        rad = Math.toRadians(angle + Math.toDegrees(Math.acos((vUp.getY()) / len)));
+        double newY = len * Math.cos(rad);
+
+        vUp = new Vector(newX, newY, vUp.getZ()).normalize();
+        vRight = vTo.crossProduct(vUp);
         return this;
     }
 }

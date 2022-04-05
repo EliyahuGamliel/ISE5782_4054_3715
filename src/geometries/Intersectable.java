@@ -7,8 +7,8 @@ import java.util.Objects;
 public abstract class Intersectable {
 
     public static class GeoPoint {
-        public final Geometry geometry;
-        public final Point point;
+        public Geometry geometry;
+        public Point point;
 
         public GeoPoint(Geometry geometry, Point point) {
             this.geometry = geometry;
