@@ -91,7 +91,7 @@ public class Polygon extends Geometry {
 	}
 
 	@Override
-	public List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
+	public List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double maxDistance) {
 
 		int len = vertices.size();
 		Point p0 = ray.getP0();
@@ -115,6 +115,6 @@ public class Polygon extends Geometry {
 			if (!checkSign(sign,dotProd) || isZero(dotProd))
 				return null;
 		}
-		return plane.findGeoIntersectionsHelper(ray);
+		return plane.findGeoIntersectionsHelper(ray, maxDistance);
 	}
 }
