@@ -8,6 +8,8 @@ import scene.Scene;
 import static primitives.Util.*;
 
 public class RayTracerBasic extends RayTracerBase {
+    private static final double DELTA = 0.1;
+
     public RayTracerBasic (Scene scene) {
         super(scene);
     }
@@ -43,15 +45,16 @@ public class RayTracerBasic extends RayTracerBase {
         Material material = intersection.geometry.getMaterial();
         int nShininess = material.getnShininess();
         Double3 kd = material.getkD(), ks = material.getkS();
-        //Color color = Color.BLACK;
         Color color = intersection.geometry.getEmission();
         for (LightSource lightSource : scene.lights) {
             Vector l = lightSource.getL(intersection.point);
             double nl = alignZero(n.dotProduct(l));
             if (nl * nv > 0) { // sign(nl) == sing(nv)
-                Color lightIntensity = lightSource.getIntensity(intersection.point);
-                color = color.add(calcDiffusive(kd, l, n, lightIntensity),
-                                    calcSpecular(ks, l, n, v, nShininess, lightIntensity));
+                if (unshaded(intersection, l, n)) {
+                    Color lightIntensity = lightSource.getIntensity(intersection.point);
+                    color = color.add(calcDiffusive(kd, l, n, lightIntensity),
+                            calcSpecular(ks, l, n, v, nShininess, lightIntensity));
+                }
             } 
         }
         return color;
@@ -64,5 +67,15 @@ public class RayTracerBasic extends RayTracerBase {
 
     private Color calcDiffusive(Double3 kd, Vector l, Vector n, Color lightIntensity) {
         return lightIntensity.scale(kd.scale(Math.abs(l.dotProduct(n))));
+    }
+
+    private boolean unshaded(GeoPoint gp, Vector l, Vector n) {
+        Vector lightDirection = l.scale(-1); // from point to light source
+        Vector delta = n.scale(n.dotProduct(lightDirection) > 0 ? DELTA : - DELTA);
+        Point point = gp.point.add(delta);
+        Ray lightRay = new Ray(point, lightDirection);
+        List<GeoPoint> intersections = scene.geometries
+                .findGeoIntersections(lightRay);
+        return intersections == null || intersections.isEmpty();
     }
 }
