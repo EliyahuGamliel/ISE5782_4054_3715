@@ -6,6 +6,7 @@ import primitives.*;
  * a non ambient light source
  */
 public interface LightSource {
+    double getDistance(Point point);
     public Color getIntensity(Point p);
     public Vector getL(Point p);
 }
