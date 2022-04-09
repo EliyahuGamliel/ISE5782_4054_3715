@@ -167,16 +167,71 @@ public class Camera {
     }
 
     /**
-     * spin the camera 'angle' degrees to the left
+     * spin the camera 'angle' degrees clockwise around the To vector
      * @param angle the angle we want to spin the camera
      * @return this instance of camera
      */
     public Camera spin(double angle) {
+        if (angle == 90 || angle == -270) {
+            vUp = vRight;
+            vRight = vTo.crossProduct(vUp).normalize();
+            return this;
+        } else if (angle == 270 || angle == -90) {
+            vUp = vRight.scale(-1);
+            vRight = vTo.crossProduct(vUp).normalize();
+            return this;
+        }
         angle = Math.toRadians(angle);
-        //rotate around the to vector using Rodrigues' rotation formula
+        //rotate around the To vector using Rodrigues' rotation formula
         vUp = vUp.scale(Math.cos(angle))
                 .add(vTo.crossProduct(vUp).scale(Math.sin(angle)));
         vRight = vTo.crossProduct(vUp).normalize();
+        return this;
+    }
+
+    /**
+     * spin the camera 'angle' degrees clockwise around the Up vector
+     * @param angle  the angle we want to spin the camera
+     * @return this instance of camera
+     */
+    public Camera spinRightLeft(double angle) {
+        if (angle == 90 || angle == -270) {
+            vTo = vRight;
+            vRight = vTo.crossProduct(vUp).normalize();
+            return this;
+        } else if (angle == 270 || angle == -90) {
+            vTo = vRight.scale(-1);
+            vRight = vTo.crossProduct(vUp).normalize();
+            return this;
+        }
+        angle = Math.toRadians(angle);
+        //rotate around the Up vector using Rodrigues' rotation formula
+        vTo = vTo.scale(Math.cos(angle))
+                .add(vUp.crossProduct(vTo).scale(Math.sin(angle)));
+        vRight = vTo.crossProduct(vUp).normalize();
+        return this;
+    }
+
+    /**
+     * spin the camera 'angle' degrees clockwise around the Right vector
+     * @param angle the angle we want to spin the camera 
+     * @return this instance of camera
+     */
+    public Camera spinUpDown(double angle) {
+        if (angle == 90 || angle == -270) {
+            vRight = vUp;
+            vUp = vTo.crossProduct(vRight).scale(-1).normalize();
+            return this;
+        } else if (angle == 270 || angle == -90) {
+            vRight = vUp.scale(-1);
+            vUp = vTo.crossProduct(vRight).scale(-1).normalize();
+            return this;
+        }
+        angle = Math.toRadians(angle);
+        //rotate around the Right vector using Rodrigues' rotation formula
+        vTo = vTo.scale(Math.cos(angle))
+                .add(vRight.crossProduct(vTo).scale(Math.sin(angle)));
+        vUp = vTo.crossProduct(vRight).scale(-1).normalize();
         return this;
     }
 }

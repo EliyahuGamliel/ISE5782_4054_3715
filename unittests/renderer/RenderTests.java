@@ -136,8 +136,7 @@ public class RenderTests {
 			.setVPDistance(100) //
 			.setVPSize(500, 500)
 			.setImageWriter(new ImageWriter("xml render test", 1000, 1000))
-			.setRayTracer(new RayTracerBasic(scene))
-			.spin(15);
+			.setRayTracer(new RayTracerBasic(scene));
 
 		camera.renderImage();
 		camera.printGrid(100, new Color(java.awt.Color.YELLOW));
@@ -175,5 +174,48 @@ public class RenderTests {
 		camera.renderImage();
 		camera.printGrid(100, new Color(WHITE));
 		camera.writeToImage();
+	}
+
+	@Test
+	void cameraRotationTest() {
+		Scene scene = new Scene("Test scene");
+
+		scene.geometries.add(new Sphere(new Point(0, 0, -50), 50d) //
+			.setEmission(new Color(BLUE).reduce(2)) //
+			.setMaterial(new Material().setkD(0.5).setkS(0.5).setShininess(300)));
+
+		scene.lights.add(new DirectionalLight(new Color(400, 0, 0), new Vector(-1, 1, -1)));
+		scene.lights.add(new PointLight(new Color(500, 500, 0), new Point(0, 30, 10))
+				.setkL(0.0000003).setkQ(0.0000001));
+		scene.lights.add(new SpotLight(new Color(0, 900, 0), new Point(-100, -70, 50), new Vector(1, -1, -2))
+				.setkL(0.0000000001).setkQ(0.000000001));
+
+		String imageName = new String("rotation test/camera rotation %d %d");
+		ImageWriter imageWriter = new ImageWriter("", 1000, 1000);
+
+		Camera camera = new Camera(new Point(0, 0, 1000), new Vector(0, 0, -1), new Vector(0, 1, 0)) //
+				.setVPSize(150, 150) //
+				.setVPDistance(1000) //
+				.setImageWriter(imageWriter)
+				.setRayTracer(new RayTracerBasic(scene));
+
+		for (int i = 0; i < 360; i += 10) {
+			camera.spin(10);
+			camera.spinRightLeft(12d/36);
+			camera.spinUpDown(12d/36);
+				
+			camera.renderImage();
+			imageWriter.setImageName(String.format(imageName, 1, i));
+			camera.writeToImage();
+		}
+		for (int i = 0; i < 360; i += 10) {
+			camera.spin(-10);
+			camera.spinUpDown(12d/36);
+			camera.spinRightLeft(12d/36);
+				
+			camera.renderImage();
+			imageWriter.setImageName(String.format(imageName, 2, i));
+			camera.writeToImage();
+		}
 	}
 }
