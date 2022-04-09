@@ -190,15 +190,12 @@ public class Camera {
      * @return this instance of camera
      */
     public Camera spinToTheSide(double angle) {
-        double len = vUp.length();
-        double rad = Math.toRadians(angle + Math.toDegrees(Math.acos((vUp.getX()) / len)));
-        double newX = len * (Math.cos(rad));
-
-        rad = Math.toRadians(angle + Math.toDegrees(Math.acos((vUp.getY()) / len)));
-        double newY = len * Math.cos(rad);
-
-        vUp = new Vector(newX, newY, vUp.getZ()).normalize();
-        vRight = vTo.crossProduct(vUp);
+        vTo = new Vector(vTo.getX(),
+                Math.cos(angle)*vTo.getY() - Math.sin(angle)*vTo.getZ(),
+                Math.sin(angle)*vTo.getY() + Math.cos(angle)*vTo.getZ());
+        vRight = new Vector(Math.cos(angle)*vRight.getX() + Math.sin(angle)*vRight.getZ(),
+                vRight.getY(),
+                -Math.sin(angle)*vRight.getX() + Math.cos(angle)*vRight.getZ());
         return this;
     }
 }
