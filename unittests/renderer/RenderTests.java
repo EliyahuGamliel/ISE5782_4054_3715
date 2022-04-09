@@ -177,6 +177,42 @@ public class RenderTests {
 	}
 
 	@Test
+	void basicCameraRotationTest() {
+		Scene scene = new Scene("Test scene")//
+				.setAmbientLight(new AmbientLight(new Color(255, 191, 191), //
+						                          new Double3(1,1,1))) //
+				.setBackground(new Color(75, 127, 90));
+
+		scene.geometries.add(new Sphere(new Point(0, 0, -100), 50),
+				new Triangle(new Point(-100, 0, -100), new Point(0, 100, -100), new Point(-100, 100, -100)), // up
+																													// left
+				new Triangle(new Point(-100, 0, -100), new Point(0, -100, -100), new Point(-100, -100, -100)), // down
+																														// left
+				new Triangle(new Point(100, 0, -100), new Point(0, -100, -100), new Point(100, -100, -100))); // down
+																													// right
+		
+		String imageName = new String("basic rotation test/camera rotation %d %d");
+		ImageWriter imageWriter = new ImageWriter("", 1000, 1000);
+																													
+		Camera camera = new Camera(Point.ZERO, new Vector(0, 0, -1), new Vector(0, 1, 0)) //
+				.setVPDistance(100) //
+				.setVPSize(500, 500) //
+				.setImageWriter(imageWriter)				
+				.setRayTracer(new RayTracerBasic(scene));
+			
+		for (int i = 0; i < 360; i += 15) {
+			camera.spinRightLeft(15);
+			// camera.spinUpDown(12d/36);
+				
+			camera.renderImage();
+			camera.printGrid(100, new Color(CYAN));
+			imageWriter.setImageName(String.format(imageName, 1, i));
+			camera.writeToImage();
+		}
+	}
+
+
+	@Test
 	void cameraRotationTest() {
 		Scene scene = new Scene("Test scene");
 
