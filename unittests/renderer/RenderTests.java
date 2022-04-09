@@ -52,8 +52,6 @@ public class RenderTests {
 				.setVPSize(500, 500) //
 				.setImageWriter(new ImageWriter("base render test", 1000, 1000))				
 				.setRayTracer(new RayTracerBasic(scene));
-
-		camera.spinToTheSide(45);
 		camera.renderImage();
 		camera.printGrid(100, new Color(java.awt.Color.BLUE));
 		camera.writeToImage();
@@ -135,10 +133,12 @@ public class RenderTests {
 		Scene scene = sceneBuilder.getScene();
 		
 		Camera camera = new Camera(Point.ZERO, new Vector(0, 0, -1), new Vector(0, 1, 0)) //
-				.setVPDistance(100) //
-				.setVPSize(500, 500)
-				.setImageWriter(new ImageWriter("xml render test", 1000, 1000))
-				.setRayTracer(new RayTracerBasic(scene));
+			.setVPDistance(100) //
+			.setVPSize(500, 500)
+			.setImageWriter(new ImageWriter("xml render test", 1000, 1000))
+			.setRayTracer(new RayTracerBasic(scene))
+			.spin(15);
+
 		camera.renderImage();
 		camera.printGrid(100, new Color(java.awt.Color.YELLOW));
 		camera.writeToImage();
