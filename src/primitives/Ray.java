@@ -8,6 +8,8 @@ import geometries.Intersectable.GeoPoint;
  * 3d ray with direction
  */
 public class Ray {
+    private static final double DELTA = 0.1;
+
     final private Point p0;
     final private Vector dir;
 
@@ -19,6 +21,12 @@ public class Ray {
     public Ray(Point p0, Vector dir) {
         this.p0 = p0;
         this.dir = dir.normalize();
+    }
+
+    public Ray(Point p0, Vector dir, Vector normal) {
+        Vector delta = normal.scale(normal.dotProduct(dir) > 0 ? DELTA : - DELTA);
+        this.p0 = p0.add(delta);
+        this.dir = dir;
     }
 
     /**

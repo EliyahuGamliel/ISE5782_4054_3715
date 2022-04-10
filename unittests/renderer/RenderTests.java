@@ -56,9 +56,8 @@ public class RenderTests {
 		camera.printGrid(100, new Color(java.awt.Color.BLUE));
 		camera.writeToImage();
 
-		//camera.spinToTheSide(90);
 		camera.renderImage();
-		camera.printGrid(100, new Color(CYAN));
+		camera.printGrid(100, new Color(YELLOW));
 		camera.writeToImage();
 	}
 

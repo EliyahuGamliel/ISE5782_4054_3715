@@ -54,7 +54,12 @@ public class Vector extends Point {
      * @return a new scaled vector
      */
     public Vector scale(double number) {
-        return new Vector(xyz.scale(number));
+        try {
+            return new Vector(xyz.scale(number));
+        }
+        catch (Exception e) {
+            return null;
+        }
     }
 
     /**
