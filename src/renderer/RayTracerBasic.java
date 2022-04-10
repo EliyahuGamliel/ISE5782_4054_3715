@@ -70,16 +70,16 @@ public class RayTracerBasic extends RayTracerBase {
                 .add(scene.ambientLight.getIntensity());
     }
 
-    private Color calcGlobalEffects(GeoPoint gp, Ray ray, int level, Double3 k) {
+    private Color calcGlobalEffects(GeoPoint gp, Vector v, int level, Double3 k) {
         Color color = Color.BLACK; Vector n = gp.geometry.getNormal(gp.point);
         Material material = gp.geometry.getMaterial();
         Double3 kkr = k.product(material.kR);
         if (!(kkr.lowerThan(MIN_CALC_COLOR_K)))
-            color = calcGlobalEffect(constructReflectedRay(gp.point, ray.getDir(), n), level, material.kR, kkr);
+            color = calcGlobalEffect(constructReflectedRay(gp.point, v, n), level, material.kR, kkr);
         Double3 kkt = k.product(material.kT);
         if (!(kkt.lowerThan(MIN_CALC_COLOR_K)))
             color = color.add(
-                    calcGlobalEffect(constructRefractedRay(gp.point, ray.getDir(), n), level, material.kT, kkt));
+                    calcGlobalEffect(constructRefractedRay(gp.point, v, n), level, material.kT, kkt));
         return color;
     }
 
@@ -89,9 +89,9 @@ public class RayTracerBasic extends RayTracerBase {
     }
 
     private Color calcColor(GeoPoint intersection, Ray ray, int level, Double3 k) {
-        Color color = scene.ambientLight.getIntensity()
+        Color color = intersection.geometry.getEmission()
                 .add(calcLocalEffects(intersection, ray, k));
-        return 1 == level ? color : color.add(calcGlobalEffects(intersection, ray, level, k));
+        return 1 == level ? color : color.add(calcGlobalEffects(intersection, ray.getDir(), level, k));
     }
 
     private GeoPoint findClosestIntersection(Ray ray) {
