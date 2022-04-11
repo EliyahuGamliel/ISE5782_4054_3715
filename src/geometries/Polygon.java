@@ -115,6 +115,13 @@ public class Polygon extends Geometry {
 			if (!checkSign(sign,dotProd) || isZero(dotProd))
 				return null;
 		}
-		return plane.findGeoIntersectionsHelper(ray, maxDistance);
+		List<GeoPoint> geoPoints = plane.findGeoIntersectionsHelper(ray, maxDistance);
+		List<GeoPoint> newGeoPoints = new ArrayList<>();
+		if (geoPoints == null)
+			return null;
+		for (GeoPoint geo : geoPoints) {
+			newGeoPoints.add(new GeoPoint(this, geo.point));
+		}
+		return newGeoPoints;
 	}
 }
