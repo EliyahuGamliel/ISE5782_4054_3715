@@ -69,4 +69,8 @@ public abstract class Util {
 		return Math.random() * (max - min) + min;
 	}
 
+	public static int getSign(double number) {
+		return number < 0 ? -1 : 1;
+	}
+
 }
