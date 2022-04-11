@@ -234,4 +234,34 @@ public class Camera {
         vUp = vTo.crossProduct(vRight).scale(-1).normalize();
         return this;
     }
+
+    /**
+     * move the camera 'distance' units along the To vector
+     * @param distance the distance we want to move the camera
+     * @return this instance of camera
+     */
+    public Camera moveForward(double distance) {
+        this.location = this.location.add(this.vTo.scale(distance));
+        return this;
+    }
+
+    /**
+     * move the camera 'distance' units along the Right vector
+     * @param distance the distance we want to move the camera
+     * @return this instance of camera
+     */
+    public Camera moveRightLeft(double distance) {
+        this.location = this.location.add(this.vRight.scale(distance));
+        return this;
+    }
+
+    /**
+     * move the camera 'distance' units along the Up vector
+     * @param distance the distance we want to move the camera
+     * @return this instance of camera
+     */
+    public Camera moveUpDown(double distance) {
+        this.location = this.location.add(this.vUp.scale(distance));
+        return this;
+    }
 }
