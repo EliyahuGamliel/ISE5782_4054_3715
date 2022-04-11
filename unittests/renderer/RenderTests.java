@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import geometries.*;
 import lighting.*;
+import models.hellicopter;
 import primitives.*;
 import scene.Scene;
 import scene.SceneBuilder;
@@ -252,5 +253,33 @@ public class RenderTests {
 			imageWriter.setImageName(String.format(imageName, 2, i));
 			camera.writeToImage();
 		}
+	}
+
+	@Test
+	void coolImageTest() {
+		Scene scene = new Scene("Test scene");
+
+		scene.geometries.add(new hellicopter(new Point(0, 0, 0), 8));
+
+		scene.lights.add(new DirectionalLight(new Color(400, 255, 0), new Vector(1, -5, 1)));
+		scene.lights.add(new DirectionalLight(new Color(400, 0, 255), new Vector(0, -5, 3)));
+		scene.lights.add(new DirectionalLight(new Color(0, 0, 255), new Vector(-1, -5, -1)));
+		scene.lights.add(new DirectionalLight(new Color(100, 255, 0), new Vector(-1, -5, -7)));
+		scene.lights.add(new PointLight(new Color(500, 500, 0), new Point(0, 30, 10))
+				.setkL(0.0000003).setkQ(0.0000001));
+		scene.lights.add(new PointLight(new Color(500, 500, 0), new Point(40, 10 , -50))
+				.setkL(0.0000003).setkQ(0.0000001));
+		scene.lights.add(new SpotLight(new Color(0, 900, 0), new Point(-100, -70, 50), new Vector(1, -1, -2))
+				.setkL(0.0000000001).setkQ(0.000000001));
+
+		Camera camera = new Camera(new Point(1000, 1000, 1000), new Vector(-1, -1, -1), new Vector(-1, 1, 0)) //
+			.setVPSize(150, 150) //
+			.setVPDistance(1000)
+			.setImageWriter(new ImageWriter("cool image", 1000, 1000))				
+			.setRayTracer(new RayTracerBasic(scene))
+			.spin(30);
+
+		camera.renderImage();
+		camera.writeToImage();
 	}
 }
