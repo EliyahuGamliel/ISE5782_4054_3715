@@ -4,20 +4,38 @@ import primitives.*;
 
 public class SpotLight extends PointLight {
     private Vector direction;
+    private double narrowBeam;
+
+    public SpotLight setNarrowBeam(double narrowBeam) {
+        this.narrowBeam = narrowBeam;
+        return this;
+    }
 
     public SpotLight(Color intensity, Point position, Vector direction) {
         super(intensity, position);
         this.direction = direction.normalize();
+        this.narrowBeam = 25;
     }
 
     public SpotLight(Color intensity, Point position, double kC, double kL, double kQ, Vector direction) {
         super(intensity, position, kC, kL, kQ);
         this.direction = direction.normalize();
+        this.narrowBeam = 25;
     }
 
     public Color getIntensity(Point p) {
-        double l = direction.dotProduct(getL(p));
-        if(l<=0) // for time saving. do not compute intensity if l<=0.
+        double l;
+        double m = direction.dotProduct(getL(p));
+
+        if (narrowBeam == 25)
+            l = m;
+        else {
+            l = Math.cos(Math.acos(m) * (25 / narrowBeam));
+            if (Math.cos(narrowBeam) > m)
+                l = 0;
+        }
+
+        if (l<=0)
             return Color.BLACK;
         return super.getIntensity(p).scale(l);
     }
