@@ -14,24 +14,24 @@ public class SpotLight extends PointLight {
     public SpotLight(Color intensity, Point position, Vector direction) {
         super(intensity, position);
         this.direction = direction.normalize();
-        this.narrowBeam = 25;
+        this.narrowBeam = 0.5;
     }
 
     public SpotLight(Color intensity, Point position, double kC, double kL, double kQ, Vector direction) {
         super(intensity, position, kC, kL, kQ);
         this.direction = direction.normalize();
-        this.narrowBeam = 25;
+        this.narrowBeam = 0.5;
     }
 
     public Color getIntensity(Point p) {
         double l;
         double m = direction.dotProduct(getL(p));
 
-        if (narrowBeam == 25)
+        if (narrowBeam == 0.5)
             l = m;
         else {
-            l = Math.cos(Math.acos(m) * (25 / narrowBeam));
-            if (Math.cos(narrowBeam) > m)
+            l = Math.cos(Math.acos(m) * (0.5 / narrowBeam));
+            if (Math.cos(narrowBeam * Math.PI) > m)
                 l = 0;
         }
 
