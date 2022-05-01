@@ -101,11 +101,11 @@ public class RayTracerBasic extends RayTracerBase {
 
     private Ray constructReflectedRay(Point p, Vector v, Vector n) {
         Vector r = v.subtract(n.scale(2 * v.dotProduct(n)));
-        return new Ray(p, r);
+        return new Ray(p, r, n);
     }
 
     private Ray constructRefractedRay(Point p, Vector v, Vector n) {
-        return new Ray(p, v);
+        return new Ray(p, v, n);
     }
 
     private Double3 transparency(GeoPoint geoPoint, LightSource ls, Vector l, Vector n) {
