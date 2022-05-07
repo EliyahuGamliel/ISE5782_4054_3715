@@ -17,7 +17,6 @@ public class RayTracerBasic extends RayTracerBase {
     }
 
     private Color calcLocalEffects(GeoPoint intersection, Ray ray, Double3 k) {
-
         Vector v = ray.getDir();
         Vector n = intersection.geometry.getNormal(intersection.point);
         double nv = alignZero(n.dotProduct(v));
