@@ -1,5 +1,6 @@
 package geometries;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import primitives.Point;
@@ -30,6 +31,10 @@ public class Circle extends Geometry {
         GeoPoint geoPoint = geoPoints.get(0);
         if (geoPoint.point.distance(center) > radius)
             return null;
-        return geoPoints;
+		List<GeoPoint> newGeoPoints = new ArrayList<>();
+		for (GeoPoint geo : geoPoints) {
+			newGeoPoints.add(new GeoPoint(this, geo.point));
+		}
+		return newGeoPoints;
     }
 }
