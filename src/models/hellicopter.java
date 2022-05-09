@@ -2,74 +2,117 @@ package models;
 
 import java.util.List;
 
+import static geometries.Utils.*;
 
 import geometries.*;
 import primitives.*;
 
 public class hellicopter extends Geometries {
+    private Point center;
+    private double size;
 
-    private Color emission = new Color(0, 0, 100);
-    private Material material = new Material().setkD(0.5).setkS(0.5).setShininess(300);
+    private Geometries body;
+
+    private Color emission = new Color(19, 47, 82);
+    private Material material = new Material().setkD(0.15).setkS(0.5).setShininess(300);
+
+    private Color emissionWings = new Color(0, 0, 0);
+    private Material materialWings = new Material().setkD(0.1).setkS(0.5).setShininess(300);
+
+    private Color emissionTail = new Color(54, 68, 100);
+    private Color emissionTailTop = new Color(114, 196, 247);
+    private Material materialTail = new Material().setkD(0.1).setkS(0.5).setShininess(300);
 
     public hellicopter(Point center, double size) {
         super();
-        // Sphere cocpit;
-        this.add(new Sphere(center, size * 5)
-            .setEmission(emission)
-            .setMaterial(material));
-        // Cylinder mainRoterHandle;
-        this.add(new Cylinder(new Ray(center.add(new Vector(0, size * 5, 0)), new Vector(0, 1, 0)),
-                            size / 2,
-                            size)
-            .setEmission(emission)
-            .setMaterial(material));
-        // Polygon mainRotorWingX;
-        this.add(createRectangleY(center.add(new Vector(0, size * 5 + size, 0)), size * 20, size)
-            .setEmission(emission)
-            .setMaterial(material));
-        // Polygon mainRotorWingY;
-        this.add(createRectangleY(center.add(new Vector(0, size * 5 + size, 0)), size, size * 20)
-            .setEmission(emission)
-            .setMaterial(material));
-        // Triangle tail;
-        this.add(new Triangle(center.add(new Vector(size * 5, size * 5, 0).normalize().scale(size * 5)),
-                            center.add(new Vector(size * 5, size * 5, 0).normalize().scale(size * 5)).add(new Vector(size * 15, -size, 0)),
-                            center.add(new Vector(size * 5, size * -3, 0).normalize().scale(size * 5)))
-            .setEmission(emission)
-            .setMaterial(material));
-        // Cylinder tailRoterHandle;
-        this.add(new Cylinder(new Ray(center.add(new Vector(size * 5, size * 5, 0).normalize().scale(size * 5)).add(new Vector(size * 15, -size, 0)),
-                                        new Vector(0, 0, 1)),
-                            size / 2,
-                            size)
-            .setEmission(emission)
-            .setMaterial(material));
-        // Polygon tailRotorWingX;
-        this.add(createRectangleZ(center.add(new Vector(size * 5, size * 5, 0).normalize().scale(size * 5)).add(new Vector(size * 15, -size, 0)).add(new Vector(0, 0, size)),
-                                size * 5, size)
-            .setEmission(emission)
-            .setMaterial(material));
-        // Polygon tailRotorWingY;
-        this.add(createRectangleZ(center.add(new Vector(size * 5, size * 5, 0).normalize().scale(size * 5)).add(new Vector(size * 15, -size, 0)).add(new Vector(0, 0, size)),
-                                size, size * 5)
-            .setEmission(emission)
-            .setMaterial(material));
+        this.center = center;
+        this.size = size;
+        this.body = createBody();
+
+        this.add(body);
+        this.add(createRotor(0));
+    }
+    
+    private hellicopter(Intersectable... geometries) {
+        super(geometries);
     }
 
-    Polygon createRectangleY(Point canter, double width, double height) {
-        return new Polygon(new Point[] {
-            canter.add(new Vector(width/2, 0, height/2)),
-            canter.add(new Vector(width/2, 0, -height/2)),
-            canter.add(new Vector(-width/2, 0, -height/2)),
-            canter.add(new Vector(-width/2, 0, height/2)),
-        });
+    public hellicopter rotatHellicopter(double angle) {
+        hellicopter res = new hellicopter(body);
+        res.add(createRotor(angle));
+        return res;
     }
-    Polygon createRectangleZ(Point canter, double width, double height) {
-        return new Polygon(new Point[] {
-            canter.add(new Vector(width/2, height/2, 0)),
-            canter.add(new Vector(width/2, -height/2, 0)),
-            canter.add(new Vector(-width/2, -height/2, 0)),
-            canter.add(new Vector(-width/2, height/2, 0)),
-        });
+
+    private Geometries createBody() {
+        Geometries body = new Geometries();
+        // Sphere cocpit;
+        body.add(new Sphere(center, size * 5)
+            .setEmission(emission)
+            .setMaterial(material));
+        // Cylinder mainrotorHandle;
+        body.add(new Cylinder(new Ray(center.add(new Vector(0, size * 5, 0)), new Vector(0, 1, 0)),
+                            size / 2,
+                            size)
+            .setEmission(emission)
+            .setMaterial(material));
+        // Triangle tail left;
+        body.add(new Triangle(center.add(new Vector(size * 5, size * 5, size).normalize().scale(size * 5)),
+                            center.add(new Vector(size * 5, size * 5, 0).normalize().scale(size * 5)).add(new Vector(size * 15, -size, 0)),
+                            center.add(new Vector(size * 5, size * -3, size).normalize().scale(size * 5)))
+                .setEmission(emissionTail)
+                .setMaterial(materialTail));
+        // Triangle tail right;
+        body.add(new Triangle(center.add(new Vector(size * 5, size * 5, -size).normalize().scale(size * 5)),
+                            center.add(new Vector(size * 5, size * 5, 0).normalize().scale(size * 5)).add(new Vector(size * 15, -size, 0)),
+                            center.add(new Vector(size * 5, size * -3, -size).normalize().scale(size * 5)))
+                    .setEmission(emissionTail)
+                    .setMaterial(materialTail));
+        // Triangle tail top;
+        body.add(new Triangle(center.add(new Vector(size * 5, size * 5, -size).normalize().scale(size * 5)),
+                            center.add(new Vector(size * 5, size * 5, 0).normalize().scale(size * 5)).add(new Vector(size * 15, -size, 0)),
+                            center.add(new Vector(size * 5, size * 5, size).normalize().scale(size * 5)))
+                    .setEmission(emissionTailTop)
+                    .setMaterial(materialTail));
+        // Cylinder tailrotorHandle;
+        body.add(new Cylinder(new Ray(center.add(new Vector(size * 5, size * 5, 0).normalize().scale(size * 5)).add(new Vector(size * 15, -size, 0)),
+                            new Vector(0, 0, 1)),
+                            size / 2,
+                            size)
+                    .setEmission(emissionTail)
+                    .setMaterial(materialTail));
+        return body;
+    }
+
+    private Geometries createRotor(double angle) {
+        Geometries rotor = new Geometries();
+        // Polygon mainRotorWingX;
+        rotor.add(createRectangleYRotate(center.add(new Vector(0, size * 5 + size, 0)), size * 20, size, angle)
+            .setEmission(emissionWings)
+            .setMaterial(materialWings));
+        // Polygon mainRotorWingY;
+        rotor.add(createRectangleYRotate(center.add(new Vector(0, size * 5 + size, 0)), size, size * 20, angle)
+            .setEmission(emissionWings)
+            .setMaterial(materialWings));
+        
+        // Polygon tailRotorWingX;
+        rotor.add(createRectangleZRotate(center.add(new Vector(size * 5, size * 5, 0).normalize().scale(size * 5)).add(new Vector(size * 15, -size, 0)).add(new Vector(0, 0, size)),
+                                size * 5, size, angle)
+            .setEmission(emissionWings)
+            .setMaterial(materialWings));
+        // Polygon tailRotorWingY;
+        rotor.add(createRectangleZRotate(center.add(new Vector(size * 5, size * 5, 0).normalize().scale(size * 5)).add(new Vector(size * 15, -size, 0)).add(new Vector(0, 0, size)),
+                                size, size * 5, angle)
+            .setEmission(emissionWings)
+            .setMaterial(materialWings));
+        return rotor;
+    }
+
+    // method to retrn random emission color
+    Color getRandomEmission() {
+        return new Color(
+            (int)(Math.random() * 255),
+            (int)(Math.random() * 255),
+            (int)(Math.random() * 255)
+        );
     }
 }

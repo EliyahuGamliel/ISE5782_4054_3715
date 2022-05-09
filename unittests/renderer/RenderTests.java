@@ -2,6 +2,8 @@ package renderer;
 
 import org.junit.jupiter.api.Test;
 
+import static geometries.Utils.*;
+
 import geometries.*;
 import lighting.*;
 import models.hellicopter;
@@ -176,7 +178,7 @@ public class RenderTests {
 		camera.writeToImage();
 	}
 
-	@Test
+	// @Test
 	void basicCameraRotationTest() {
 		Scene scene = new Scene("Test scene")//
 				.setAmbientLight(new AmbientLight(new Color(255, 191, 191), //
@@ -212,7 +214,7 @@ public class RenderTests {
 	}
 
 
-	@Test
+	// @Test
 	void cameraRotationTest() {
 		Scene scene = new Scene("Test scene");
 
@@ -257,29 +259,66 @@ public class RenderTests {
 
 	@Test
 	void coolImageTest() {
-		Scene scene = new Scene("Test scene");
+		Geometries constGeometries = new Geometries();
 
-		scene.geometries.add(new hellicopter(new Point(0, 0, 0), 8));
+		hellicopter choper = new hellicopter(new Point(0, 0, 0), 8);
+		//add a plane to geometries as a background
+		constGeometries.add(new Plane(new Point(0, -100, -200), new Vector(0, 1, 0))
+									.setEmission(new Color(75, 0, 0))
+									.setMaterial(new Material().setkD(0.5).setkS(0.5).setShininess(300)));
 
-		scene.lights.add(new DirectionalLight(new Color(400, 255, 0), new Vector(1, -5, 1)));
-		scene.lights.add(new DirectionalLight(new Color(400, 0, 255), new Vector(0, -5, 3)));
-		scene.lights.add(new DirectionalLight(new Color(0, 0, 255), new Vector(-1, -5, -1)));
-		scene.lights.add(new DirectionalLight(new Color(100, 255, 0), new Vector(-1, -5, -7)));
-		scene.lights.add(new PointLight(new Color(500, 500, 0), new Point(0, 30, 10))
-				.setkL(0.0000003).setkQ(0.0000001));
-		scene.lights.add(new PointLight(new Color(500, 500, 0), new Point(40, 10 , -50))
-				.setkL(0.0000003).setkQ(0.0000001));
-		scene.lights.add(new SpotLight(new Color(0, 900, 0), new Point(-100, -70, 50), new Vector(1, -1, -2))
-				.setkL(0.0000000001).setkQ(0.000000001));
+		constGeometries.add(new Plane(new Point(-150, 0, 0), new Vector(1, 0, 1))
+									.setEmission(new Color(0, 75, 0))
+									.setMaterial(new Material().setkD(0.5).setkS(0.5).setShininess(300)));
+
+		//draw an H at the floor background
+		constGeometries.add(createRectangleY(new Point(0, -100+1, 25), 80, 12)
+									.setEmission(new Color(200, 200, 200))
+									.setMaterial(new Material().setkD(0.5).setkS(0.5).setShininess(300)));
+		constGeometries.add(createRectangleY(new Point(0, -100+1, -25), 80, 12)
+									.setEmission(new Color(200, 200, 200))
+									.setMaterial(new Material().setkD(0.5).setkS(0.5).setShininess(300)));
+		constGeometries.add(createRectangleY(new Point(0, -100+1, 0), 12, 50)
+									.setEmission(new Color(200, 200, 200))
+									.setMaterial(new Material().setkD(0.5).setkS(0.5).setShininess(300)));
+
+		constGeometries.add(new Circle(new Point(0, -100+0.5, 0), new Vector(0, 1, 0), 75)
+									.setEmission(new Color(0, 0, 75))
+									.setMaterial(new Material().setkD(0.5).setkS(0.5).setShininess(300)));
+
+		
+		// scene.lights.add(new DirectionalLight(new Color(400, 255, 0), new Vector(1, -5, 1)));
+		// scene.lights.add(new DirectionalLight(new Color(400, 0, 255), new Vector(0, -5, 3)));
+		// scene.lights.add(new DirectionalLight(new Color(0, 0, 255), new Vector(-1, -5, -1)));
+		// scene.lights.add(new PointLight(new Color(500, 500, 0), new Point(40, 10 , -50))
+		// 		.setkL(0.0000003).setkQ(0.0000001));
+		// scene.lights.add(new SpotLight(new Color(0, 900, 0), new Point(-100, -70, 50), new Vector(1, -1, -2))
+		// 		.setkL(0.0000000001).setkQ(0.000000001));
+
+		String imageName = new String("cool image/cool image %d");
+		ImageWriter imageWriter = new ImageWriter("", 1000, 1000);
 
 		Camera camera = new Camera(new Point(1000, 1000, 1000), new Vector(-1, -1, -1), new Vector(-1, 1, 0)) //
 			.setVPSize(150, 150) //
 			.setVPDistance(1000)
-			.setImageWriter(new ImageWriter("cool image", 1000, 1000))				
-			.setRayTracer(new RayTracerBasic(scene))
-			.spin(30);
+			.spin(30)
+			// .spinRightLeft(1)
+			.setImageWriter(imageWriter);	
 
-		camera.renderImage();
-		camera.writeToImage();
+		for (int i = 0; i < 90; i += 15) {
+			Scene scene = new Scene("Test scene");
+			scene.geometries.add(constGeometries);
+			scene.geometries.add(choper.rotatHellicopter(i));
+			
+
+			scene.lights.add(new DirectionalLight(new Color(255, 255, 255), new Vector(-1, -5, -7)));
+			scene.lights.add(new PointLight(new Color(100, 100, 100), new Point(0, 110, 50))
+					.setkL(0.0000003).setkQ(0.0000001));
+
+			camera.setRayTracer(new RayTracerBasic(scene));
+			camera.renderImage();
+			imageWriter.setImageName(String.format(imageName, i));
+			camera.writeToImage();
+		}
 	}
 }
