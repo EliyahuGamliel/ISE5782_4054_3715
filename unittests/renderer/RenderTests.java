@@ -273,13 +273,13 @@ public class RenderTests {
 
 		//draw an H at the floor background
 		constGeometries.add(createRectangleY(new Point(0, -100+1, 25), 80, 12)
-									.setEmission(new Color(200, 200, 200))
+									.setEmission(new Color(150, 150, 150))
 									.setMaterial(new Material().setkD(0.5).setkS(0.5).setShininess(300)));
 		constGeometries.add(createRectangleY(new Point(0, -100+1, -25), 80, 12)
-									.setEmission(new Color(200, 200, 200))
+									.setEmission(new Color(150, 150, 150))
 									.setMaterial(new Material().setkD(0.5).setkS(0.5).setShininess(300)));
 		constGeometries.add(createRectangleY(new Point(0, -100+1, 0), 12, 50)
-									.setEmission(new Color(200, 200, 200))
+									.setEmission(new Color(150, 150, 150))
 									.setMaterial(new Material().setkD(0.5).setkS(0.5).setShininess(300)));
 
 		constGeometries.add(new Circle(new Point(0, -100+0.5, 0), new Vector(0, 1, 0), 75)
@@ -314,6 +314,8 @@ public class RenderTests {
 			scene.lights.add(new DirectionalLight(new Color(255, 255, 255), new Vector(-1, -5, -7)));
 			scene.lights.add(new PointLight(new Color(100, 100, 100), new Point(0, 110, 50))
 					.setkL(0.0000003).setkQ(0.0000001));
+
+			camera.spinRightLeft(0.001);
 
 			camera.setRayTracer(new RayTracerBasic(scene));
 			camera.renderImage();
