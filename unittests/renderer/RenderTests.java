@@ -264,28 +264,50 @@ public class RenderTests {
 		hellicopter choper = new hellicopter(new Point(0, 0, 0), 8);
 		//add a plane to geometries as a background
 		constGeometries.add(new Plane(new Point(0, -100, -200), new Vector(0, 1, 0))
-									.setEmission(new Color(75, 0, 0))
-									.setMaterial(new Material().setkD(0.5).setkS(0.5).setShininess(300)));
+									.setEmission(new Color(155, 118, 83))
+									.setMaterial(new Material().setkD(0.2).setkS(0.5).setShininess(100)));
 
 		constGeometries.add(new Plane(new Point(-150, 0, 0), new Vector(1, 0, 1))
-									.setEmission(new Color(0, 75, 0))
-									.setMaterial(new Material().setkD(0.5).setkS(0.5).setShininess(300)));
+									.setEmission(new Color(135, 206, 235))
+									.setMaterial(new Material().setkD(0.2).setkS(0.5).setShininess(100)));
 
 		//draw an H at the floor background
-		constGeometries.add(createRectangleY(new Point(0, -100+1, 25), 80, 12)
+		constGeometries.add(createRectangleY(new Point(0, -100+0.9, 25), 80, 18)
+									.setEmission(new Color(58, 58, 58))
+									.setMaterial(new Material().setkD(0.5).setkS(0.5).setShininess(300)));
+		constGeometries.add(createRectangleY(new Point(0, -100+0.9, -25), 80, 18)
+									.setEmission(new Color(58, 58, 58))
+									.setMaterial(new Material().setkD(0.5).setkS(0.5).setShininess(300)));
+		constGeometries.add(createRectangleY(new Point(0, -100+0.9, 0), 20, 50)
+									.setEmission(new Color(58, 58, 58))
+									.setMaterial(new Material().setkD(0.5).setkS(0.5).setShininess(300)));
+
+		constGeometries.add(createRectangleY(new Point(0, -100+1, 25), 74, 12)
 									.setEmission(new Color(150, 150, 150))
 									.setMaterial(new Material().setkD(0.5).setkS(0.5).setShininess(300)));
-		constGeometries.add(createRectangleY(new Point(0, -100+1, -25), 80, 12)
+		constGeometries.add(createRectangleY(new Point(0, -100+1, -25), 74, 12)
 									.setEmission(new Color(150, 150, 150))
 									.setMaterial(new Material().setkD(0.5).setkS(0.5).setShininess(300)));
-		constGeometries.add(createRectangleY(new Point(0, -100+1, 0), 12, 50)
+		constGeometries.add(createRectangleY(new Point(0, -100+1, 0), 14, 50)
 									.setEmission(new Color(150, 150, 150))
 									.setMaterial(new Material().setkD(0.5).setkS(0.5).setShininess(300)));
 
-		constGeometries.add(new Circle(new Point(0, -100+0.5, 0), new Vector(0, 1, 0), 75)
-									.setEmission(new Color(0, 0, 75))
+		//draw an circel around the H at the floor background				
+		constGeometries.add(new Circle(new Point(0, -100+0.5, 0), new Vector(0, 1, 0), 81)
+									.setEmission(new Color(58, 58, 58))
 									.setMaterial(new Material().setkD(0.5).setkS(0.5).setShininess(300)));
 
+		constGeometries.add(new Circle(new Point(0, -100+0.6, 0), new Vector(0, 1, 0), 78)
+									.setEmission(new Color(255, 211, 25))
+									.setMaterial(new Material().setkD(0.5).setkS(0.5).setShininess(300)));
+
+		constGeometries.add(new Circle(new Point(0, -100+0.7, 0), new Vector(0, 1, 0), 68)
+									.setEmission(new Color(58, 58, 58))
+									.setMaterial(new Material().setkD(0.5).setkS(0.5).setShininess(300)));
+
+		constGeometries.add(new Circle(new Point(0, -100+0.8, 0), new Vector(0, 1, 0), 65)
+									.setEmission(new Color(93, 93, 93))
+									.setMaterial(new Material().setkD(0.5).setkS(0.5).setShininess(300)));
 		
 		// scene.lights.add(new DirectionalLight(new Color(400, 255, 0), new Vector(1, -5, 1)));
 		// scene.lights.add(new DirectionalLight(new Color(400, 0, 255), new Vector(0, -5, 3)));
@@ -302,7 +324,7 @@ public class RenderTests {
 			.setVPSize(150, 150) //
 			.setVPDistance(1000)
 			.spin(30)
-			// .spinRightLeft(1)
+			.spinRightLeft(0.0001)
 			.setImageWriter(imageWriter);	
 
 		for (int i = 0; i < 90; i += 15) {
@@ -315,7 +337,7 @@ public class RenderTests {
 			scene.lights.add(new PointLight(new Color(100, 100, 100), new Point(0, 110, 50))
 					.setkL(0.0000003).setkQ(0.0000001));
 
-			camera.spinRightLeft(0.001);
+			// camera.spinRightLeft(0.001);
 
 			camera.setRayTracer(new RayTracerBasic(scene));
 			camera.renderImage();
