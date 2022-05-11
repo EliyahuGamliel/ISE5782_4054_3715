@@ -2,7 +2,10 @@ package renderer;
 
 import primitives.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.MissingResourceException;
+import java.util.stream.Collectors;
 
 import static primitives.Util.*;
 
@@ -17,6 +20,7 @@ public class Camera {
     private double distance;
     private ImageWriter imageWriter;
     private RayTracerBase rayTracerBase;
+    private Scatterer scatterer;
 
     /**
      * create a camera specifying the location and the To and Up vectors
@@ -73,6 +77,11 @@ public class Camera {
         return this;
     }
 
+    public Camera setScatterer(Scatterer scatterer) {
+        this.scatterer = scatterer;
+        return this;
+    }
+
     /**
      * set the View Plane size
      * @param width the width of the VP
@@ -112,6 +121,31 @@ public class Camera {
         return new Ray(location, ijV);
     }
 
+
+    /**
+     * create a ray from the camera through a specific pixel in the View Plane
+     * @param nX how many pixels are in the X dim
+     * @param nY how many pixels are in the Y dim
+     * @param j the pixel to go through X dim
+     * @param i the pixel to go through Y dim
+     * @return the constructed Ray
+     */
+    public List<Ray> constructBeamOfRay(int nX, int nY, int j, int i) {
+        Point imgCenter = location.add(vTo.scale(distance));
+        double rY = height / nY, rX = width / nX;
+        double iY = -(i - (nY - 1d) / 2) * rY, jX = (j - (nX - 1d) / 2) * rX;
+        Point ijP = imgCenter;
+        if (jX != 0) ijP = ijP.add(vRight.scale(jX));
+        if (iY != 0) ijP = ijP.add(vUp.scale(iY));
+        List<Point> ijPs = scatterer.createPointsAround(ijP, rX, rY, vRight, vUp);
+        List<Ray> rays = new ArrayList<>();
+        for (Point p : ijPs) {
+            Vector ijV = p.subtract(location);
+            rays.add(new Ray(location, ijV));
+        }
+        return rays;
+    }
+
     /**
      * construct a ray from the camera throu a specific pixel in the View Plane
      * and get the color of the pixel
@@ -122,9 +156,20 @@ public class Camera {
      * @return the color of the pixel
      */
     private Color castRay(int nX, int nY, int j, int i) {
-        Ray ray = this.constructRay(nX, nY, j, i);
-        return rayTracerBase.traceRay(ray);
+        if (scatterer != null) {
+            List<Ray> rays = constructBeamOfRay(nX, nY, j, i);
+            List<Color> colors = rays.stream()
+                            .map(ray -> rayTracerBase.traceRay(ray))
+                            .collect(Collectors.toList());
+            Color averageColor = Util.calcColorAverage(colors);
+            return averageColor;
+        }
+        else {
+            Ray ray = this.constructRay(nX, nY, j, i);
+            return rayTracerBase.traceRay(ray);
+        }
     }
+
 
     public Camera renderImage() {
         if (imageWriter == null)
