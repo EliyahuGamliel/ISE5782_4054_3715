@@ -1,5 +1,7 @@
 package primitives;
 
+import java.util.List;
+
 /**
  * Util class is used for some internal utilities, e.g. controlling accuracy
  * 
@@ -69,8 +71,27 @@ public abstract class Util {
 		return Math.random() * (max - min) + min;
 	}
 
+	/**
+	 * return 1 or -1 respectively to the sign of the number
+	 * @param number
+	 * @return 1 or -1
+	 */
 	public static int getSign(double number) {
 		return number < 0 ? -1 : 1;
 	}
+
+	/**
+	 * calculate the average of a list of Color
+	 * @param colors
+	 * @return the average color
+	 */
+    public static Color calcColorAverage(List<Color> colors) {
+        Color averageColor = new Color(0, 0, 0);
+        for (Color color : colors) {
+            averageColor = averageColor.add(color);
+        }
+        averageColor = averageColor.reduce(colors.size());
+        return averageColor;
+    }
 
 }
