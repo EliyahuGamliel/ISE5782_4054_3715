@@ -35,6 +35,12 @@ public class SceneXMLHandler extends DefaultHandler {
         } else if (qName.equalsIgnoreCase("triangle")) {
             Map<String, String> triangle = attributesToMap(attributes);
             sceneDescriptor.triangles.add(triangle);
+        } else if (qName.equalsIgnoreCase("point")) {
+            Map<String, String> point = attributesToMap(attributes);
+            sceneDescriptor.points.add(point);
+        } else if (qName.equalsIgnoreCase("polygon")) {
+            Map<String, String> polygon = attributesToMap(attributes);
+            sceneDescriptor.polygons.add(polygon);
         }
     }
     

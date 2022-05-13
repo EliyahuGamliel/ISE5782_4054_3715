@@ -40,4 +40,24 @@ public class Utils {
 		Point p2 = makePointFromString(p2String);
 		return new Triangle(p0, p1, p2);
 	}
+
+	public static Polygon makePolygon(Map<String, String> polygonString) {
+		String q0String = polygonString.get("q0");
+		Point q0 = makePointFromString(q0String);
+		String q1String = polygonString.get("q1");
+		Point q1 = makePointFromString(q1String);
+		String q2String = polygonString.get("q2");
+		Point q2 = makePointFromString(q2String);
+		return new Polygon(q0, q1, q2);
+	}
+
+	public static Polygon makePoint(Map<String, String> pointString) {
+		String q0String = pointString.get("d1");
+		Point q0 = makePointFromString(q0String);
+		String q1String = pointString.get("d2");
+		Point q1 = makePointFromString(q1String);
+		String q2String = pointString.get("d3");
+		Point q2 = makePointFromString(q2String);
+		return new Polygon(q0, q1, q2);
+	}
 }
