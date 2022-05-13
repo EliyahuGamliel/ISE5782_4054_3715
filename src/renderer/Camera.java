@@ -21,6 +21,7 @@ public class Camera {
     private ImageWriter imageWriter;
     private RayTracerBase rayTracerBase;
     private Scatterer scatterer;
+    private boolean antiAlising = false;
 
     /**
      * create a camera specifying the location and the To and Up vectors
@@ -65,6 +66,14 @@ public class Camera {
     }
     public RayTracerBase getRayTracerBase() {
         return rayTracerBase;
+    }
+    public boolean isAntiAlising() {
+        return antiAlising;
+    }
+
+    public Camera setAntiAlising(boolean antiAlising) {
+        this.antiAlising = antiAlising;
+        return this;
     }
 
     public Camera setImageWriter(ImageWriter imageWriter) {
@@ -156,20 +165,20 @@ public class Camera {
      * @return the color of the pixel
      */
     private Color castRay(int nX, int nY, int j, int i) {
-        if (scatterer != null) {
+        Color c;
+        if (antiAlising) {
             List<Ray> rays = constructBeamOfRay(nX, nY, j, i);
             List<Color> colors = rays.stream()
                             .map(ray -> rayTracerBase.traceRay(ray))
                             .collect(Collectors.toList());
-            Color averageColor = Util.calcColorAverage(colors);
-            return averageColor;
+            c = Util.calcColorAverage(colors);
         }
         else {
-            Ray ray = this.constructRay(nX, nY, j, i);
-            return rayTracerBase.traceRay(ray);
+            Ray ray = constructRay(nX, nY, j, i);
+            c = rayTracerBase.traceRay(ray);
         }
+        return c;
     }
-
 
     public Camera renderImage() {
         if (imageWriter == null)
@@ -213,7 +222,7 @@ public class Camera {
 
     /**
      * spin the camera 'angle' degrees clockwise around the To vector
-     * @param angleRad the angle we want to spin the camera
+     * @param angle the angle we want to spin the camera
      * @return this instance of camera
      */
     public Camera spin(double angle) {

@@ -11,7 +11,7 @@ public interface Scatterer {
      * @param p the point
      * @param rX length of pixel in x dimension
      * @param rY length of pixel in y dimension
-     * @param vRught the vector to the right
+     * @param vRight the vector to the right
      * @param vUp the vector to the up
      * @return list of scattered points
      */

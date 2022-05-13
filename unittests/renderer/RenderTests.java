@@ -400,32 +400,4 @@ public class RenderTests {
 			camera.writeToImage();
 		}
 	}
-
-	@Test
-	void antiAlisingTest() {
-		Scene scene = new Scene("Test scene");
-		Camera camera = new Camera(new Point(0, 0, 1000), new Vector(0, 0, -1), new Vector(0, 1, 0)) //
-				.setVPSize(200, 200).setVPDistance(1000);
-
-		scene.setAmbientLight(new AmbientLight(new Color(WHITE), new Double3(0.15)));
-
-		scene.geometries.add( //
-				new Triangle(new Point(-150, -150, -115), new Point(150, -150, -135), new Point(75, 75, -150)) //
-						.setMaterial(new Material().setkD(0.5).setkS(0.5).setShininess(60)), //
-				new Triangle(new Point(-150, -150, -115), new Point(-70, 70, -140), new Point(75, 75, -150)) //
-						.setMaterial(new Material().setkD(0.5).setkS(0.5).setShininess(60)), //
-				new Sphere(new Point(60, 50, -50), 30d).setEmission(new Color(BLUE)) //
-						.setMaterial(new Material().setkD(0.2).setkS(0.2).setShininess(30).setkT(0.6)));
-
-		scene.lights.add(new SpotLight(new Color(700, 400, 400), new Point(60, 50, 0), new Vector(0, 0, -1)) //
-				.setkL(4E-5).setkQ(2E-7));
-
-		ImageWriter imageWriter = new ImageWriter("anti alising test", 600, 600);
-		camera.setImageWriter(imageWriter) //
-				.setRayTracer(new RayTracerBasic(scene)) //
-				.setScatterer(new GridScatter(3, 3))
-				.renderImage() //
-				.writeToImage();
-	}
-		
 }
