@@ -80,6 +80,48 @@ public class hellicopter extends Geometries {
                             size)
                     .setEmission(emissionTail)
                     .setMaterial(materialTail));
+        //right leg head
+        body.add(new Cylinder(new Ray(center, new Vector(-7, -14, -8)),
+                size / 4,
+                size*8)
+                .setEmission(emission)
+                .setMaterial(material));
+
+        //right leg tail
+        body.add(new Cylinder(new Ray(center, new Vector(7 , -14, -8)),
+                size / 4,
+                size * 8)
+                .setEmission(emission)
+                .setMaterial(material));
+
+        //right leg
+        body.add(new Cylinder(new Ray(new Point( -0.5 * 8 * size, -0.83 * size * 8, -0.47 * size * 8), new Vector(14*size, 0, 0)),
+                size / 2,
+                size * 8)
+                .setEmission(emission)
+                .setMaterial(material));
+
+        //right leg head
+        body.add(new Cylinder(new Ray(center, new Vector(-7, -14, 8)),
+                size / 4,
+                size*8)
+                .setEmission(emission)
+                .setMaterial(material));
+
+        //right leg tail
+        body.add(new Cylinder(new Ray(center, new Vector(7 , -14, 8)),
+                size / 4,
+                size * 8)
+                .setEmission(emission)
+                .setMaterial(material));
+
+        //right leg
+        body.add(new Cylinder(new Ray(new Point( -0.5 * 8 * size, -0.83 * size * 8, 0.47 * size * 8), new Vector(14*size, 0, 0)),
+                size / 2,
+                size * 8)
+                .setEmission(emission)
+                .setMaterial(material));
+
         return body;
     }
 

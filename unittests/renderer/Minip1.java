@@ -6,6 +6,7 @@ import models.hellicopter;
 import org.junit.jupiter.api.Test;
 import primitives.*;
 import scene.Scene;
+import scene.SceneBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -96,6 +97,8 @@ public class Minip1 {
                 .setVPDistance(700)
                 .spinRightLeft(0.0001)
                 .setImageWriter(imageWriter);
+                //.setScatterer(new GridScatter(3, 3))//
+                //.setAntiAlising(true);
 
         ImageWriter imageWriter2 = new ImageWriter("anti alising test 2", 1000, 1000);
 
