@@ -102,9 +102,9 @@ public class Minip1 {
                 .setVPSize(150, 150) //
                 .setVPDistance(700)
                 .spinRightLeft(0.0001)
-                .setImageWriter(imageWriter);
-                //.setScatterer(new GridScatter(3, 3))//
-                //.setAntiAlising(true);
+                .setImageWriter(imageWriter)
+                .setScatterer(new GridScatter(3, 3))//
+                .setAntiAlising(true);
 
         ImageWriter imageWriter2 = new ImageWriter("anti alising test 2", 1000, 1000);
 
@@ -146,7 +146,7 @@ public class Minip1 {
         scene.setBackground(new Color(135, 206, 235));
         scene.setAmbientLight(new AmbientLight(new Color(255, 0, 0),new Double3(1)));
         ImageWriter imageWriter = new ImageWriter("Ship", 1000, 1000);
-        parser modelParser = new parser("/Users/lyhwgmlyl/Downloads/abc.obj") ;
+        parser modelParser = new parser("scenes/ship2.obj") ;
         scene.geometries.add(modelParser.getFaces().scale(2).rotate(0,new Vector(0,1,0)).getTriangles().stream().map((e)->(Intersectable)e.setEmission(new Color(BLUE).reduce(2)) //
                 .setMaterial(new Material().setkD(new Double3(0.5)).setkS(new Double3(0.5)).setShininess(300))).toArray(Intersectable[]::new));
 
