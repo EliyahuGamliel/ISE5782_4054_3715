@@ -103,8 +103,7 @@ public class Minip1 {
                 .setVPDistance(700)
                 .spinRightLeft(0.0001)
                 .setImageWriter(imageWriter)
-                .setScatterer(new GridScatter(3, 3))//
-                .setAntiAlising(true);
+                .setScatterer(new GridScatter(3, 3));
 
         ImageWriter imageWriter2 = new ImageWriter("anti alising test 2", 1000, 1000);
 
