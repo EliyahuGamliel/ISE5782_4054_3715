@@ -259,4 +259,32 @@ public class Minip1 {
         camera.renderImage();
         camera.writeToImage();
     }
+
+    @Test
+    void softShadowTest() {
+        Scene scene = new Scene("the soft shadow test");
+
+        scene.geometries.add(new Plane(new Point(0, 0, 0), new Vector(0, 1, 0))
+                .setEmission(new Color(0, 50, 0))
+                .setMaterial(new Material().setkD(0.5).setkS(0.5).setShininess(300)));
+        scene.geometries.add(new Sphere(new Point(0, 50, 0), 50)
+                .setEmission(new Color(50, 0, 0))
+                .setMaterial(new Material().setkD(0.5).setkS(0.5).setShininess(300)));
+
+        // scene.lights.add(new PointLight(new Color(100,100,100), new Point(0, 200, 0))
+        //         .setkL(0.0000003).setkQ(0.0000001));
+        scene.lights.add(new CirclesLight(new Color(100,100,100), new Point(100, 200, 0), new Vector(0, -1, 0), 100)
+                .setkL(0.0000003).setkQ(0.0000001));
+
+        Camera camera = new Camera(new Point(-200, 200, 200), new Vector(1, -1, -1), new Vector(1, 0, 1))
+                .setVPSize(100, 100)
+                .setVPDistance(150)
+                .setImageWriter(new ImageWriter("soft shadow", 700, 700))
+                .setRayTracer(new RayTracerBasic(scene))
+                .setScatterer(new GridScatter(3, 3))
+                .spin(-90);
+
+        camera.renderImage();
+        camera.writeToImage();
+    }
 }

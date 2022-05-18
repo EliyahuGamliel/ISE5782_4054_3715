@@ -5,8 +5,8 @@ import primitives.Point;
 import primitives.Vector;
 
 public class PointLight extends Light implements LightSource {
-    private final Point position;
-    private double kC = 1, kL = 0, kQ = 0;
+    protected final Point position;
+    protected double kC = 1, kL = 0, kQ = 0;
     
     
     public PointLight(Color intensity, Point position) {
@@ -52,5 +52,4 @@ public class PointLight extends Light implements LightSource {
         this.kQ = kQ;
         return this;
     }
-
 }
