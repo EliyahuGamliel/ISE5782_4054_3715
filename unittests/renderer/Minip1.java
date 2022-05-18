@@ -143,11 +143,10 @@ public class Minip1 {
         // Open a stream to your OBJ resource
         Scene scene = new Scene("Test scene");
         scene.setBackground(new Color(135, 206, 235));
-        scene.setAmbientLight(new AmbientLight(new Color(255, 0, 0),new Double3(1)));
-        ImageWriter imageWriter = new ImageWriter("Ship", 1000, 1000);
+        ImageWriter imageWriter = new ImageWriter("Ship", 5000, 5000);
         parser modelParser = new parser("scenes/ship2.obj") ;
         scene.geometries.add(modelParser.getFaces().scale(2).rotate(0,new Vector(0,1,0)).getTriangles().stream().map((e)->(Intersectable)e.setEmission(new Color(75,83,32)) //
-                .setMaterial(new Material().setkD(new Double3(0.5)).setkS(new Double3(0.5)).setShininess(300))).toArray(Intersectable[]::new));
+                .setMaterial(new Material().setkD(0.15).setkS(0.5).setShininess(300))).toArray(Intersectable[]::new));
 
         scene.lights.add(new DirectionalLight(trCL, trDL));
         scene.lights.add(new DirectionalLight(trCL, new Vector(2,2,2)));
