@@ -1,6 +1,8 @@
 package geometries;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import primitives.*;
@@ -12,7 +14,7 @@ import static primitives.Util.*;
  * 
  * @author Dan
  */
-public class Polygon extends Geometry {
+public class Polygon extends Geometry implements BoxAble{
 	/**
 	 * List of polygon's vertices
 	 */
@@ -22,6 +24,10 @@ public class Polygon extends Geometry {
 	 */
 	protected Plane plane;
 	private int size;
+	/**
+	 * the box that bounds this polygon
+	 */
+	protected Box _boundingBox =null;
 
 	/**
 	 * Polygon constructor based on vertices list. The list must be ordered by edge
@@ -123,5 +129,35 @@ public class Polygon extends Geometry {
 			newGeoPoints.add(new GeoPoint(this, geo.point));
 		}
 		return newGeoPoints;
+	}
+
+	@Override
+	public Box getBox() {
+
+		if(_boundingBox==null){
+			_boundingBox = BuildBox();
+		}
+
+		return _boundingBox;
+	}
+
+
+	private Box BuildBox(){
+		// calc the bounding box. the BB minimum point is the point with the minimal coords from all the vertices.
+		// in order to cover all the points, we should find the maximum x,y,z coord, and the box is Box(Point(x_min,y_min,z_min),Point(x_max,y_max,z_max))
+		Comparator<Point> x = Comparator.comparing(Point::getX); // comparator that finds the min and max x from all the points
+		Comparator<Point> y = Comparator.comparing(Point::getY); //comparator that finds the min and max y from all the points
+		Comparator<Point> z = Comparator.comparing(Point::getZ); //comparator that finds the min and max z from all the points
+
+		double maxX = Collections.max(vertices, x).getX();
+		double minX = Collections.min(vertices,x).getX();
+
+		double maxY = Collections.max(vertices, y).getY();
+		double minY = Collections.min(vertices,y).getY();
+
+		double maxZ = Collections.max(vertices, z).getZ();
+		double minZ = Collections.min(vertices,z).getZ();
+
+		return new Box(new Point(minX,minY,minZ),new Point(maxX,maxY,maxZ));
 	}
 }

@@ -9,10 +9,15 @@ import java.util.List;
 /**
  * sort of a ball
  */
-public class Sphere extends Geometry {
+public class Sphere extends Geometry implements BoxAble {
     
     final private Point center;
     final private double radius;
+
+    /**
+     * the box that bounds this sphere
+     */
+    private Box _boundingBox=null;
 
     /**
      * create a sphere with point and a radius
@@ -84,5 +89,21 @@ public class Sphere extends Geometry {
             points.add(new GeoPoint(this, p));
         }
         return points;
+    }
+
+    @Override
+    public Box getBox() {
+        if(_boundingBox==null){
+            _boundingBox=BuildBox();
+        }
+        return _boundingBox;
+    }
+
+    private Box BuildBox() {
+        // init the bounding box. the first point of this box is the most low point of the sphere, and the second is the most high point of the sphere.
+        double x = center.getX(),y= center.getY(),z=center.getZ();
+        Point min = new Point(x-radius,y-radius,z-radius); // calculates the most low point of the sphere
+        Point max = new Point(x+radius,y+radius,z+radius); // calculates the most high point of the sphere
+        return new Box(min,max);
     }
 }

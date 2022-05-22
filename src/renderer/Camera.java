@@ -1,5 +1,6 @@
 package renderer;
 
+import geometries.Geometries;
 import primitives.*;
 
 import java.util.ArrayList;
@@ -175,6 +176,9 @@ public class Camera {
 
         if (rayTracerBase == null)
             throw new MissingResourceException("Camera resource not set", "Camera", "Ray Tracer Base");
+
+        if(Geometries.DoBoundingBox)
+            rayTracerBase.scene.geometries.ReArrange();
 
         int nX = imageWriter.getNx();
         int nY = imageWriter.getNy();
