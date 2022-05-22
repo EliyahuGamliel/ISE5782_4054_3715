@@ -5,21 +5,15 @@ import geometries.*;
 import lighting.*;
 import models.hellicopter;
 import org.junit.jupiter.api.Test;
-import org.xml.sax.SAXException;
 import per.mokiat.data.front.error.WFException;
 import primitives.*;
 import scene.Scene;
-import scene.SceneBuilder;
 
-import javax.xml.parsers.ParserConfigurationException;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import static geometries.Utils.createRectangleY;
-import static java.awt.Color.BLUE;
-import static java.awt.Color.WHITE;
 
 public class Minip1 {
 
@@ -361,11 +355,15 @@ public class Minip1 {
         scene.geometries.add(new Plane(new Point(0, 0, 0), new Vector(0, 1, 0))
                 .setEmission(new Color(0, 50, 0))
                 .setMaterial(new Material().setkD(0.5).setkS(0.5).setShininess(300)));
-        scene.geometries.add(new Sphere(new Point(0, 50, 0), 50)
+        // scene.geometries.add(new Sphere(new Point(0, 50, 0), 50)
+        //         .setEmission(new Color(50, 0, 0))
+        //         .setMaterial(new Material().setkD(0.5).setkS(0.5).setShininess(300)));
+        scene.geometries.add(new Cylinder(new Ray(new Point(0, 0, 0), new Vector(0, 1, 0)), 20, 60)
                 .setEmission(new Color(50, 0, 0))
                 .setMaterial(new Material().setkD(0.5).setkS(0.5).setShininess(300)));
 
-        scene.lights.add(new CirclesLight(new Color(100,100,100), new Point(0, 200, 0), new Vector(0, -1, 0), 100)
+        scene.lights.add(new CirclesLight(new Color(100,100,100), new Point(300, 200, 0), new Vector(0, -1, 0), 50)
+                .setNumOfShadowRays(50)
                 .setkL(0.0000003).setkQ(0.0000001));
 
         Camera camera = new Camera(new Point(-200, 200, 200), new Vector(1, -1, -1), new Vector(1, 0, 1))
