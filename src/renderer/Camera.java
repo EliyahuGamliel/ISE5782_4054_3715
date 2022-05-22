@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.MissingResourceException;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static primitives.Util.*;
 
@@ -178,16 +179,16 @@ public class Camera {
         int nX = imageWriter.getNx();
         int nY = imageWriter.getNy();
 
-        for (int j = 0; j < nX; j++) {
-            for (int i = 0; i < nY; i++) {
+        IntStream.range(0, nY).parallel().forEach(i -> {
+            IntStream.range(0, nX).parallel().forEach(j -> { 
                 Color color = this.castRay(nX, nY, j, i);
                 imageWriter.writePixel(j, i, color);
-            }
-        }
+            });
+        });
         return this;
     }
 
-    public void printGrid(int interval, Color color) {
+    public Camera printGrid(int interval, Color color) {
         if (imageWriter == null)
             throw new MissingResourceException("Camera resource not set", "Camera", "Image writer");
 
@@ -199,6 +200,7 @@ public class Camera {
                 imageWriter.writePixel(j, i, color);
                 imageWriter.writePixel(i, j, color);
             }
+        return this;
     }
 
     public void writeToImage() {
