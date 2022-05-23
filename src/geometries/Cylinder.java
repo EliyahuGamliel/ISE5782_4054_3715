@@ -10,7 +10,7 @@ import static primitives.Util.*;
 /**
  *  a finite tube
  */
-public class Cylinder extends Tube {
+public class Cylinder extends Tube implements Boundable {
     final private double height;
 
     /**
@@ -51,6 +51,51 @@ public class Cylinder extends Tube {
 
         if (res.size() == 0)
             return null;
+        return res;
+    }
+
+    @Override
+    public AxisAlignedBoundingBox getBoundingBox() {
+        double minX, minY, minZ, maxX, maxY, maxZ;
+
+        Point o1 = exisRay.getP0();//middle of first end
+        Point o2 = o1.add(exisRay.getDir().scale(height));//middle of second end
+
+
+        //middle point of side circles plus a radius offset is a good approximation for the bounding box
+        if (o1.getX() > o2.getX()) {
+            maxX = o1.getX() + radius;
+            minX = o2.getX() - radius;
+        }
+
+        else {
+            maxX = o2.getX() + radius;
+            minX = o1.getX() - radius;
+        }
+
+        if (o1.getY() > o2.getY()) {
+            maxY = o1.getY() + radius;
+            minY = o2.getY() - radius;
+        }
+
+        else {
+            maxY = o2.getY() + radius;
+            minY = o1.getY() - radius;
+        }
+
+        if (o1.getZ() > o2.getZ()) {
+            maxZ = o1.getZ() + radius;
+            minZ = o2.getZ() - radius;
+        }
+
+        else {
+            maxZ = o2.getZ() + radius;
+            minZ = o1.getZ() - radius;
+        }
+
+        AxisAlignedBoundingBox res = new AxisAlignedBoundingBox(minX,minY,minZ,maxX,maxY,maxZ);
+        res.addToContains(this);
+
         return res;
     }
 }

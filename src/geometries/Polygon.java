@@ -14,7 +14,7 @@ import static primitives.Util.*;
  * 
  * @author Dan
  */
-public class Polygon extends Geometry implements BoxAble{
+public class Polygon extends Geometry implements Boundable {
 	/**
 	 * List of polygon's vertices
 	 */
@@ -24,10 +24,6 @@ public class Polygon extends Geometry implements BoxAble{
 	 */
 	protected Plane plane;
 	private int size;
-	/**
-	 * the box that bounds this polygon
-	 */
-	protected Box _boundingBox =null;
 
 	/**
 	 * Polygon constructor based on vertices list. The list must be ordered by edge
@@ -132,32 +128,27 @@ public class Polygon extends Geometry implements BoxAble{
 	}
 
 	@Override
-	public Box getBox() {
+	public AxisAlignedBoundingBox getBoundingBox() {
+		double minX, minY, minZ, maxX, maxY, maxZ;
 
-		if(_boundingBox==null){
-			_boundingBox = BuildBox();
+		minX = maxX = vertices.get(0).getX();
+		minY = maxY = vertices.get(0).getY();
+		minZ = maxZ = vertices.get(0).getZ();
+
+		//find the furthest coordinates of the pyramid's vertices
+		for(int i=1; i<vertices.size(); i++)
+		{
+			if(vertices.get(i).getX() > maxX) { maxX = vertices.get(i).getX();}
+			if(vertices.get(i).getY() > maxY) { maxY = vertices.get(i).getY();}
+			if(vertices.get(i).getZ() > maxZ) { maxZ = vertices.get(i).getZ();}
+			if(vertices.get(i).getX() < minX) { minX = vertices.get(i).getX();}
+			if(vertices.get(i).getY() < minY) { minY = vertices.get(i).getY();}
+			if(vertices.get(i).getZ() < minZ) { minZ = vertices.get(i).getZ();}
 		}
 
-		return _boundingBox;
-	}
+		AxisAlignedBoundingBox res = new AxisAlignedBoundingBox(minX,minY,minZ,maxX,maxY,maxZ);
+		res.addToContains(this);
 
-
-	private Box BuildBox(){
-		// calc the bounding box. the BB minimum point is the point with the minimal coords from all the vertices.
-		// in order to cover all the points, we should find the maximum x,y,z coord, and the box is Box(Point(x_min,y_min,z_min),Point(x_max,y_max,z_max))
-		Comparator<Point> x = Comparator.comparing(Point::getX); // comparator that finds the min and max x from all the points
-		Comparator<Point> y = Comparator.comparing(Point::getY); //comparator that finds the min and max y from all the points
-		Comparator<Point> z = Comparator.comparing(Point::getZ); //comparator that finds the min and max z from all the points
-
-		double maxX = Collections.max(vertices, x).getX();
-		double minX = Collections.min(vertices,x).getX();
-
-		double maxY = Collections.max(vertices, y).getY();
-		double minY = Collections.min(vertices,y).getY();
-
-		double maxZ = Collections.max(vertices, z).getZ();
-		double minZ = Collections.min(vertices,z).getZ();
-
-		return new Box(new Point(minX,minY,minZ),new Point(maxX,maxY,maxZ));
+		return res;
 	}
 }
