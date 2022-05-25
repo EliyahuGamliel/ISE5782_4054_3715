@@ -3,6 +3,7 @@ package geometries;
 import primitives.Point;
 import primitives.Ray;
 
+import java.io.Console;
 import java.util.*;
 
 public class Geometries extends Intersectable {
@@ -47,7 +48,8 @@ public class Geometries extends Intersectable {
             }
 
             // create a aabb tree for the boundable geometries and add the tree to the geometry list
-            geos.add(AxisAlignedBoundingBox.createTree(boundables));
+            if (AxisAlignedBoundingBox.createTree(boundables) != null)
+                geos.add(AxisAlignedBoundingBox.createTree(boundables));
 
             this.geometries = geos;
         } else
@@ -66,11 +68,12 @@ public class Geometries extends Intersectable {
 
             //add all the un-boundable ones to the ones that are bounded in boxes
             for (Intersectable item : this.geometries) {
-                if (item instanceof Geometry) {
+                if (item instanceof Geometry)
                     geos.add(item);
-                } else {
+                else if (item instanceof Geometries)
+                        geos.add(item);
+                else
                     geos.addAll(((AxisAlignedBoundingBox) item).getAllGeometries());
-                }
             }
 
             // Add all new geometries to the existing ones

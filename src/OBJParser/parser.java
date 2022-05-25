@@ -40,9 +40,4 @@ public class parser {
         }
         return new parserModel(lstPackage) ;
     }
-
-    
-
-
-
 }
