@@ -31,35 +31,39 @@ public class Triangle extends Polygon {
 
     @Override
     public List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double maxDistance) {
-        int len = vertices.size();
 		Point p0 = ray.getP0();
 		Vector v = ray.getDir();
-		List<Vector> vectors = new ArrayList<Vector>(len);
 
-		//all the vectors
-		for (Point vertex : vertices) {
-			vectors.add(vertex.subtract(p0));
-		}
+		Vector v0 = vertices.get(0).subtract(p0);
+		Vector v1 = vertices.get(1).subtract(p0);
+		Vector v2 = vertices.get(2).subtract(p0);
 
-		int sign = 0;
-		for (int i = 0; i < len; i++) {
-			// calculate the normal using the formula in the course slides
-			Vector N = vectors.get(i).crossProduct(vectors.get((i+1)%len)).normalize();
-			double dotProd = v.dotProduct(N);
+		// calculate the normal using the formula in the course slides
+		Vector N = v0.crossProduct(v1).normalize();
+		double dotProd = v.dotProduct(N);
 
-			if (i == 0)
-				sign = dotProd > 0 ? 1 : -1;
+		int sign = dotProd > 0 ? 1 : -1;
 
-			if (!checkSign(sign,dotProd) || isZero(dotProd))
+		if (!checkSign(sign,dotProd) || isZero(dotProd))
 				return null;
-		}
+
+		// calculate the normal using the formula in the course slides
+		N = v1.crossProduct(v2).normalize();
+		dotProd = v.dotProduct(N);
+
+		if (!checkSign(sign,dotProd) || isZero(dotProd))
+				return null;
+
+		// calculate the normal using the formula in the course slides
+		N = v2.crossProduct(v0).normalize();
+		dotProd = v.dotProduct(N);
+
+		if (!checkSign(sign,dotProd) || isZero(dotProd))
+				return null;
+				
 		List<GeoPoint> geoPoints = plane.findGeoIntersectionsHelper(ray, maxDistance);
-		List<GeoPoint> newGeoPoints = new ArrayList<>();
 		if (geoPoints == null)
 			return null;
-		for (GeoPoint geo : geoPoints) {
-			newGeoPoints.add(new GeoPoint(this, geo.point));
-		}
-		return newGeoPoints;
+		return geoPoints.stream().map(geo -> new GeoPoint(this, geo.point)).toList();
     }
 }
