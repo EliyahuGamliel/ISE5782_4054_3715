@@ -2,6 +2,7 @@ package OBJParser;
 import java.util.LinkedList;
 import java.util.List;
 import geometries.Intersectable;
+import geometries.Polygon;
 import geometries.Triangle;
 import primitives.Color;
 import primitives.Double3;
@@ -37,17 +38,26 @@ public class parserModel {
     public parserModel changeStartingPoint(Point newStart){
         return new parserModel(lst.stream().map((i)->i.stream().map((j)-> j.add(new Vector(EPS + start.getX(),EPS + start.getY(),EPS + start.getZ()).add(VEPS).scale(-1)).add(new Vector(EPS + newStart.getX(),EPS  + newStart.getY(),EPS + newStart.getZ()))).toList()).toList(),newStart);
     }
-    public List<Triangle> getTriangles(){
-        List<Triangle> newLst = new LinkedList<Triangle>();
+    public List<Polygon> getShapes(){
+        List<Polygon> newLst = new LinkedList<Polygon>();
         for(var i :lst){
             try{
-                newLst.add(new Triangle(i.get(0), i.get(1), i.get(2)));
-            } 
+                if(i.size() < 3){
+                    throw new IllegalArgumentException("cant get lines or single points");
+                }
+                if(i.size() == 3 ){
+                    newLst.add(new Triangle(i.get(0),i.get(1),i.get(2)));
+                }
+                else{
+                    newLst.add(new Polygon(i.toArray(Point[]::new)));
+                }
+
+            }
             catch(Exception e) {
-                //I dont realy care about that 
-              }
-       
+                //I dont realy care about that
+            }
+
         }
-        return newLst ; 
+        return newLst ;
     }
 }
