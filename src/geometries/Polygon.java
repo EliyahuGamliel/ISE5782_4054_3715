@@ -108,7 +108,7 @@ public class Polygon extends Geometry implements Boundable {
 		int sign = 0;
 		for (int i = 0; i < len; i++) {
 			// calculate the normal using the formula in the course slides
-			Vector N = vectors.get(i).crossProduct(vectors.get((i+1)%len)).normalize();
+			Vector N = vectors.get(i).crossProduct(vectors.get((i+1)%len));
 			double dotProd = v.dotProduct(N);
 
 			if (i == 0)
@@ -118,13 +118,9 @@ public class Polygon extends Geometry implements Boundable {
 				return null;
 		}
 		List<GeoPoint> geoPoints = plane.findGeoIntersectionsHelper(ray, maxDistance);
-		List<GeoPoint> newGeoPoints = new ArrayList<>();
 		if (geoPoints == null)
 			return null;
-		for (GeoPoint geo : geoPoints) {
-			newGeoPoints.add(new GeoPoint(this, geo.point));
-		}
-		return newGeoPoints;
+		return geoPoints.stream().map(geo -> new GeoPoint(this, geo.point)).toList();
 	}
 
 	@Override

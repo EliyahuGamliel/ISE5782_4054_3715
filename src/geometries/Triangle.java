@@ -3,6 +3,8 @@ package geometries;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.ise.DEBUG;
+
 import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
@@ -31,6 +33,7 @@ public class Triangle extends Polygon {
 
     @Override
     public List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double maxDistance) {
+		// DEBUG.counter++;
 		Point p0 = ray.getP0();
 		Vector v = ray.getDir();
 
@@ -39,7 +42,7 @@ public class Triangle extends Polygon {
 		Vector v2 = vertices.get(2).subtract(p0);
 
 		// calculate the normal using the formula in the course slides
-		Vector N = v0.crossProduct(v1).normalize();
+		Vector N = v0.crossProduct(v1);
 		double dotProd = v.dotProduct(N);
 
 		int sign = dotProd > 0 ? 1 : -1;
@@ -48,14 +51,14 @@ public class Triangle extends Polygon {
 				return null;
 
 		// calculate the normal using the formula in the course slides
-		N = v1.crossProduct(v2).normalize();
+		N = v1.crossProduct(v2);
 		dotProd = v.dotProduct(N);
 
 		if (!checkSign(sign,dotProd) || isZero(dotProd))
 				return null;
 
 		// calculate the normal using the formula in the course slides
-		N = v2.crossProduct(v0).normalize();
+		N = v2.crossProduct(v0);
 		dotProd = v.dotProduct(N);
 
 		if (!checkSign(sign,dotProd) || isZero(dotProd))
