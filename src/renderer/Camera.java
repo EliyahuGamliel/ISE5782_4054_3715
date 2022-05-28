@@ -6,6 +6,8 @@ import primitives.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.MissingResourceException;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -23,6 +25,8 @@ public class Camera {
     private ImageWriter imageWriter;
     private RayTracerBase rayTracerBase;
     private Scatterer scatterer;
+
+    private long pixelCounter = 0;
 
     /**
      * create a camera specifying the location and the To and Up vectors
@@ -103,6 +107,22 @@ public class Camera {
         this.distance = distance;
         return this;
     }
+
+    private void startTimer() {
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+                private long total = imageWriter.getNx() * imageWriter.getNy();
+                @Override
+                public void run() {
+                        System.out.format("%.1f%% : %,d pixels done from %,d\n",
+                                        ((double)pixelCounter/total) * 100,
+                                        pixelCounter,
+                                        total);
+                        writeToImage();
+                }
+        }, 1000, 1000);
+    }
+
     /**
      * create a ray from the camera through a specific pixel in the View Plane
      * @param nX how many pixels are in the X dim
@@ -180,12 +200,18 @@ public class Camera {
         int nX = imageWriter.getNx();
         int nY = imageWriter.getNy();
 
+        startTimer();
+
         IntStream.range(0, nY).parallel().forEach(i -> {
             IntStream.range(0, nX).parallel().forEach(j -> { 
                 Color color = this.castRay(nX, nY, j, i);
                 imageWriter.writePixel(j, i, color);
+                pixelCounter++;
             });
         });
+
+        System.out.println("100% :)");
+
         return this;
     }
 

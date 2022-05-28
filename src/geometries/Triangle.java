@@ -1,9 +1,6 @@
 package geometries;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import com.ise.DEBUG;
 
 import primitives.Point;
 import primitives.Ray;
@@ -33,7 +30,6 @@ public class Triangle extends Polygon {
 
     @Override
     public List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double maxDistance) {
-		// DEBUG.counter++;
 		Point p0 = ray.getP0();
 		Vector v = ray.getDir();
 
