@@ -119,4 +119,24 @@ public class Vector extends Point {
        ); 
 
    }
+
+    public Vector findNormal() {
+        if (Util.alignZero(xyz.d3) != 0) {
+            Vector vz = new Vector(1, 0, -xyz.d1 / xyz.d3);
+            if (vz.equals(this))
+                return new Vector(1, 1, -(xyz.d1 + xyz.d2) / xyz.d3);
+            else
+                return vz;
+        } else {
+            if (Util.alignZero(xyz.d2) != 0) {
+                Vector v = new Vector(1, -xyz.d1 / xyz.d2, 1);
+                if (v.equals(this))
+                    return new Vector(1, -xyz.d1 / xyz.d2, 0);
+                else
+                    return v;
+            } else
+                return new Vector(0, 1, 0);
+
+        }
+    }
 }

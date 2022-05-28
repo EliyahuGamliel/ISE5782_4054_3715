@@ -70,14 +70,7 @@ public class Minip2 {
 
         //light sun
         constLights.add(new DirectionalLight(new Color(0, 102, 204), new Vector(1, -5, -11)));
-
-
-        //monkey
-        modelParser = new parser("scenes/monkey.obj") ;
-        constGeometries.add(modelParser.getFaces().scale(0.3).changeStartingPoint(new Point(0,30,0)).getShapes().stream().map((e)->(Intersectable)e.setEmission(new Color(103,95,75)) //
-                .setMaterial(new Material().setkD(0.15).setkS(0.5).setShininess(300))).toArray(Intersectable[]::new));
-
-
+/*
         //helicopter
         constGeometries.add(new hellicopter(new Point(32, 75, -50), 1.5));
 
@@ -131,15 +124,25 @@ public class Minip2 {
         constGeometries.add(new Sphere(new Point(9, 10, 60), 1).setEmission(new Color(128, 132, 135)).setMaterial(new Material().setkD(0.2).setkS(0.5).setShininess(300)));
         //endregion
 
-
+        //monkey
+        modelParser = new parser("scenes/monkey.obj") ;
+        constGeometries.add(modelParser.getFaces().scale(0.3).changeStartingPoint(new Point(0,30,0)).getShapes().stream().map((e)->(Intersectable)e.setEmission(new Color(103,95,75)) //
+                .setMaterial(new Material().setkD(0.15).setkS(0.5).setShininess(300))).toArray(Intersectable[]::new));
         //shark
         modelParser = new parser("scenes/shark.obj") ;
         constGeometries.add(modelParser.getFaces().scale(2).changeStartingPoint(new Point(-10,0,700)).getShapes().stream().map((e)->(Intersectable)e.setEmission(new Color(103,95,75)) //
                 .setMaterial(new Material().setkD(0.15).setkS(0.5).setShininess(300))).toArray(Intersectable[]::new));
 
+
         //ship
         modelParser = new parser("scenes/ship.obj") ;
         constGeometries.add(modelParser.getFaces().scale(3).changeStartingPoint(new Point(-75,0,-1500)).getShapes().stream().map((e)->(Intersectable)e.setEmission(new Color(103,95,75)) //
+                .setMaterial(new Material().setkD(0.15).setkS(0.5).setShininess(300))).toArray(Intersectable[]::new));
+*/
+
+        //flag
+        modelParser = new parser("scenes/flag.obj") ;
+        constGeometries.add(modelParser.getFaces().scale(9).changeStartingPoint(new Point(-20,40,0)).getShapes().stream().map((e)->(Intersectable)e.setEmission(new Color(103,95,75)) //
                 .setMaterial(new Material().setkD(0.15).setkS(0.5).setShininess(300))).toArray(Intersectable[]::new));
 
         ImageWriter imageWriter = new ImageWriter("The Final Picture", 1000, 1000);
