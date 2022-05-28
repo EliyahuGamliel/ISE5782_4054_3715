@@ -1,5 +1,9 @@
 package special;
 
+import static java.awt.Color.WHITE;
+import static java.awt.Color.BLUE;
+import static java.awt.Color.RED;
+
 import OBJParser.parser;
 import geometries.*;
 import lighting.DirectionalLight;
@@ -21,9 +25,12 @@ import scene.Scene;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
 public class Minip2 {
     @Test
     void pictureTest() throws IOException {
+        long time = System.currentTimeMillis();
+
         Vector axisY = new Vector(0, 1, 0);
 
         Geometries constGeometries = new Geometries();
@@ -72,7 +79,7 @@ public class Minip2 {
         constLights.add(new DirectionalLight(new Color(0, 102, 204), new Vector(1, -5, -11)));
 /*
         //helicopter
-        constGeometries.add(new hellicopter(new Point(32, 75, -50), 1.5));
+        constGeometries.add(new hellicopter(new Point(32, 75, -50), 1.5).rotatHellicopter(12));
 
         //region "S"
         constGeometries.add(new Sphere(new Point(-29, 18, 39), 1).setEmission(new Color(128, 132, 135)).setMaterial(new Material().setkD(0.2).setkS(0.5).setShininess(300)));
@@ -139,16 +146,30 @@ public class Minip2 {
         constGeometries.add(modelParser.getFaces().scale(3).changeStartingPoint(new Point(-75,0,-1500)).getShapes().stream().map((e)->(Intersectable)e.setEmission(new Color(103,95,75)) //
                 .setMaterial(new Material().setkD(0.15).setkS(0.5).setShininess(300))).toArray(Intersectable[]::new));
 */
-
-        //flag
-        modelParser = new parser("scenes/flag.obj") ;
-        constGeometries.add(modelParser.getFaces().scale(9).changeStartingPoint(new Point(-20,40,0)).getShapes().stream().map((e)->(Intersectable)e.setEmission(new Color(103,95,75)) //
+        Geometries flag = new Geometries();
+        //flag_pole
+        modelParser = new parser("scenes/flag_pole.obj") ;
+        flag.add(modelParser.getFaces().scale(9).changeStartingPoint(new Point(-20,40,0)).getShapes().stream().map((e)->(Intersectable)e.setEmission(new Color(103,95,75)) //
                 .setMaterial(new Material().setkD(0.15).setkS(0.5).setShininess(300))).toArray(Intersectable[]::new));
+        //flag_white
+        modelParser = new parser("scenes/flag_white.obj") ;
+        flag.add(modelParser.getFaces().scale(9).changeStartingPoint(new Point(-20,40,0)).getShapes().stream().map((e)->(Intersectable)e.setEmission(new Color(WHITE)) //
+                .setMaterial(new Material().setkD(0.15).setkS(0.5).setShininess(300))).toArray(Intersectable[]::new));
+        //flag_blue
+        modelParser = new parser("scenes/flag_blue.obj") ;
+        flag.add(modelParser.getFaces().scale(9).changeStartingPoint(new Point(-20,40,0)).getShapes().stream().map((e)->(Intersectable)e.setEmission(new Color(BLUE)) //
+                .setMaterial(new Material().setkD(0.15).setkS(0.5).setShininess(300))).toArray(Intersectable[]::new));
+        //flag_red
+        modelParser = new parser("scenes/flag_red.obj") ;
+        flag.add(modelParser.getFaces().scale(9).changeStartingPoint(new Point(-20,40,0)).getShapes().stream().map((e)->(Intersectable)e.setEmission(new Color(RED)) //
+                .setMaterial(new Material().setkD(0.15).setkS(0.5).setShininess(300))).toArray(Intersectable[]::new));
+        constGeometries.add(flag);
 
-        ImageWriter imageWriter = new ImageWriter("The Final Picture", 1000, 1000);
+        ImageWriter imageWriter = new ImageWriter("The Final Picture", 600, 600);
         Camera camera = new Camera(new Point(0, 20, 1000), new Vector(0, 0, -1), new Vector(0, 1, 0)) //
                 .setVPSize(150, 150) //
                 .setVPDistance(1000)
+                .setScatterer(new GridScatter(2, 2))
                 .setImageWriter(imageWriter);
 
         Scene scene = new Scene("Test scene");
@@ -160,6 +181,9 @@ public class Minip2 {
         scene.setBackground(new Color(162,237,255));
 
         camera.setRayTracer(new RayTracerBasic(scene));
+
+        System.out.format("build scene in %f sec", (System.currentTimeMillis()-time)/1000d);
+
         camera.renderImage();
         camera.writeToImage();
     }
