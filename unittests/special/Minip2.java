@@ -31,7 +31,7 @@ import scene.Scene;
 
 public class Minip2 {
     @Test
-    void pictureTest() throws IOException {
+    public static void pictureTest() throws IOException {
         long time = System.currentTimeMillis();
 
         Vector axisY = new Vector(0, 1, 0);
@@ -134,20 +134,20 @@ public class Minip2 {
         constGeometries.add(new Sphere(new Point(9, 10, 60), 1).setEmission(new Color(128, 132, 135)).setMaterial(new Material().setkD(0.2).setkS(0.5).setShininess(300)));
         //endregion
 
-        // //monkey
-        // modelParser = new parser("scenes/monkey.obj") ;
-        // constGeometries.add(modelParser.getFaces().scale(0.3).changeStartingPoint(new Point(0,30,0)).getShapes().stream().map((e)->(Intersectable)e.setEmission(new Color(103,95,75)) //
-        //         .setMaterial(new Material().setkD(0.15).setkS(0.5).setShininess(300))).toArray(Intersectable[]::new));
+        //monkey
+        modelParser = new parser("scenes/monkey.obj") ;
+        constGeometries.add(modelParser.getFaces().scale(0.3).changeStartingPoint(new Point(0,30,0)).getShapes().stream().map((e)->(Intersectable)e.setEmission(new Color(103,95,75)) //
+                .setMaterial(new Material().setkD(0.15).setkS(0.5).setShininess(300))).toArray(Intersectable[]::new));
         //shark
         modelParser = new parser("scenes/shark.obj") ;
         constGeometries.add(modelParser.getFaces().scale(2).changeStartingPoint(new Point(-10,0,700)).getShapes().stream().map((e)->(Intersectable)e.setEmission(new Color(103,95,75)) //
                 .setMaterial(new Material().setkD(0.15).setkS(0.5).setShininess(300))).toArray(Intersectable[]::new));
 
 
-        // //ship
-        // modelParser = new parser("scenes/ship.obj") ;
-        // constGeometries.add(modelParser.getFaces().scale(3).changeStartingPoint(new Point(-75,0,-1500)).getShapes().stream().map((e)->(Intersectable)e.setEmission(new Color(103,95,75)) //
-        //         .setMaterial(new Material().setkD(0.15).setkS(0.5).setShininess(300))).toArray(Intersectable[]::new));
+        //ship
+        modelParser = new parser("scenes/ship.obj") ;
+        constGeometries.add(modelParser.getFaces().scale(3).changeStartingPoint(new Point(-75,0,-1500)).getShapes().stream().map((e)->(Intersectable)e.setEmission(new Color(103,95,75)) //
+                .setMaterial(new Material().setkD(0.15).setkS(0.5).setShininess(300))).toArray(Intersectable[]::new));
 
         Geometries flag = new Geometries();
         //flag_pole
@@ -168,7 +168,7 @@ public class Minip2 {
                 .setMaterial(new Material().setkD(0.15).setkS(0.5).setShininess(300))).toArray(Intersectable[]::new));
         constGeometries.add(flag);
 
-        ImageWriter imageWriter = new ImageWriter("The Final Picture", 100, 100);
+        ImageWriter imageWriter = new ImageWriter("The Final Picture", 1000, 1000);
         Camera camera = new Camera(new Point(0, 20, 1000), new Vector(0, 0, -1), new Vector(0, 1, 0)) //
                 .setVPSize(150, 150) //
                 .setVPDistance(1000)
