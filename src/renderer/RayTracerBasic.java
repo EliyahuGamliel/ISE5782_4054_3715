@@ -9,7 +9,7 @@ import scene.Scene;
 import static primitives.Util.*;
 
 public class RayTracerBasic extends RayTracerBase {
-    private static final int MAX_CALC_COLOR_LEVEL = 10;
+    private static final int MAX_CALC_COLOR_LEVEL = 3;
     private static final double MIN_CALC_COLOR_K = 0.001;
     private static final Double3 INITIAL_K = new Double3(1.0);
 
