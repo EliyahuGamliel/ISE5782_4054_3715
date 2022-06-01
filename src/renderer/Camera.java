@@ -25,8 +25,11 @@ public class Camera {
     private ImageWriter imageWriter;
     private RayTracerBase rayTracerBase;
     private Scatterer scatterer;
+    private boolean adaptiveSampling = false;
 
     private long pixelCounter = 0;
+
+    private final int MAX_ADAPTIVE_DEPTH = 2;
 
     /**
      * create a camera specifying the location and the To and Up vectors
@@ -74,6 +77,10 @@ public class Camera {
     }
     public Camera setImageWriter(ImageWriter imageWriter) {
         this.imageWriter = imageWriter;
+        return this;
+    }
+    public Camera setAdaptiveSampling(boolean adaptiveSampling) {
+        this.adaptiveSampling = adaptiveSampling;
         return this;
     }
 
@@ -167,6 +174,69 @@ public class Camera {
         return rays;
     }
 
+    private Color adaptiveSamplingHelper(int nX, int nY, int j, int i) {
+        Point imgCenter = location.add(vTo.scale(distance));
+        double rY = height / nY, rX = width / nX;
+        double iY = -(i - (nY - 1d) / 2) * rY, jX = (j - (nX - 1d) / 2) * rX;
+        Point ijP = imgCenter;
+        if (jX != 0) ijP = ijP.add(vRight.scale(jX));
+        if (iY != 0) ijP = ijP.add(vUp.scale(iY));
+
+        Point leftUp = ijP.add(vRight.scale(-rX/2)).add(vUp.scale(rY/2));
+        Point rightUp = ijP.add(vRight.scale(rX/2)).add(vUp.scale(rY/2));
+        Point leftDown = ijP.add(vRight.scale(-rX/2)).add(vUp.scale(-rY/2));
+        Point rightDown = ijP.add(vRight.scale(rX/2)).add(vUp.scale(-rY/2));
+
+        Color leftUpColor = rayTracerBase.traceRay(new Ray(location, leftUp.subtract(location)));
+        Color rightUpColor = rayTracerBase.traceRay(new Ray(location, rightUp.subtract(location)));
+        Color leftDownColor = rayTracerBase.traceRay(new Ray(location, leftDown.subtract(location)));
+        Color rightDownColor = rayTracerBase.traceRay(new Ray(location, rightDown.subtract(location)));
+
+        return adaptiveSampling(ijP, rX, rY,
+                        leftUpColor, rightUpColor,
+                        leftDownColor, rightDownColor,
+                        MAX_ADAPTIVE_DEPTH);
+    }
+
+    private Color adaptiveSampling(Point center, double rX, double rY,
+                                Color leftUpColor, Color rightUpColor,
+                                Color leftDownColor, Color rightDownColor,
+                                int depth) {
+        if (depth <= 0) {
+            Color color = Color.BLACK;
+            color = color.add(leftUpColor, rightUpColor, leftDownColor, rightDownColor);
+            return color.reduce(4);
+        }
+        if (leftUpColor.equals(rightUpColor) && leftUpColor.equals(leftDownColor) && leftUpColor.equals(rightDownColor)) {
+            return leftUpColor;
+        }
+        else {
+            Point up = center.add(vUp.scale(rY/2));
+            Point down = center.add(vUp.scale(-rY/2));
+            Point left = center.add(vRight.scale(-rY/2));
+            Point right = center.add(vRight.scale(rY/2));
+
+            Color upColor = rayTracerBase.traceRay(new Ray(location, up.subtract(location)));
+            Color downColor = rayTracerBase.traceRay(new Ray(location, down.subtract(location)));
+            Color leftColor = rayTracerBase.traceRay(new Ray(location, left.subtract(location)));
+            Color rightColor = rayTracerBase.traceRay(new Ray(location, right.subtract(location)));
+            Color centerColor = rayTracerBase.traceRay(new Ray(location, center.subtract(location)));
+
+            leftUpColor = adaptiveSampling(center.add(vRight.scale(-rX/4)).add(vUp.scale(rY/4)), rX/2, rY/2, 
+                                leftUpColor, upColor, leftColor, centerColor, depth-1);
+            rightUpColor = adaptiveSampling(center.add(vRight.scale(rX/4)).add(vUp.scale(rY/4)), rX/2, rY/2, 
+                                upColor, rightUpColor, centerColor, rightColor, depth-1);
+            leftDownColor = adaptiveSampling(center.add(vRight.scale(-rX/4)).add(vUp.scale(-rY/4)), rX/2, rY/2, 
+                                leftColor, centerColor, leftDownColor, downColor, depth-1);
+            rightDownColor = adaptiveSampling(center.add(vRight.scale(rX/4)).add(vUp.scale(-rY/4)), rX/2, rY/2, 
+                                centerColor, rightColor, downColor, rightDownColor, depth-1);
+
+            Color color = Color.BLACK;
+            color = color.add(leftUpColor, rightUpColor, leftDownColor, rightDownColor);
+            return color.reduce(4);
+        }
+    }
+
     /**
      * construct a ray from the camera throu a specific pixel in the View Plane
      * and get the color of the pixel
@@ -177,6 +247,9 @@ public class Camera {
      * @return the color of the pixel
      */
     private Color castRay(int nX, int nY, int j, int i) {
+        if (adaptiveSampling) {
+            return adaptiveSamplingHelper(nX, nY, j, i);
+        }
         if (scatterer != null) {
             List<Ray> rays = constructBeamOfRay(nX, nY, j, i);
             List<Color> colors = rays.stream()
