@@ -142,4 +142,19 @@ public class Color {
 		return new Color(rgb.d1 / k.d1, rgb.d2 / k.d2, rgb.d3 / k.d3);
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Color other = (Color) obj;
+		if (Math.abs(rgb.d1 - other.rgb.d1) > 1 || Math.abs(rgb.d2 - other.rgb.d2) > 1 || Math.abs(rgb.d3 - other.rgb.d3) > 1)
+			return false;
+		return true;
+	}
+
+	
 }
