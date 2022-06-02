@@ -70,6 +70,9 @@ public class ImageWriter {
 	 */
 	public void writeToImage() {
 		try {
+			File directory = new File(FOLDER_PATH);
+			if (! directory.exists())
+				directory.mkdir();
 			File file = new File(FOLDER_PATH + '/' + imageName + ".png");
 			ImageIO.write(image, "png", file);
 		} catch (IOException e) {
