@@ -22,7 +22,7 @@ public class Parser {
     private Vector trDL = new Vector(-2, -2, -2); // Triangles test Direction of Light
 
     @Test
-    public void TestParser() throws WFException, IOException {
+    void TestParser() throws WFException, IOException {
         // Open a stream to your OBJ resource
         Scene scene = new Scene("Test scene");
         scene.setBackground(new Color(135, 206, 235));

@@ -26,7 +26,7 @@ import scene.Scene;
 
 public class Minip2 {
     @Test
-    public static void pictureTest() throws IOException {
+    void pictureTest() throws IOException {
         long time = System.currentTimeMillis();
 
         Vector axisY = new Vector(0, 1, 0);
@@ -67,14 +67,15 @@ public class Minip2 {
         //endregion
 
         //sun
-        constGeometries.add(new Sphere(new Point(-50, 70, 0), 10)
+        constGeometries.add(new Sphere(new Point(-50, 70, 10), 10)
                 .setEmission(new Color(253, 184, 19))
                 .setMaterial(new Material().setkD(0.2).setkS(0.5).setShininess(300)));
 
         constLights.add(new SpotLight(new Color(500, 500, 500), new Point(0, 20-0.001,1000), new Vector(-50, 50, -900)).setNarrowBeam(0.8).setkL(4E-5).setkQ(2E-7));
 
         //light sun
-        constLights.add(new CirclesLight(new Color(50, 50, 50), new Point(-50, 70, 0), new Vector(5, -7, 0), 10));
+        constLights.add(new CirclesLight(new Color(50, 50, 50), new Point(-50, 70, 9), new Vector(50, -35, -9), 100).setNumOfShadowRays(10).setkL(4E-5).setkQ(2E-7));
+        //constLights.add(new PointLight(new Color(200, 200, 200),new Point(5, -7, 0)).setkL(4E-5).setkQ(2E-7));
 
         //helicopter
         constGeometries.add(new hellicopter(new Point(32, 75, -50), 1.5).rotatHellicopter(10));
@@ -133,7 +134,7 @@ public class Minip2 {
         modelParser = new parser("scenes/monkey.obj") ;
         constGeometries.add(modelParser.getFaces().scale(0.3).changeStartingPoint(new Point(0,30,0)).getShapes().stream().map((e)->(Intersectable)e.setEmission(new Color(103,95,75)) //
                  .setMaterial(new Material().setkD(0.15).setkS(0.5).setShininess(300))).toArray(Intersectable[]::new));
-
+/*
         //shark
         modelParser = new parser("scenes/shark.obj") ;
         constGeometries.add(modelParser.getFaces().scale(2).changeStartingPoint(new Point(-10,0,700)).getShapes().stream().map((e)->(Intersectable)e.setEmission(new Color(52, 54, 58)) //
@@ -143,12 +144,6 @@ public class Minip2 {
         modelParser = new parser("scenes/ship.obj") ;
         constGeometries.add(modelParser.getFaces().scale(3).changeStartingPoint(new Point(-75,0,-1500)).getShapes().stream().map((e)->(Intersectable)e.setEmission(new Color(103,95,75)) //
                 .setMaterial(new Material().setkD(0.15).setkS(0.5).setShininess(300))).toArray(Intersectable[]::new));
-
-
-        // //ship
-        // modelParser = new parser("scenes/ship.obj") ;
-        // constGeometries.add(modelParser.getFaces().scale(3).changeStartingPoint(new Point(-75,0,-1500)).getShapes().stream().map((e)->(Intersectable)e.setEmission(new Color(103,95,75)) //
-        //         .setMaterial(new Material().setkD(0.15).setkS(0.5).setShininess(300))).toArray(Intersectable[]::new));
 
         //region flag
         Geometries flag = new Geometries();
@@ -170,7 +165,7 @@ public class Minip2 {
                 .setMaterial(new Material().setkD(0.15).setkS(0.5).setShininess(300))).toArray(Intersectable[]::new));
         constGeometries.add(flag);
 //endregion
-
+*/
         ImageWriter imageWriter = new ImageWriter("The Final Picture", 100, 100);
         Camera camera = new Camera(new Point(0, 20, 1000), new Vector(0, 0, -1), new Vector(0, 1, 0)) //
                 .setVPSize(150, 150) //
@@ -181,7 +176,7 @@ public class Minip2 {
         Scene scene = new Scene("Test scene");
         scene.geometries.add(constGeometries);
         scene.lights.addAll(constLights);
-        scene.setAmbientLight(new AmbientLight(new Color(255, 255, 255), new Double3(0.1)));
+        scene.setAmbientLight(new AmbientLight(new Color(WHITE), new Double3(0.15)));
         scene.lights.addAll(redLights);
         scene.geometries.add(redLightsSurfaces);
         scene.setBackground(new Color(162,237,255));

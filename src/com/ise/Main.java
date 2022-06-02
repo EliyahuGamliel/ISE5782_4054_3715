@@ -1,7 +1,7 @@
 package com.ise;
 
 import primitives.*;
-import special.Minip2;
+//import special.Minip2;
 
 import static java.lang.System.out;
 import static primitives.Util.*;
@@ -27,8 +27,8 @@ public final class Main {
 	 */
 	public static void main(String[] args) {
 		try {
-			Minip2.pictureTest();
-		} catch (IOException e) {
+			//Minip2.pictureTest();
+		} catch (Exception e/*IOException e*/) {
 			System.out.println("are you shure the reqiered files are in scenes/");
 		}
 	}
