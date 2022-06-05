@@ -1,7 +1,7 @@
 package renderer;
 
-import geometries.Geometries;
-import primitives.*;
+import static primitives.Util.getSign;
+import static primitives.Util.isZero;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +11,11 @@ import java.util.TimerTask;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static primitives.Util.*;
+import primitives.Color;
+import primitives.Point;
+import primitives.Ray;
+import primitives.Util;
+import primitives.Vector;
 
 /**
  * Class to represent a Camera in 3d space

@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import lighting.*;
 import org.junit.jupiter.api.Test;
 
 import OBJParser.parser;
@@ -16,10 +15,17 @@ import geometries.Geometries;
 import geometries.Intersectable;
 import geometries.Plane;
 import geometries.Sphere;
+import lighting.AmbientLight;
+import lighting.CirclesLight;
+import lighting.LightSource;
+import lighting.SpotLight;
 import models.hellicopter;
-import primitives.*;
+import primitives.Color;
+import primitives.Double3;
+import primitives.Material;
+import primitives.Point;
+import primitives.Vector;
 import renderer.Camera;
-import renderer.GridScatter;
 import renderer.ImageWriter;
 import renderer.RayTracerBasic;
 import scene.Scene;
@@ -144,7 +150,7 @@ public class Minip2 {
         modelParser = new parser("scenes/ship.obj") ;
         constGeometries.add(modelParser.getFaces().scale(3).changeStartingPoint(new Point(-75,0,-1500)).getShapes().stream().map((e)->(Intersectable)e.setEmission(new Color(103,95,75)) //
                 .setMaterial(new Material().setkD(0.15).setkS(0.5).setShininess(300))).toArray(Intersectable[]::new));
-
+*/
         //region flag
         Geometries flag = new Geometries();
         //flag_pole
@@ -165,12 +171,12 @@ public class Minip2 {
                 .setMaterial(new Material().setkD(0.15).setkS(0.5).setShininess(300))).toArray(Intersectable[]::new));
         constGeometries.add(flag);
 //endregion
-*/
         ImageWriter imageWriter = new ImageWriter("The Final Picture", 100, 100);
         Camera camera = new Camera(new Point(0, 20, 1000), new Vector(0, 0, -1), new Vector(0, 1, 0)) //
                 .setVPSize(150, 150) //
                 .setVPDistance(1000)
-                .setScatterer(new GridScatter(2, 2))
+                .setAdaptiveSampling(true)
+                // .setScatterer(new GridScatter(2, 2))
                 .setImageWriter(imageWriter);
 
         Scene scene = new Scene("Test scene");

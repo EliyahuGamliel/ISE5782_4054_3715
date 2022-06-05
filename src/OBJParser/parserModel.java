@@ -1,12 +1,9 @@
 package OBJParser;
 import java.util.LinkedList;
 import java.util.List;
-import geometries.Intersectable;
+
 import geometries.Polygon;
 import geometries.Triangle;
-import primitives.Color;
-import primitives.Double3;
-import primitives.Material;
 import primitives.Point;
 import primitives.Vector;
 

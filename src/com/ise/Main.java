@@ -1,13 +1,5 @@
 package com.ise;
 
-import primitives.*;
-//import special.Minip2;
-
-import static java.lang.System.out;
-import static primitives.Util.*;
-
-import java.io.IOException;
-
 /**
  * Eliyahu Gamliel 325884054 egamliel@g.jct.ac.il
  * Avraham Simon 214363715 simon@yatmal.co.il
