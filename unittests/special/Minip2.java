@@ -140,7 +140,7 @@ public class Minip2 {
         modelParser = new parser("scenes/monkey.obj") ;
         constGeometries.add(modelParser.getFaces().scale(0.3).changeStartingPoint(new Point(0,30,0)).getShapes().stream().map((e)->(Intersectable)e.setEmission(new Color(103,95,75)) //
                  .setMaterial(new Material().setkD(0.15).setkS(0.5).setShininess(300))).toArray(Intersectable[]::new));
-/*
+
         //shark
         modelParser = new parser("scenes/shark.obj") ;
         constGeometries.add(modelParser.getFaces().scale(2).changeStartingPoint(new Point(-10,0,700)).getShapes().stream().map((e)->(Intersectable)e.setEmission(new Color(52, 54, 58)) //
@@ -150,7 +150,7 @@ public class Minip2 {
         modelParser = new parser("scenes/ship.obj") ;
         constGeometries.add(modelParser.getFaces().scale(3).changeStartingPoint(new Point(-75,0,-1500)).getShapes().stream().map((e)->(Intersectable)e.setEmission(new Color(103,95,75)) //
                 .setMaterial(new Material().setkD(0.15).setkS(0.5).setShininess(300))).toArray(Intersectable[]::new));
-*/
+
         //region flag
         Geometries flag = new Geometries();
         //flag_pole
