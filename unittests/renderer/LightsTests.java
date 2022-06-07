@@ -1,13 +1,23 @@
 package renderer;
 
+import static java.awt.Color.BLUE;
+import static java.awt.Color.WHITE;
+
 import org.junit.jupiter.api.Test;
 
-import lighting.*;
-import geometries.*;
-import primitives.*;
-import renderer.*;
+import geometries.Geometry;
+import geometries.Sphere;
+import geometries.Triangle;
+import lighting.AmbientLight;
+import lighting.DirectionalLight;
+import lighting.PointLight;
+import lighting.SpotLight;
+import primitives.Color;
+import primitives.Double3;
+import primitives.Material;
+import primitives.Point;
+import primitives.Vector;
 import scene.Scene;
-import static java.awt.Color.*;
 
 /**
  * Test rendering a basic image

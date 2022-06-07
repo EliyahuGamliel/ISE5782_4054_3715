@@ -63,14 +63,6 @@ public class RayTracerBasic extends RayTracerBase {
         return lightIntensity.scale(kd.scale(Math.abs(l.dotProduct(n))));
     }
 
-    private boolean unshaded(double lightDistance, Vector l, Vector n, GeoPoint geoPoint) {
-        Vector lightDirection = l.scale(-1); // from point to light source
-        Ray lightRay = new Ray(geoPoint.point, lightDirection, n);
-        List<GeoPoint> intersections = scene.geometries
-                .findGeoIntersections(lightRay, lightDistance);
-        return intersections == null || intersections.isEmpty() || geoPoint.geometry.getMaterial().kT != Double3.ZERO;
-    }
-
     public Color traceRay(Ray ray) {
         GeoPoint closestPoint = findClosestIntersection(ray);
         return closestPoint == null ? scene.background : calcColor(closestPoint, ray);

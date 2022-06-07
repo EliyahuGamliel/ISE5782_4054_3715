@@ -1,12 +1,14 @@
 package geometries;
 
+import static primitives.Util.checkSign;
+import static primitives.Util.isZero;
+
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
-import primitives.*;
-import static primitives.Util.*;
+import primitives.Point;
+import primitives.Ray;
+import primitives.Vector;
 
 /**
  * Polygon class represents two-dimensional polygon in 3D Cartesian coordinate
@@ -23,8 +25,6 @@ public class Polygon extends Geometry implements Boundable {
 	 * Associated plane in which the polygon lays
 	 */
 	protected Plane plane;
-	private int size;
-
 	/**
 	 * Polygon constructor based on vertices list. The list must be ordered by edge
 	 * path. The polygon must be convex.
@@ -84,7 +84,6 @@ public class Polygon extends Geometry implements Boundable {
 			if (positive != (edge1.crossProduct(edge2).dotProduct(n) > 0))
 				throw new IllegalArgumentException("All vertices must be ordered and the polygon must be convex");
 		}
-		size = vertices.length;
 	}
 
 	@Override

@@ -1,7 +1,5 @@
 package special;
 
-import static java.awt.Color.YELLOW;
-
 import org.junit.jupiter.api.Test;
 
 import geometries.Triangle;
@@ -11,7 +9,6 @@ import primitives.Material;
 import primitives.Point;
 import primitives.Vector;
 import renderer.Camera;
-import renderer.GridScatter;
 import renderer.ImageWriter;
 import renderer.RayTracerBasic;
 import scene.Scene;
@@ -1568,7 +1565,7 @@ public class TeapotTest {
         );
         scene.lights.add(new PointLight(new Color(500, 500, 500), new Point(100, 0, -100)).setkQ(0.000001));
 
-        camera.setRayTracer(new RayTracerBasic(scene)).renderImage().writeToImage();
+        camera.setRayTracer(new RayTracerBasic(scene)).setAdaptiveSampling(true).renderImage().writeToImage();
     }
 
 }

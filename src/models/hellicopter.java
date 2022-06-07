@@ -1,11 +1,18 @@
 package models;
 
-import java.util.List;
+import static geometries.Utils.createRectangleYRotate;
+import static geometries.Utils.createRectangleZRotate;
 
-import static geometries.Utils.*;
-
-import geometries.*;
-import primitives.*;
+import geometries.Cylinder;
+import geometries.Geometries;
+import geometries.Intersectable;
+import geometries.Sphere;
+import geometries.Triangle;
+import primitives.Color;
+import primitives.Material;
+import primitives.Point;
+import primitives.Ray;
+import primitives.Vector;
 
 public class hellicopter extends Geometries {
     private Point center;

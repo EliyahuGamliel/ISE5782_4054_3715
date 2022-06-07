@@ -1,14 +1,13 @@
 package scene;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import geometries.Geometries;
 import lighting.AmbientLight;
 import lighting.LightSource;
 import primitives.Color;
 import primitives.Double3;
-
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 
 public class Scene {
     public String name;

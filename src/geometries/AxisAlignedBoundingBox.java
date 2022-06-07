@@ -1,15 +1,13 @@
 package geometries;
 
-import primitives.Point;
-import primitives.Ray;
+import static primitives.Util.isZero;
 
-import javax.swing.*;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static primitives.Util.isZero;
+import primitives.Point;
+import primitives.Ray;
 
 /**
  *

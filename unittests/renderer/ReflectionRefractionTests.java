@@ -1,14 +1,20 @@
 package renderer;
 
+import static java.awt.Color.BLUE;
+import static java.awt.Color.RED;
+import static java.awt.Color.WHITE;
+
 import org.junit.jupiter.api.Test;
 
-import static java.awt.Color.*;
-
-import renderer.ImageWriter;
-import lighting.*;
-import geometries.*;
-import primitives.*;
-import renderer.*;
+import geometries.Sphere;
+import geometries.Triangle;
+import lighting.AmbientLight;
+import lighting.SpotLight;
+import primitives.Color;
+import primitives.Double3;
+import primitives.Material;
+import primitives.Point;
+import primitives.Vector;
 import scene.Scene;
 
 /**

@@ -1,23 +1,32 @@
 package special;
 
-import OBJParser.parser;
-import geometries.*;
-import lighting.*;
-import models.hellicopter;
+import static geometries.Utils.createRectangleY;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
-import per.mokiat.data.front.error.WFException;
-import primitives.*;
+
+import geometries.Circle;
+import geometries.Cylinder;
+import geometries.Geometries;
+import geometries.Plane;
+import lighting.CirclesLight;
+import lighting.DirectionalLight;
+import lighting.LightSource;
+import lighting.PointLight;
+import lighting.SpotLight;
+import models.hellicopter;
+import primitives.Color;
+import primitives.Material;
+import primitives.Point;
+import primitives.Ray;
+import primitives.Vector;
 import renderer.Camera;
 import renderer.GridScatter;
 import renderer.ImageWriter;
 import renderer.RayTracerBasic;
 import scene.Scene;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import static geometries.Utils.createRectangleY;
 
 public class Minip1 {
     @Test
