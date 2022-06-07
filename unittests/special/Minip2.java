@@ -19,7 +19,6 @@ import geometries.Sphere;
 import models.hellicopter;
 import primitives.*;
 import renderer.Camera;
-import renderer.GridScatter;
 import renderer.ImageWriter;
 import renderer.RayTracerBasic;
 import scene.Scene;
@@ -66,14 +65,19 @@ public class Minip2 {
         //endregion
 
         //sun
-        constGeometries.add(new Sphere(new Point(-50, 70, -10), 10)
+        constGeometries.add(new Sphere(new Point(-60, 80, -110), 10)
                 .setEmission(new Color(253, 184, 19))
-                .setMaterial(new Material().setkD(0.2).setkS(0.5).setShininess(300)));
+                .setMaterial(new Material()
+                .setkD(0.2)
+                .setkS(0.5)
+                .setShininess(10)
+        ));
 
-        constLights.add(new SpotLight(new Color(500, 500, 500), new Point(0, 50-0.001,1000), new Vector(0, -50, -1000)).setNarrowBeam(0.5).setkL(4E-5).setkQ(2E-7));
+        constLights.add(new SpotLight(new Color(300, 300, 300), new Point(0, 50-0.001,1000), new Vector(0, -50, -1000)).setNarrowBeam(0.5).setkL(4E-5).setkQ(2E-7));
 
-        //light sun
-        constLights.add(new CirclesLight(new Color(100, 100, 100), new Point(-50, 70, -9), new Vector(8, -48, 9), 100).setNumOfShadowRays(10).setkL(4E-5).setkQ(2E-7));
+        // //light sun
+        // constLights.add(new CirclesLight(new Color(100, 100, 100), new Point(-50, 70, -9), new Vector(8, -48, 9), 100).setNumOfShadowRays(10).setkL(4E-5).setkQ(2E-7));
+        constLights.add(new DirectionalLight(new Color(100, 100, 100), new Vector(-0.5, -1.5, 1)));
 
         //helicopter
         constGeometries.add(new hellicopter(new Point(32, 75, -50), 1.5).rotatHellicopter(10));
