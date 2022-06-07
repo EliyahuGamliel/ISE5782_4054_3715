@@ -32,11 +32,10 @@ public class Minip2 {
         Vector axisY = new Vector(0, 1, 0);
 
         Geometries constGeometries = new Geometries();
+
         List<LightSource> constLights = new ArrayList<>();
 
         Geometries redLightsSurfaces = new Geometries();
-
-        List<LightSource> redLights = new ArrayList<>();
 
         //sea
         constGeometries.add(new Plane(new Point(0, 0, 0), axisY)
@@ -75,7 +74,6 @@ public class Minip2 {
 
         //light sun
         constLights.add(new CirclesLight(new Color(50, 50, 50), new Point(-50, 70, 9), new Vector(50, -35, -9), 100).setNumOfShadowRays(10).setkL(4E-5).setkQ(2E-7));
-        //constLights.add(new PointLight(new Color(200, 200, 200),new Point(5, -7, 0)).setkL(4E-5).setkQ(2E-7));
 
         //helicopter
         constGeometries.add(new hellicopter(new Point(32, 75, -50), 1.5).rotatHellicopter(10));
@@ -134,7 +132,7 @@ public class Minip2 {
         modelParser = new parser("scenes/monkey.obj") ;
         constGeometries.add(modelParser.getFaces().scale(0.3).changeStartingPoint(new Point(0,30,0)).getShapes().stream().map((e)->(Intersectable)e.setEmission(new Color(103,95,75)) //
                  .setMaterial(new Material().setkD(0.15).setkS(0.5).setShininess(300))).toArray(Intersectable[]::new));
-/*
+
         //shark
         modelParser = new parser("scenes/shark.obj") ;
         constGeometries.add(modelParser.getFaces().scale(2).changeStartingPoint(new Point(-10,0,700)).getShapes().stream().map((e)->(Intersectable)e.setEmission(new Color(52, 54, 58)) //
@@ -165,7 +163,7 @@ public class Minip2 {
                 .setMaterial(new Material().setkD(0.15).setkS(0.5).setShininess(300))).toArray(Intersectable[]::new));
         constGeometries.add(flag);
 //endregion
-*/
+
         ImageWriter imageWriter = new ImageWriter("The Final Picture", 100, 100);
         Camera camera = new Camera(new Point(0, 20, 1000), new Vector(0, 0, -1), new Vector(0, 1, 0)) //
                 .setVPSize(150, 150) //
@@ -177,7 +175,6 @@ public class Minip2 {
         scene.geometries.add(constGeometries);
         scene.lights.addAll(constLights);
         scene.setAmbientLight(new AmbientLight(new Color(WHITE), new Double3(0.15)));
-        scene.lights.addAll(redLights);
         scene.geometries.add(redLightsSurfaces);
         scene.setBackground(new Color(162,237,255));
 

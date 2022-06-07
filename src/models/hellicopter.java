@@ -13,14 +13,14 @@ public class hellicopter extends Geometries {
 
     private Geometries body;
 
-    private Color emission = new Color(75, 83, 32);
+    private Color emission = new Color(38,51,150);
     private Material material = new Material().setkD(0.15).setkS(0.5).setShininess(300);
 
-    private Color emissionWings = new Color(71,66, 42);
+    private Color emissionWings = Color.BLACK;
     private Material materialWings = new Material().setkD(0.1).setkS(0.5).setShininess(300);
 
-    private Color emissionTailTop = new Color(75, 83, 32);
-    private Color emissionTail = new Color(75, 83, 32);
+    private Color emissionTailTop = Color.BLACK;
+    private Color emissionTail =  new Color(38,51,150);
     private Material materialTail = new Material().setkD(0.1).setkS(0.5).setShininess(300);
 
     public hellicopter(Point center, double size) {
