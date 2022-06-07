@@ -33,7 +33,7 @@ public class Camera {
 
     private long pixelCounter = 0;
 
-    private final int MAX_ADAPTIVE_DEPTH = 2;
+    private int adaptiveSamplingDepth = 2;
 
     /**
      * create a camera specifying the location and the To and Up vectors
@@ -87,7 +87,10 @@ public class Camera {
         this.adaptiveSampling = adaptiveSampling;
         return this;
     }
-
+    public Camera setAdaptiveSamplingDepth(int adaptiveSamplingDepth) {
+        this.adaptiveSamplingDepth = adaptiveSamplingDepth;
+        return this;
+    }
     public Camera setRayTracer(RayTracerBase rayTracerBase) {
         this.rayTracerBase = rayTracerBase;
         return this;
@@ -129,7 +132,7 @@ public class Camera {
                                         ((double)pixelCounter/total) * 100,
                                         pixelCounter,
                                         total);
-                        writeToImage();
+                        // writeToImage();
                 }
         }, 1000, 2000);
     }
@@ -199,7 +202,7 @@ public class Camera {
         return adaptiveSampling(ijP, rX, rY,
                         leftUpColor, rightUpColor,
                         leftDownColor, rightDownColor,
-                        MAX_ADAPTIVE_DEPTH);
+                        adaptiveSamplingDepth);
     }
 
     private Color adaptiveSampling(Point center, double rX, double rY,

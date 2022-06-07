@@ -1,5 +1,7 @@
 package com.ise;
 
+import special.Minip2;
+
 /**
  * Eliyahu Gamliel 325884054 egamliel@g.jct.ac.il
  * Avraham Simon 214363715 simon@yatmal.co.il
@@ -19,7 +21,7 @@ public final class Main {
 	 */
 	public static void main(String[] args) {
 		try {
-			//Minip2.pictureTest();
+			Minip2.pictureTest();
 		} catch (Exception e/*IOException e*/) {
 			System.out.println("are you shure the reqiered files are in scenes/");
 		}

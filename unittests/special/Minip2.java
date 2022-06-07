@@ -25,7 +25,7 @@ import scene.Scene;
 
 public class Minip2 {
     @Test
-    void pictureTest() throws IOException {
+    public static void pictureTest() throws IOException {
         long time = System.currentTimeMillis();
 
         Vector axisY = new Vector(0, 1, 0);
@@ -168,11 +168,12 @@ public class Minip2 {
         constGeometries.add(flag);
 //endregion
 
-        ImageWriter imageWriter = new ImageWriter("The Final Picture", 100, 100);
-        Camera camera = new Camera(new Point(0, 20, 1000), new Vector(0, 0, -1), new Vector(0, 1, 0)) //
+        ImageWriter imageWriter = new ImageWriter("The Final Picture", 1000, 1000);
+        Camera camera = new Camera(new Point(0, 10, 300), new Vector(0, 0, -1), new Vector(0, 1, 0)) //
                 .setVPSize(150, 150) //
-                .setVPDistance(1000)
-                .setScatterer(new GridScatter(2, 2))
+                .setVPDistance(300)
+                .setAdaptiveSampling(true)
+                .setAdaptiveSamplingDepth(5)
                 .setImageWriter(imageWriter);
 
         Scene scene = new Scene("Test scene");
