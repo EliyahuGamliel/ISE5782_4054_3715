@@ -32,6 +32,7 @@ public class Camera {
     private boolean adaptiveSampling = false;
 
     private long pixelCounter = 0;
+    Timer timer = new Timer();
 
     private int adaptiveSamplingDepth = 2;
 
@@ -123,8 +124,7 @@ public class Camera {
     }
 
     private void startTimer() {
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
+        this.timer.schedule(new TimerTask() {
                 private long total = imageWriter.getNx() * imageWriter.getNy();
                 @Override
                 public void run() {
@@ -135,6 +135,10 @@ public class Camera {
                         // writeToImage();
                 }
         }, 1000, 2000);
+    }
+
+    private void stopTimer() {
+        this.timer.cancel();
     }
 
     /**
@@ -291,6 +295,8 @@ public class Camera {
         });
 
         System.out.println("100% :)");
+
+        stopTimer();
 
         return this;
     }
