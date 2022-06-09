@@ -148,13 +148,14 @@ public class Camera {
 
     /**
      * create a ray from the camera through a specific pixel in the View Plane
+     * (this method is public for testing porpuses)
      * @param nX how many pixels are in the X dim
      * @param nY how many pixels are in the Y dim
      * @param j the pixel to go through X dim
      * @param i the pixel to go through Y dim
      * @return the constructed Ray
      */
-    private Ray constructRay(int nX, int nY, int j, int i) {
+    public Ray constructRay(int nX, int nY, int j, int i) {
         Point imgCenter = location.add(vTo.scale(distance));
         double rY = height / nY, rX = width / nX;
         double iY = -(i - (nY - 1d) / 2) * rY, jX = (j - (nX - 1d) / 2) * rX;
