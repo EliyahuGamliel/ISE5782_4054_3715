@@ -1,31 +1,31 @@
 package special;
 
-import static java.awt.Color.BLUE;
-import static java.awt.Color.RED;
-import static java.awt.Color.WHITE;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import lighting.*;
-import org.junit.jupiter.api.Test;
-
 import OBJParser.parser;
 import geometries.Geometries;
 import geometries.Intersectable;
 import geometries.Plane;
 import geometries.Sphere;
+import lighting.AmbientLight;
+import lighting.DirectionalLight;
+import lighting.LightSource;
+import lighting.SpotLight;
 import models.hellicopter;
+import org.junit.jupiter.api.Test;
 import primitives.*;
 import renderer.Camera;
 import renderer.ImageWriter;
 import renderer.RayTracerBasic;
 import scene.Scene;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import static java.awt.Color.*;
+
 public class Minip2 {
     @Test
-    public static void pictureTest() throws IOException {
+    void pictureTest() throws IOException {
         long time = System.currentTimeMillis();
 
         Vector axisY = new Vector(0, 1, 0);
@@ -75,8 +75,7 @@ public class Minip2 {
 
         constLights.add(new SpotLight(new Color(300, 300, 300), new Point(0, 50-0.001,1000), new Vector(0, -50, -1000)).setNarrowBeam(0.5).setkL(4E-5).setkQ(2E-7));
 
-        // //light sun
-        // constLights.add(new CirclesLight(new Color(100, 100, 100), new Point(-50, 70, -9), new Vector(8, -48, 9), 100).setNumOfShadowRays(10).setkL(4E-5).setkQ(2E-7));
+        //light sun
         constLights.add(new DirectionalLight(new Color(100, 100, 100), new Vector(-0.5, -1.5, 1)));
 
         //helicopter
@@ -130,7 +129,7 @@ public class Minip2 {
         constGeometries.add(new Sphere(new Point(3, 8, 63), 1).setEmission(new Color(128, 132, 135)).setMaterial(new Material().setkD(0.2).setkS(0.5).setShininess(300)));
         constGeometries.add(new Sphere(new Point(7, 8, 63), 1).setEmission(new Color(128, 132, 135)).setMaterial(new Material().setkD(0.2).setkS(0.5).setShininess(300)));
         constGeometries.add(new Sphere(new Point(9, 10, 60), 1).setEmission(new Color(128, 132, 135)).setMaterial(new Material().setkD(0.2).setkS(0.5).setShininess(300)));
-//endregion
+        //endregion
 
         //monkey
         modelParser = new parser("scenes/monkey.obj") ;
@@ -145,7 +144,7 @@ public class Minip2 {
         //ship
         modelParser = new parser("scenes/ship.obj") ;
         constGeometries.add(modelParser.getFaces().scale(3).changeStartingPoint(new Point(-75,0,-1500)).getShapes().stream().map((e)->(Intersectable)e.setEmission(new Color(0,0,128)) //
-                .setMaterial(new Material().setkD(0.15).setkS(0.5).setShininess(300))).toArray(Intersectable[]::new));
+                .setMaterial(new Material().setkD(0.8).setkS(0.5).setShininess(300))).toArray(Intersectable[]::new));
 
         //region flag
         Geometries flag = new Geometries();
