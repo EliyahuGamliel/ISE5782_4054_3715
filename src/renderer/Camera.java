@@ -96,12 +96,10 @@ public class Camera {
         this.rayTracerBase = rayTracerBase;
         return this;
     }
-
     public Camera setScatterer(Scatterer scatterer) {
         this.scatterer = scatterer;
         return this;
     }
-
     /**
      * set the View Plane size
      * @param width the width of the VP
@@ -123,6 +121,10 @@ public class Camera {
         return this;
     }
 
+    
+    /**
+     * starts timer which will print the progress every 15 seconds
+     */
     private void startTimer() {
         this.timer.schedule(new TimerTask() {
                 private long total = imageWriter.getNx() * imageWriter.getNy();
@@ -134,9 +136,12 @@ public class Camera {
                                         total);
                         // writeToImage();
                 }
-        }, 1000, 2000);
+        }, 1000, 15000);
     }
 
+    /**
+     * stops the timer that startTimer() started
+     */
     private void stopTimer() {
         this.timer.cancel();
     }
@@ -149,7 +154,7 @@ public class Camera {
      * @param i the pixel to go through Y dim
      * @return the constructed Ray
      */
-    public Ray constructRay(int nX, int nY, int j, int i) {
+    private Ray constructRay(int nX, int nY, int j, int i) {
         Point imgCenter = location.add(vTo.scale(distance));
         double rY = height / nY, rX = width / nX;
         double iY = -(i - (nY - 1d) / 2) * rY, jX = (j - (nX - 1d) / 2) * rX;
@@ -160,7 +165,6 @@ public class Camera {
         return new Ray(location, ijV);
     }
 
-
     /**
      * create a ray from the camera through a specific pixel in the View Plane
      * @param nX how many pixels are in the X dim
@@ -169,7 +173,7 @@ public class Camera {
      * @param i the pixel to go through Y dim
      * @return the constructed Ray
      */
-    public List<Ray> constructBeamOfRay(int nX, int nY, int j, int i) {
+    private List<Ray> constructBeamOfRay(int nX, int nY, int j, int i) {
         Point imgCenter = location.add(vTo.scale(distance));
         double rY = height / nY, rX = width / nX;
         double iY = -(i - (nY - 1d) / 2) * rY, jX = (j - (nX - 1d) / 2) * rX;
@@ -185,6 +189,15 @@ public class Camera {
         return rays;
     }
 
+    /**
+     * calculate the color of a pixel with adaptive super sampling technic
+     * this helper function calls the recursive {@link #adaptiveSampling(Point, double, double, Color, Color, Color, Color, int)} and give the entire pixel as the area
+     * @param nX how many pixels are in the X dim
+     * @param nY how many pixels are in the Y dim
+     * @param j the pixel to go through X dim
+     * @param i the pixel to go through Y dim
+     * @return the final color of this pixel
+     */
     private Color adaptiveSamplingHelper(int nX, int nY, int j, int i) {
         Point imgCenter = location.add(vTo.scale(distance));
         double rY = height / nY, rX = width / nX;
@@ -209,6 +222,20 @@ public class Camera {
                         adaptiveSamplingDepth);
     }
 
+    /**
+     * the recursive function
+     * calculate the color of an area given this parameters
+     * calls itself on every quarter if necessery
+     * @param center center point of this area
+     * @param rX width of the area
+     * @param rY height of the area
+     * @param leftUpColor color of the upper left cornor
+     * @param rightUpColor color of the upper right cornor
+     * @param leftDownColor color of the lower left cornor
+     * @param rightDownColor color of the lower right cornor
+     * @param depth recursion max depth stops when <= 0
+     * @return
+     */
     private Color adaptiveSampling(Point center, double rX, double rY,
                                 Color leftUpColor, Color rightUpColor,
                                 Color leftDownColor, Color rightDownColor,
@@ -273,7 +300,12 @@ public class Camera {
             return rayTracerBase.traceRay(ray);
         }
     }
-
+    
+    /**
+     * render the image to buffer
+     * multithreaded
+     * @return builder design
+     */
     public Camera renderImage() {
         if (imageWriter == null)
             throw new MissingResourceException("Camera resource not set", "Camera", "Image Writer");
@@ -300,7 +332,12 @@ public class Camera {
 
         return this;
     }
-
+    /**
+     * print grid oer the buffer
+     * @param interval how offten the pattern should repeate
+     * @param color the color of the grid
+     * @return builder design
+     */
     public Camera printGrid(int interval, Color color) {
         if (imageWriter == null)
             throw new MissingResourceException("Camera resource not set", "Camera", "Image writer");
@@ -316,6 +353,9 @@ public class Camera {
         return this;
     }
 
+    /**
+     * write the buffer to file
+     */
     public void writeToImage() {
         if (imageWriter == null)
             throw new MissingResourceException("Camera resource not set", "Camera", "Image writer");

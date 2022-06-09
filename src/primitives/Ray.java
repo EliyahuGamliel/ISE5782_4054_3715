@@ -64,11 +64,21 @@ public class Ray {
         return p0.add(dir.scale(t));
     }
 
+    /**
+     * wraper for {@link #findClosestGeoPoint(List)}
+     * @param points the point list
+     * @return the closest point
+     */
     public Point findClosestPoint(List<Point> points) {
         return points == null || points.isEmpty() ? null
                 : findClosestGeoPoint(points.stream().map(p -> new GeoPoint(null, p)).toList()).point;
     }
 
+    /**
+     * finds the closest point (intersection) to p0
+     * @param points the points list
+     * @return the closest point
+     */
     public GeoPoint findClosestGeoPoint(List<GeoPoint> points) {
         if (points.size() == 0)
             return null;
