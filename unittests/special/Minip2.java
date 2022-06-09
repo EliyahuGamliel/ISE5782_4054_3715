@@ -25,7 +25,7 @@ import static java.awt.Color.*;
 
 public class Minip2 {
     @Test
-    void pictureTest() throws IOException {
+    public static void pictureTest() throws IOException {
         long time = System.currentTimeMillis();
 
         Vector axisY = new Vector(0, 1, 0);
@@ -172,7 +172,7 @@ public class Minip2 {
                 .setVPSize(150, 150) //
                 .setVPDistance(1000)
                 .setAdaptiveSampling(true)
-                .setAdaptiveSamplingDepth(1)
+                .setAdaptiveSamplingDepth(5)
                 .setImageWriter(imageWriter);
 
         Scene scene = new Scene("Test scene");
