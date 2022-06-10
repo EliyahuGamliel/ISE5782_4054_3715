@@ -23,4 +23,4 @@ The project creates images with basic shapes and even supports obj files of comp
 <img src="https://user-images.githubusercontent.com/76405628/172895158-69f37eda-e642-4207-9f70-d4f6e2fd240c.png" width=25% height=25%>
 
 # The final picture:
-
+<img src="https://user-images.githubusercontent.com/76405628/173038559-0b8cc90b-0ae8-4929-939c-ecd316cac34b.png" width=35% height=35%>
