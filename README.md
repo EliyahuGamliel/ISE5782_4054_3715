@@ -16,6 +16,8 @@ The project creates images with basic shapes and even supports obj files of comp
 2. Complex 3D models can be added and will be displayed in the image
 
 ### © Eliyahu Gamliel and Avraham Simon ###
+#### We were helped by ["idanmaman2"](https://github.com/idanmaman2) ####
+#### We were helped by ["mokiat"](https://github.com/mokiat) ####
 
 ## Examples of photos: ##
 <img src="https://user-images.githubusercontent.com/76405628/172894005-78cc1e6d-b04a-43e5-9722-455efd7373eb.png" width=25% height=25%>
